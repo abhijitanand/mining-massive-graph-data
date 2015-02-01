@@ -1,0 +1,71 @@
+\section{Temporal Graphs}
+\label{sec:temporal-graphs}
+
+%General intro to graphs and contemporary application domains
+Graphs encode the interconnections between entities to model relations between them. They have proven to be an intuitive datastructure in modelling, querying and reasoning about real-life relationships. In websearch the graphs derived from links between webpages are used for link analysis and establishing authority of webpages. In social networks, the graph structure captures interesting insights about the influential nodes, community structures, connectivity and reachability etc. In biological networks people are interested in how diseases spread. In ontologies, they are useful to model taxonomies in the form of type hierarchies. Apart from these scenarios they find applications in road, water networks for shortest path computations and flow problems. 
+
+% Evolving graphs and need for scoping out the area
+Traditional research has focussed on largely on \emph{static graphs}. However, as one might quickly realize, most of the scenarios enumerated above have a evolutionary nature to them. Social networks, Web graphs, citation networks and even biological networks evolve over time. So there has been a growing need to support data management, querying, mining and analytics tasks over evolving or time-varying graphs. In this proposal we attempt to scope out the problems relating to dynamic graphs and more specifically time-varying graphs with an intent to identify open issues and problems which would be worth investigating.
+
+% Our focus areas
+We study dynamic graphs with a specific focus on three dimensions -- \emph{data or input models} for representing graphs, support for \emph{primitive operations} in querying and mining dynamic graphs, and finally data management issues pertaining to storing dynamic graphs for supporting \emph{approximate} and \emph{exact queries}.
+
+\subsection{Dynamic Graph Input/Data Model}
+\label{sec: data-model}
+
+In this section we outline some of the prevalent data models in the literature pertaining to dynamic graphs. 
+
+\begin{enumerate}
+	\item {\textbf{Streaming Model: }} The most prevalent and standard data model for dynamic graphs is the \emph{streaming model} which assumes the input to be a sequence edges from a given family of nodes. (cite Muthukrishnan et. al Data Streams: Algorithms and Applications). Here the algorithm sees the entire input and the typical assumption is of a limited working memory. 
+
+%The relevant questions for such a model are : how d
+	
+	
+	\item {\textbf{Dynamic Graph Model :}} In this setting, a graph changes over time and the goal is to keep track of the changes so as to be able to efficiently answer graph queries. The main difference is that here when a change is performed to a graph, the algorithm is notified of the change. (cite Demetrescu et. al from "Dynamic graph algorithms").
+
+
+	\item {\textbf{Property Testing Model :}}  Here the goal is to find whether a graph has some property or is far from satisfying the property using a limited number of queries. (cite the Ron guy from "Algorithmic and analysis techniques in property testing.")
+
+	\item {\textbf{Mutli-armed Bandit Model :}}  In the standard multi- armed bandit setting there are k slot machines (one-armed bandits) and pulling a lever in a slot machine gives a re- ward, which depends on the machine, and reveals informa- tion about the machine. The objective is to select the machines to query so as to maximize the total reward; as in our case, the number of queries in every time step is limited. (cite Muthukrishnan et. al Data Streams: Algorithms and Applications)
+
+	\item {\textbf{Fixed-probe Model :}} The time is assumed to proceed in discrete steps, numbered by positive integers. At each time step t, the data is given by a (possibly weighted) graph Gt. The data is changing gradually, i.e., the graph Gt+1 is obtained from Gt by a small random change.2 At each time step t, the algorithm is allowed to probe a small portion of the graph Gt, and then must output a solution for the problem under consideration. We would like this solu- tion to be close to the“correct”solution for the graph Gt. In this paper we do not impose any constraint on the amount of memory the algorithm maintains or the running time of the algorithm, although all of the algorithms we present are quite efficient with respect to these factors. (Cite Aris from "Algorithms for Evolving Graphs").
+
+	\item {\textbf{Parametric optimization and kinetic problems :}} In the parametric optimization model, the edge weights are known continuous functions of a real parameter $\lambda$ (often referred to as “time”), and the goal is to identify how the solution changes as $\lambda$ varies. A kinetic problem combines parametric optimizations and dynamic data structures for insertions and deletions. In such a problem, at the begin- ning a parametric problem of parameter $\lambda$ is given; as the time $\lambda$ progresses, the weight functions change and objects (e.g., edges) are inserted or deleted. The goal is to efficiently maintain the optimal solution at each point in time.
+(cite Henzinger from Parametric and kinetic minimum spanning trees.)
+
+
+\end{enumerate}
+
+
+
+\subsection{Querying and Mining Dynamic Graphs}
+\label{sec:query-mining}
+
+In this section we investigate the primitive operations that have been supported on dynamic graphs over the past few years. In doing so, we identify potential open problems which need to be addressed. 
+
+
+\subsubsection{Path Related Problems} 
+\label{sec:path-problems}
+
+
+\subsubsection{Sub-graph Problems}
+\label{sec:subgraph-problems}
+
+
+\subsubsection{Matching Problems}
+\label{sec:matching-problems}
+
+
+\subsection{Data Structures for Approximate and Exact Queries}
+\label{sec:approx-exacts}
+
+\subsubsection{Index Structures based on Graph Sketches}
+\label{sec:indexing-dynamic-graphs}
+
+\subsubsection{Spanners, Sparsifiers and Expanders}
+\label{sec:spanners}
+
+\subsubsection{Approximate operations on Graphs}
+\label{sec:approximate-problems}
+
+
