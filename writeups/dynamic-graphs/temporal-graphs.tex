@@ -22,7 +22,7 @@ In this section we outline some of the prevalent data models in the literature p
 
 	\item {\textbf{Multi-armed Bandit Model~\cite{muthukrishnan2005data} :}}  In the standard multi- armed bandit setting there are k slot machines (one-armed bandits) and pulling a lever in a slot machine gives a re- ward, which depends on the machine, and reveals informa- tion about the machine. The objective is to select the machines to query so as to maximize the total reward; as in our case, the number of queries in every time step is limited. 
 
-	\item {\textbf{Fixed-probe Model~\cite{anagnostopoulos_algorithms_2012} :}} The time is assumed to proceed in discrete steps, numbered by positive integers. At each time step t, the data is given by a (possibly weighted) graph Gt. The data is changing gradually, i.e., the graph Gt+1 is obtained from Gt by a small random change.2 At each time step t, the algorithm is allowed to probe a small portion of the graph Gt, and then must output a solution for the problem under consideration. We would like this solu- tion to be close to the“correct”solution for the graph Gt. In this paper we do not impose any constraint on the amount of memory the algorithm maintains or the running time of the algorithm, although all of the algorithms we present are quite efficient with respect to these factors.
+	\item {\textbf{Fixed-probe Model~\cite{anagnostopoulos_algorithms_2012} :}} The time is assumed to proceed in discrete steps, numbered by positive integers. At each time step t, the data is given by a (possibly weighted) graph $G_t$. The data is changing gradually, i.e., the graph $G_{t+1}$ is obtained from $G_t$ by a small random change.2 At each time step $t$, the algorithm is allowed to probe a small portion of the graph Gt, and then must output a solution for the problem under consideration. We would like this solution to be close to the  \emph{correct} solution for the graph $G_t$. In this paper we do not impose any constraint on the amount of memory the algorithm maintains or the running time of the algorithm, although all of the algorithms we present are quite efficient with respect to these factors.
 
 	\item {\textbf{Parametric optimization and kinetic problems~\cite{agarwal1998parametric} :}}In the parametric optimization model, the edge weights are known continuous functions of a real parameter $\lambda$ (often referred to as “time”), and the goal is to identify how the solution changes as $\lambda$ varies. A kinetic problem combines parametric optimizations and dynamic data structures for insertions and deletions. In such a problem, at the begin- ning a parametric problem of parameter $\lambda$ is given; as the time $\lambda$ progresses, the weight functions change and objects (e.g., edges) are inserted or deleted. The goal is to efficiently maintain the optimal solution at each point in time.
 
@@ -39,7 +39,11 @@ In this section we investigate the primitive operations that have been supported
 
 \subsubsection{Path Related Problems} 
 \label{sec:path-problems}
-
+\subsubsection {Reachability Problems}
+cite paper A Fully Dynamic Reachability Algorithm for Directed Graphs with an Almost Linear Update Time by Roddity,Zwick
+\subsubsection {Shortest Path Problems}
+cite paper On Dynamic Shortest Paths Problems
+Liam Roditty, Uri Zwick
 
 \subsubsection{Sub-graph Problems}
 \label{sec:subgraph-problems}
