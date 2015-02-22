@@ -1,0 +1,507 @@
+%----------------Matching------------------------%
+@inproceedings{kCores,
+ author = {Fountoulakis, N. and Khosla, M. and Panagiotou, K.},
+ title = {The Multiple-Orientability Thresholds for Random Hypergraphs},
+  booktitle = {Proceedings of the Twenty-Second Annual ACM-SIAM Symposium on Discrete Algorithms (SODA 2011)},
+ year = {2011},
+ pages = {1222--1236}
+} 
+@incollection{ballsbins,
+booktitle={Algorithms--ESA 2013},
+year={2013},
+volume={8125},
+series={Lecture Notes in Computer Science},
+title={Balls into Bins Made Faster},
+author={Khosla, M.},
+pages={601-612}
+}
+@inproceedings{boundsKap,
+  author    = {Michael Kapralov and
+               Sanjeev Khanna and
+               Madhu Sudan},
+  title     = {Streaming Lower Bounds for Approximating {MAX-CUT}},
+  booktitle = {Proceedings of the Twenty-Sixth Annual {ACM-SIAM} Symposium on Discrete
+               Algorithms, {SODA} 2015, San Diego, CA, USA, January 4-6, 2015},
+  pages     = {1263--1282},
+  year      = {2015}
+}
+@inproceedings{Goel,
+ author = {Goel, Ashish and Kapralov, Michael and Khanna, Sanjeev},
+ title = {On the Communication and Streaming Complexity of Maximum Bipartite Matching},
+ booktitle = {Proceedings of the Twenty-third Annual ACM-SIAM Symposium on Discrete Algorithms},
+ series = {SODA '12},
+ year = {2012},
+ location = {Kyoto, Japan},
+ pages = {468--485}
+} 
+%-------------------------------------------------%
+
+@inproceedings{agarwal1998parametric,
+  title={Parametric and kinetic minimum spanning trees},
+  author={Agarwal, Pankaj K and Eppstein, David and Guibas, Leonidas J and Henzinger, Monika Rauch},
+  booktitle={Foundations of Computer Science, 1998. Proceedings. 39th Annual Symposium on},
+  pages={596--605},
+  year={1998},
+  organization={IEEE}
+}
+
+@book{muthukrishnan2005data,
+  title={Data streams: Algorithms and applications},
+  author={Muthukrishnan, Shanmugavelayutham},
+  year={2005},
+  publisher={Now Publishers Inc}
+}
+
+@inproceedings{anagnostopoulos_algorithms_2012,
+	address = {New York, {NY}, {USA}},
+	series = {{ITCS} '12},
+	title = {Algorithms on Evolving Graphs},
+	isbn = {978-1-4503-1115-1},
+	url = {http://doi.acm.org/10.1145/2090236.2090249},
+	doi = {10.1145/2090236.2090249},
+	abstract = {Motivated by applications that concern graphs that are evolving and massive in nature, we define a new general framework for computing with such graphs. In our framework, the graph changes over time and an algorithm can only track these changes by explicitly probing the graph. This framework captures the inherent tradeoff between the complexity of maintaining an up-to-date view of the graph and the quality of results computed with the available view. We apply this framework to two classical graph connectivity problems, namely, path connectivity and minimum spanning trees, and obtain efficient algorithms.},
+	urldate = {2015-02-01},
+	booktitle = {Proceedings of the 3rd Innovations in Theoretical Computer Science Conference},
+	publisher = {{ACM}},
+	author = {Anagnostopoulos, Aris and Kumar, Ravi and Mahdian, Mohammad and Upfal, Eli and Vandin, Fabio},
+	year = {2012},
+	keywords = {algorithms, evolving graphs, minimum spanning tree, path connectivity},
+	pages = {149--160},
+	file = {ACM Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/2GQQG3GG/Anagnostopoulos et al. - 2012 - Algorithms on Evolving Graphs.pdf:application/pdf}
+}
+
+@inproceedings{bahmani_pagerank_2012,
+	address = {New York, {NY}, {USA}},
+	series = {{KDD} '12},
+	title = {{PageRank} on an Evolving Graph},
+	isbn = {978-1-4503-1462-6},
+	url = {http://doi.acm.org/10.1145/2339530.2339539},
+	doi = {10.1145/2339530.2339539},
+	abstract = {One of the most important features of the Web graph and social networks is that they are constantly evolving. The classical computational paradigm, which assumes a fixed data set as an input to an algorithm that terminates, is inadequate for such settings. In this paper we study the problem of computing {PageRank} on an evolving graph. We propose an algorithm that, at any moment in the time and by crawling a small portion of the graph, provides an estimate of the {PageRank} that is close to the true {PageRank} of the graph at that moment. We will also evaluate our algorithm experimentally on real data sets and on randomly generated inputs. Under a stylized model of graph evolution, we show that our algorithm achieves a provable performance guarantee that is significantly better than the naive algorithm that crawls the nodes in a round-robin fashion.},
+	urldate = {2015-02-01},
+	booktitle = {Proceedings of the 18th {ACM} {SIGKDD} International Conference on Knowledge Discovery and Data Mining},
+	publisher = {{ACM}},
+	author = {Bahmani, Bahman and Kumar, Ravi and Mahdian, Mohammad and Upfal, Eli},
+	year = {2012},
+	keywords = {dynamic graphs, pagerank, random walks},
+	pages = {24--32},
+	file = {ACM Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/XCTTR92X/Bahmani et al. - 2012 - PageRank on an Evolving Graph.pdf:application/pdf}
+}
+
+@inproceedings{berlingerio_mining_2009,
+	address = {Berlin, Heidelberg},
+	series = {{ECML} {PKDD} '09},
+	title = {Mining Graph Evolution Rules},
+	isbn = {978-3-642-04179-2},
+	url = {http://dx.doi.org/10.1007/978-3-642-04180-8_25},
+	doi = {10.1007/978-3-642-04180-8_25},
+	abstract = {In this paper we introduce {\textless}em{\textgreater}graph-evolution rules{\textless}/em{\textgreater} , a novel type of frequency-based pattern that describe the evolution of large networks over time, at a local level. Given a sequence of snapshots of an evolving graph, we aim at discovering rules describing the local changes occurring in it. Adopting a definition of support based on {\textless}em{\textgreater}minimum image{\textless}/em{\textgreater} we study the problem of extracting patterns whose frequency is larger than a minimum support threshold. Then, similar to the classical association rules framework, we derive graph-evolution rules from frequent patterns that satisfy a given minimum confidence constraint. We discuss merits and limits of alternative definitions of support and confidence, justifying the chosen framework. To evaluate our approach we devise {\textless}em{\textgreater}{GERM}{\textless}/em{\textgreater} (Graph Evolution Rule Miner), an algorithm to mine all graph-evolution rules whose support and confidence are greater than given thresholds. The algorithm is applied to analyze four large real-world networks (i.e., two social networks, and two co-authorship networks from bibliographic data), using different time granularities. Our extensive experimentation confirms the feasibility and utility of the presented approach. It further shows that different kinds of networks exhibit different evolution rules, suggesting the usage of these local patterns to globally discriminate different kind of networks.},
+	urldate = {2015-02-01},
+	booktitle = {Proceedings of the European Conference on Machine Learning and Knowledge Discovery in Databases: Part I},
+	publisher = {Springer-Verlag},
+	author = {Berlingerio, Michele and Bonchi, Francesco and Bringmann, Björn and Gionis, Aristides},
+	year = {2009},
+	pages = {115--130}
+}
+
+@inproceedings{bogdanov_mining_2011,
+	title = {Mining Heavy Subgraphs in Time-Evolving Networks},
+	doi = {10.1109/ICDM.2011.101},
+	abstract = {Networks from different genres are not static entities, but exhibit dynamic behavior. The congestion level of links in transportation networks varies in time depending on the traffic. Similarly, social and communication links are employed at varying rates as information cascades unfold. In recent years there has been an increase of interest in modeling and mining dynamic networks. However, limited attention has been placed in high-scoring sub graph discovery in time-evolving networks. We define the problem of finding the highest-scoring temporal sub graph in a dynamic network, termed Heaviest Dynamic Sub graph ({HDS}). We show that {HDS} is {NP}-hard even with edge weights in -1,1 and devise an efficient approach for large graph instances that evolve over long time periods. While a naive approach would enumerate all O(t2) sub-intervals, our solution performs an effective pruning of the sub-interval space by considering O(t·log(t)) groups of sub-intervals and computing an aggregate of each group in logarithmic time. We also define a fast heuristic and a tight upper bound for approximating the static version of {HDS}, and use them for further pruning the sub-interval space and quickly verifying candidate sub-intervals. We perform an extensive experimental evaluation of our algorithm on transportation, communication and social media networks for discovering sub graphs that correspond to traffic congestions, communication overflow and localized social discussions. Our method is two orders of magnitude faster than a naive approach and scales well with network size and time length.},
+	booktitle = {2011 {IEEE} 11th International Conference on Data Mining ({ICDM})},
+	author = {Bogdanov, P. and Mongiovi, M. and Singh, A.K.},
+	month = dec,
+	year = {2011},
+	keywords = {Approximation algorithms, Biology, Complexity theory, data mining, dynamic behavior, dynamic networks, graph discovery, graph theory, {HDS}, heaviest dynamic sub graph, heavy subgraph, mining heavy subgraphs, {NP}-hard problem, optimisation, pattern mining, social media networks, Steiner trees, time evolving networks, traffic congestions, transportation, transportation networks, Upper bound},
+	pages = {81--90},
+	file = {IEEE Xplore Abstract Record:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/MEMHWJNG/abs_all.html:text/html;IEEE Xplore Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/R5GMCMW2/Bogdanov et al. - 2011 - Mining Heavy Subgraphs in Time-Evolving Networks.pdf:application/pdf}
+}
+
+@article{chen_information_2013,
+	title = {Information and Influence Propagation in Social Networks},
+	volume = {5},
+	issn = {2153-5418},
+	url = {http://www.morganclaypool.com/doi/abs/10.2200/S00527ED1V01Y201308DTM037},
+	doi = {10.2200/S00527ED1V01Y201308DTM037},
+	number = {4},
+	urldate = {2015-02-01},
+	journal = {Synthesis Lectures on Data Management},
+	author = {Chen, Wei and Lakshmanan, Laks V.S. and Castillo, Carlos},
+	month = oct,
+	year = {2013},
+	pages = {1--177},
+	file = {Snapshot:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/KTKHI877/S00527ED1V01Y201308DTM037.html:text/html}
+}
+
+@article{cordella_improved_2001,
+	title = {An improved algorithm for matching large graphs},
+	url = {http://citeseer.uark.edu:8080/citeseerx/viewdoc/summary?doi=10.1.1.101.5342},
+	journal = {{IN}: 3RD {IAPR}-{TC}15 {WORKSHOP} {ON} {GRAPH}-{BASED} {REPRESENTATIONS} {IN} {PATTERN} {RECOGNITION}, {CUEN}},
+	author = {Cordella, L. P. and Foggia, P. and Sansone, C. and Vento, M.},
+	year = {2001},
+	pages = {149--159},
+	file = {CiteSeerX — An improved algorithm for matching large graphs:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/ZDBA95NE/summary.html:text/html}
+}
+
+@incollection{demetrescu_algorithms_2010,
+	title = {Algorithms and Theory of Computation Handbook},
+	isbn = {978-1-58488-822-2},
+	url = {http://dl.acm.org/citation.cfm?id=1882757.1882766},
+	urldate = {2015-02-01},
+	publisher = {Chapman \& Hall/{CRC}},
+	author = {Demetrescu, Camil and Eppstein, David and Galil, Zvi and Italiano, Giuseppe F.},
+	editor = {Atallah, Mikhail J. and Blanton, Marina},
+	year = {2010},
+	pages = {9--9},
+	file = {ACM Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/6RBIFJMS/Demetrescu et al. - 2010 - Algorithms and Theory of Computation Handbook.pdf:application/pdf}
+}
+
+@techreport{even_updating_1985,
+	address = {Chicago, {IL}, {USA}},
+	title = {Updating Distances in Dynamic Graphs},
+	institution = {University of Chicago},
+	author = {Even, Shimon and Gazit, Hillel},
+	year = {1985}
+}
+
+@inproceedings{faloutsos_large_2014,
+	address = {New York, {NY}, {USA}},
+	series = {{WWW} '14},
+	title = {Large Graph Mining: Patterns, Cascades, Fraud Detection, and Algorithms},
+	isbn = {978-1-4503-2744-2},
+	shorttitle = {Large Graph Mining},
+	url = {http://doi.acm.org/10.1145/2566486.2576889},
+	doi = {10.1145/2566486.2576889},
+	abstract = {Given a large graph, like who-calls-whom, or who-likes-whom, what behavior is normal and what should be surprising, possibly due to fraudulent activity? How do graphs evolve over time? How does influence/news/viruses propagate, over time? We focus on three topics: (a) anomaly detection in large static graphs (b) patterns and anomalies in large time-evolving graphs and (c) cascades and immunization. For the first, we present a list of static and temporal laws, including advances patterns like 'eigenspokes'; we show how to use them to spot suspicious activities, in on-line buyer-and-seller settings, in {FaceBook}, in twitter-like networks. For the second, we show how to handle time-evolving graphs as tensors, how to handle large tensors in map-reduce environments, as well as some discoveries such settings. For the third, we show that for virus propagation, a single number is enough to characterize the connectivity of graph, and thus we show how to do efficient immunization for almost any type of virus ({SIS} - no immunity; {SIR} - lifetime immunity; etc) We conclude with some open research questions for graph mining.},
+	urldate = {2015-02-01},
+	booktitle = {Proceedings of the 23rd International Conference on World Wide Web},
+	publisher = {{ACM}},
+	author = {Faloutsos, Christos},
+	year = {2014},
+	keywords = {cascades, fraud detection, large graph mining, patterns},
+	pages = {1--2},
+	file = {ACM Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/NBHQB458/Faloutsos - 2014 - Large Graph Mining Patterns, Cascades, Fraud Dete.pdf:application/pdf}
+}
+
+@article{fan_incremental_2013,
+	title = {Incremental Graph Pattern Matching},
+	volume = {38},
+	issn = {0362-5915},
+	url = {http://doi.acm.org/10.1145/2489791},
+	doi = {10.1145/2489791},
+	abstract = {Graph pattern matching is commonly used in a variety of emerging applications such as social network analysis. These applications highlight the need for studying the following two issues. First, graph pattern matching is traditionally defined in terms of subgraph isomorphism or graph simulation. These notions, however, often impose too strong a topological constraint on graphs to identify meaningful matches. Second, in practice a graph is typically large, and is frequently updated with small changes. It is often prohibitively expensive to recompute matches starting from scratch via batch algorithms when the graph is updated. This article studies these two issues. (1) We propose to define graph pattern matching based on a notion of bounded simulation, which extends graph simulation by specifying the connectivity of nodes in a graph within a predefined number of hops. We show that bounded simulation is able to find sensible matches that the traditional matching notions fail to catch. We also show that matching via bounded simulation is in cubic time, by giving such an algorithm. (2) We provide an account of results on incremental graph pattern matching, for matching defined with graph simulation, bounded simulation, and subgraph isomorphism. We show that the incremental matching problem is unbounded, that is, its cost is not determined alone by the size of the changes in the input and output, for all these matching notions. Nonetheless, when matching is defined in terms of simulation or bounded simulation, incremental matching is semibounded, that is, its worst-time complexity is bounded by a polynomial in the size of the changes in the input, output, and auxiliary information that is necessarily maintained to reuse previous computation, and the size of graph patterns. We also develop incremental matching algorithms for graph simulation and bounded simulation, by minimizing unnecessary recomputation. In contrast, matching based on subgraph isomorphism is neither bounded nor semibounded. (3) We experimentally verify the effectiveness and efficiency of these algorithms, and show that: (a) the revised notion of graph pattern matching allows us to identify communities commonly found in real-life networks, and (b) the incremental algorithms substantially outperform their batch counterparts in response to small changes. These suggest a promising framework for real-life graph pattern matching.},
+	number = {3},
+	urldate = {2015-02-01},
+	journal = {{ACM} Trans. Database Syst.},
+	author = {Fan, Wenfei and Wang, Xin and Wu, Yinghui},
+	month = sep,
+	year = {2013},
+	keywords = {Graph pattern matching, graph simulation, incremental pattern matching, subgraph isomorphism},
+	pages = {18:1--18:47},
+	file = {ACM Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/T8EE8N3J/Fan et al. - 2013 - Incremental Graph Pattern Matching.pdf:application/pdf}
+}
+
+@inproceedings{he_graphs-at--time:_2008,
+	address = {New York, {NY}, {USA}},
+	series = {{SIGMOD} '08},
+	title = {Graphs-at-a-time: Query Language and Access Methods for Graph Databases},
+	isbn = {978-1-60558-102-6},
+	shorttitle = {Graphs-at-a-time},
+	url = {http://doi.acm.org/10.1145/1376616.1376660},
+	doi = {10.1145/1376616.1376660},
+	abstract = {With the prevalence of graph data in a variety of domains, there is an increasing need for a language to query and manipulate graphs with heterogeneous attributes and structures. We propose a query language for graph databases that supports arbitrary attributes on nodes, edges, and graphs. In this language, graphs are the basic unit of information and each query manipulates one or more collections of graphs. To allow for flexible compositions of graph structures, we extend the notion of formal languages from strings to the graph domain. We present a graph algebra extended from the relational algebra in which the selection operator is generalized to graph pattern matching and a composition operator is introduced for rewriting matched graphs. Then, we investigate access methods of the selection operator. Pattern matching over large graphs is challenging due to the {NP}-completeness of subgraph isomorphism. We address this by a combination of techniques: use of neighborhood subgraphs and profiles, joint reduction of the search space, and optimization of the search order. Experimental results on real and synthetic large graphs demonstrate that our graph specific optimizations outperform an {SQL}-based implementation by orders of magnitude.},
+	urldate = {2015-02-01},
+	booktitle = {Proceedings of the 2008 {ACM} {SIGMOD} International Conference on Management of Data},
+	publisher = {{ACM}},
+	author = {He, Huahai and Singh, Ambuj K.},
+	year = {2008},
+	keywords = {graph algebra, graph query language, query optimization},
+	pages = {405--418},
+	file = {ACM Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/VBSK4DJN/He and Singh - 2008 - Graphs-at-a-time Query Language and Access Method.pdf:application/pdf}
+}
+
+@inproceedings{khayyat_mizan:_2013,
+	address = {New York, {NY}, {USA}},
+	series = {{EuroSys} '13},
+	title = {Mizan: A System for Dynamic Load Balancing in Large-scale Graph Processing},
+	isbn = {978-1-4503-1994-2},
+	shorttitle = {Mizan},
+	url = {http://doi.acm.org/10.1145/2465351.2465369},
+	doi = {10.1145/2465351.2465369},
+	abstract = {Pregel [23] was recently introduced as a scalable graph mining system that can provide significant performance improvements over traditional {MapReduce} implementations. Existing implementations focus primarily on graph partitioning as a preprocessing step to balance computation across compute nodes. In this paper, we examine the runtime characteristics of a Pregel system. We show that graph partitioning alone is insufficient for minimizing end-to-end computation. Especially where data is very large or the runtime behavior of the algorithm is unknown, an adaptive approach is needed. To this end, we introduce Mizan, a Pregel system that achieves efficient load balancing to better adapt to changes in computing needs. Unlike known implementations of Pregel, Mizan does not assume any a priori knowledge of the structure of the graph or behavior of the algorithm. Instead, it monitors the runtime characteristics of the system. Mizan then performs efficient fine-grained vertex migration to balance computation and communication. We have fully implemented Mizan; using extensive evaluation we show that---especially for highly-dynamic workloads---Mizan provides up to 84\% improvement over techniques leveraging static graph pre-partitioning.},
+	urldate = {2015-02-01},
+	booktitle = {Proceedings of the 8th {ACM} European Conference on Computer Systems},
+	publisher = {{ACM}},
+	author = {Khayyat, Zuhair and Awara, Karim and Alonazi, Amani and Jamjoom, Hani and Williams, Dan and Kalnis, Panos},
+	year = {2013},
+	pages = {169--182},
+	file = {ACM Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/FFP2AEFS/Khayyat et al. - 2013 - Mizan A System for Dynamic Load Balancing in Larg.pdf:application/pdf}
+}
+
+@inproceedings{khurana_efficient_2013,
+	title = {Efficient snapshot retrieval over historical graph data},
+	doi = {10.1109/ICDE.2013.6544892},
+	abstract = {We present a distributed graph database system to manage historical data for large evolving information networks, with the goal to enable temporal and evolutionary queries and analysis. The cornerstone of our system is a novel, user-extensible, highly tunable, and distributed hierarchical index structure called {DeltaGraph}, that enables compact recording of the historical network information, and that supports efficient retrieval of historical graph snapshots for single-site or parallel processing. Our system exposes a general programmatic {API} to process and analyze the retrieved snapshots. Along with the original graph data, {DeltaGraph} can also maintain and index auxiliary information; this functionality can be used to extend the structure to efficiently execute queries like subgraph pattern matching over historical data. We develop analytical models for both the storage space needed and the snapshot retrieval times to aid in choosing the right construction parameters for a specific scenario. We also present an in-memory graph data structure called {GraphPool} that can maintain hundreds of historical graph instances in main memory in a non-redundant manner. We present a comprehensive experimental evaluation that illustrates the effectiveness of our proposed techniques at managing historical graph information.},
+	booktitle = {2013 {IEEE} 29th International Conference on Data Engineering ({ICDE})},
+	author = {Khurana, U. and Deshpande, A.},
+	month = apr,
+	year = {2013},
+	keywords = {analytical models, application program interfaces, comprehensive experimental evaluation, Data models, data structures, {DeltaGraph}, distributed databases, distributed graph database system, distributed hierarchical index structure, evolutionary analysis, evolutionary queries, general programmatic {API}, {GraphPool}, historical data management, historical graph data, historical graph information management, historical graph snapshots, historical network information, Indexes, information networks, in-memory graph data structure, Memory management, parallel processing, Pattern matching, query processing, single-site processing, snapshot retrieval, storage space, subgraph pattern matching, temporal queries},
+	pages = {997--1008},
+	file = {IEEE Xplore Abstract Record:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/C5V6NTS8/abs_all.html:text/html;IEEE Xplore Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/66JK7RMZ/Khurana and Deshpande - 2013 - Efficient snapshot retrieval over historical graph.pdf:application/pdf}
+}
+
+@article{leicht_large-scale_2007,
+	title = {Large-scale structure of time evolving citation networks},
+	volume = {59},
+	issn = {1434-6028, 1434-6036},
+	url = {http://link.springer.com/article/10.1140/epjb/e2007-00271-7},
+	doi = {10.1140/epjb/e2007-00271-7},
+	abstract = {In this paper we examine a number of methods for probing and understanding the large-scale structure of networks that evolve over time. We focus in particular on citation networks, networks of references between documents such as papers, patents, or court cases. We describe three different methods of analysis, one based on an expectation-maximization algorithm, one based on modularity optimization, and one based on eigenvector centrality. Using the network of citations between opinions of the United States Supreme Court as an example, we demonstrate how each of these methods can reveal significant structural divisions in the network and how, ultimately, the combination of all three can help us develop a coherent overall picture of the network's shape.},
+	language = {en},
+	number = {1},
+	urldate = {2015-02-01},
+	journal = {The European Physical Journal B},
+	author = {Leicht, E. A. and Clarkson, G. and Shedden, K. and Newman, M. E. J.},
+	month = oct,
+	year = {2007},
+	keywords = {89.70.+c Information theory and communication theory, 89.75.Fb Structures and organization in complex systems, 89.75.Hc Networks and genealogical trees, Complexity, Condensed Matter, Fluids, Physics, general, Solid State Physics and Spectroscopy, Superconductivity, Superfluidity, Quantum Fluids},
+	pages = {75--83},
+	file = {Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/GFVN53VZ/Leicht et al. - 2007 - Large-scale structure of time evolving citation ne.pdf:application/pdf;Snapshot:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/5N889SV6/10.html:text/html}
+}
+
+@article{leskovec_graph_2007,
+	title = {Graph Evolution: Densification and Shrinking Diameters},
+	volume = {1},
+	issn = {1556-4681},
+	shorttitle = {Graph Evolution},
+	url = {http://doi.acm.org/10.1145/1217299.1217301},
+	doi = {10.1145/1217299.1217301},
+	abstract = {How do real graphs evolve over time? What are normal growth patterns in social, technological, and information networks? Many studies have discovered patterns in static graphs, identifying properties in a single snapshot of a large network or in a very small number of snapshots; these include heavy tails for in- and out-degree distributions, communities, small-world phenomena, and others. However, given the lack of information about network evolution over long periods, it has been hard to convert these findings into statements about trends over time. Here we study a wide range of real graphs, and we observe some surprising phenomena. First, most of these graphs densify over time with the number of edges growing superlinearly in the number of nodes. Second, the average distance between nodes often shrinks over time in contrast to the conventional wisdom that such distance parameters should increase slowly as a function of the number of nodes (like O(log n) or O(log(log n)). Existing graph generation models do not exhibit these types of behavior even at a qualitative level. We provide a new graph generator, based on a forest fire spreading process that has a simple, intuitive justification, requires very few parameters (like the flammability of nodes), and produces graphs exhibiting the full range of properties observed both in prior work and in the present study. We also notice that the forest fire model exhibits a sharp transition between sparse graphs and graphs that are densifying. Graphs with decreasing distance between the nodes are generated around this transition point. Last, we analyze the connection between the temporal evolution of the degree distribution and densification of a graph. We find that the two are fundamentally related. We also observe that real networks exhibit this type of relation between densification and the degree distribution.},
+	number = {1},
+	urldate = {2015-02-01},
+	journal = {{ACM} Trans. Knowl. Discov. Data},
+	author = {Leskovec, Jure and Kleinberg, Jon and Faloutsos, Christos},
+	month = mar,
+	year = {2007},
+	keywords = {Densification power laws, graph generators, graph mining, heavy-tailed distributions, small-world phenomena},
+	file = {ACM Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/IJW7KDBB/Leskovec et al. - 2007 - Graph Evolution Densification and Shrinking Diame.pdf:application/pdf}
+}
+
+@inproceedings{liu_compressing_2012,
+	address = {New York, {NY}, {USA}},
+	series = {{CIKM} '12},
+	title = {On Compressing Weighted Time-evolving Graphs},
+	isbn = {978-1-4503-1156-4},
+	url = {http://doi.acm.org/10.1145/2396761.2398630},
+	doi = {10.1145/2396761.2398630},
+	abstract = {Existing graph compression techniquesmostly focus on static graphs. However for many practical graphs such as social networks the edge weights frequently change over time. This phenomenon raises the question of how to compress dynamic graphs while maintaining most of their intrinsic structural patterns at each time snapshot. In this paper we show that the encoding cost of a dynamic graph is proportional to the heterogeneity of a three dimensional tensor that represents the dynamic graph. We propose an effective algorithm that compresses a dynamic graph by reducing the heterogeneity of its tensor representation, and at the same time also maintains a maximum lossy compression error at any time stamp of the dynamic graph. The bounded compression error benefits compressed graphs in that they retain good approximations of the original edge weights, and hence properties of the original graph (such as shortest paths) are well preserved. To the best of our knowledge, this is the first work that compresses weighted dynamic graphs with bounded lossy compression error at any time snapshot of the graph.},
+	urldate = {2015-02-01},
+	booktitle = {Proceedings of the 21st {ACM} International Conference on Information and Knowledge Management},
+	publisher = {{ACM}},
+	author = {Liu, Wei and Kan, Andrey and Chan, Jeffrey and Bailey, James and Leckie, Christopher and Pei, Jian and Kotagiri, Ramamohanarao},
+	year = {2012},
+	keywords = {dynamic graphs, graph compression, graph mining.},
+	pages = {2319--2322},
+	file = {ACM Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/JACPEJQV/Liu et al. - 2012 - On Compressing Weighted Time-evolving Graphs.pdf:application/pdf}
+}
+
+@inproceedings{liu_spotting_2008,
+	title = {Spotting Significant Changing Subgraphs in Evolving Graphs},
+	doi = {10.1109/ICDM.2008.112},
+	abstract = {Graphs are popularly used to model structural relationships between objects. In many application domains such as social networks, sensor networks and telecommunication, graphs evolve over time. In this paper, we study a new problem of discovering the subgraphs that exhibit significant changes in evolving graphs. This problem is challenging since it is hard to define changing regions that are closely related to the actual changes (i.e., additions/deletions of edges/nodes) in graphs. We formalize the problem, and design an efficient algorithm that is able to identify the changing subgraphs incrementally. Our experimental results on real datasets show that our solution is very efficient and the resultant subgraphs are of high quality.},
+	booktitle = {Eighth {IEEE} International Conference on Data Mining, 2008. {ICDM} '08},
+	author = {Liu, Zheng and Yu, J.X. and Ke, Yiping and Lin, Xuemin and Chen, Lei},
+	month = dec,
+	year = {2008},
+	keywords = {Algorithm design and analysis, Bioinformatics, changing subgraphs, Collaborative work, data mining, evolving graphs, graphs, graph theory, Pattern analysis, query processing, Routing, sensor networks, social networks, Social network services, Telecommunication traffic, Wireless sensor networks},
+	pages = {917--922},
+	file = {IEEE Xplore Abstract Record:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/WGP9PRGH/abs_all.html:text/html;IEEE Xplore Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/6PK2AZ57/Liu et al. - 2008 - Spotting Significant Changing Subgraphs in Evolvin.pdf:application/pdf}
+}
+
+@article{low_distributed_2012,
+	title = {Distributed {GraphLab}: A Framework for Machine Learning and Data Mining in the Cloud},
+	volume = {5},
+	issn = {2150-8097},
+	shorttitle = {Distributed {GraphLab}},
+	url = {http://dx.doi.org/10.14778/2212351.2212354},
+	doi = {10.14778/2212351.2212354},
+	abstract = {While high-level data parallel frameworks, like {MapReduce}, simplify the design and implementation of large-scale data processing systems, they do not naturally or efficiently support many important data mining and machine learning algorithms and can lead to inefficient learning systems. To help fill this critical void, we introduced the {GraphLab} abstraction which naturally expresses asynchronous, dynamic, graph-parallel computation while ensuring data consistency and achieving a high degree of parallel performance in the shared-memory setting. In this paper, we extend the {GraphLab} framework to the substantially more challenging distributed setting while preserving strong data consistency guarantees. We develop graph based extensions to pipelined locking and data versioning to reduce network congestion and mitigate the effect of network latency. We also introduce fault tolerance to the {GraphLab} abstraction using the classic Chandy-Lamport snapshot algorithm and demonstrate how it can be easily implemented by exploiting the {GraphLab} abstraction itself. Finally, we evaluate our distributed implementation of the {GraphLab} abstraction on a large Amazon {EC}2 deployment and show 1-2 orders of magnitude performance gains over Hadoop-based implementations.},
+	number = {8},
+	urldate = {2015-02-01},
+	journal = {Proc. {VLDB} Endow.},
+	author = {Low, Yucheng and Bickson, Danny and Gonzalez, Joseph and Guestrin, Carlos and Kyrola, Aapo and Hellerstein, Joseph M.},
+	month = apr,
+	year = {2012},
+	pages = {716--727},
+	file = {ACM Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/9DQRA6XI/Low et al. - 2012 - Distributed GraphLab A Framework for Machine Lear.pdf:application/pdf}
+}
+
+@inproceedings{malewicz_pregel:_2010,
+	address = {New York, {NY}, {USA}},
+	series = {{SIGMOD} '10},
+	title = {Pregel: A System for Large-scale Graph Processing},
+	isbn = {978-1-4503-0032-2},
+	shorttitle = {Pregel},
+	url = {http://doi.acm.org/10.1145/1807167.1807184},
+	doi = {10.1145/1807167.1807184},
+	abstract = {Many practical computing problems concern large graphs. Standard examples include the Web graph and various social networks. The scale of these graphs - in some cases billions of vertices, trillions of edges - poses challenges to their efficient processing. In this paper we present a computational model suitable for this task. Programs are expressed as a sequence of iterations, in each of which a vertex can receive messages sent in the previous iteration, send messages to other vertices, and modify its own state and that of its outgoing edges or mutate graph topology. This vertex-centric approach is flexible enough to express a broad set of algorithms. The model has been designed for efficient, scalable and fault-tolerant implementation on clusters of thousands of commodity computers, and its implied synchronicity makes reasoning about programs easier. Distribution-related details are hidden behind an abstract {API}. The result is a framework for processing large graphs that is expressive and easy to program.},
+	urldate = {2015-02-01},
+	booktitle = {Proceedings of the 2010 {ACM} {SIGMOD} International Conference on Management of Data},
+	publisher = {{ACM}},
+	author = {Malewicz, Grzegorz and Austern, Matthew H. and Bik, Aart J.C and Dehnert, James C. and Horn, Ilan and Leiser, Naty and Czajkowski, Grzegorz},
+	year = {2010},
+	keywords = {distributed computing, graph algorigthms},
+	pages = {135--146},
+	file = {ACM Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/4QNWE7IG/Malewicz et al. - 2010 - Pregel A System for Large-scale Graph Processing.pdf:application/pdf}
+}
+
+@inproceedings{mondal_managing_2012,
+	address = {New York, {NY}, {USA}},
+	series = {{SIGMOD} '12},
+	title = {Managing Large Dynamic Graphs Efficiently},
+	isbn = {978-1-4503-1247-9},
+	url = {http://doi.acm.org/10.1145/2213836.2213854},
+	doi = {10.1145/2213836.2213854},
+	abstract = {There is an increasing need to ingest, manage, and query large volumes of graph-structured data arising in applications like social networks, communication networks, biological networks, and so on. Graph databases that can explicitly reason about the graphical nature of the data, that can support flexible schemas and node-centric or edge-centric analysis and querying, are ideal for storing such data. However, although there is much work on single-site graph databases and on efficiently executing different types of queries over large graphs, to date there is little work on understanding the challenges in distributed graph databases, needed to handle the large scale of such data. In this paper, we propose the design of an in-memory, distributed graph data management system aimed at managing a large-scale dynamically changing graph, and supporting low-latency query processing over it. The key challenge in a distributed graph database is that, partitioning a graph across a set of machines inherently results in a large number of distributed traversals across partitions to answer even simple queries. We propose aggressive replication of the nodes in the graph for supporting low-latency querying, and investigate three novel techniques to minimize the communication bandwidth and the storage requirements. First, we develop a hybrid replication policy that monitors node read-write frequencies to dynamically decide what data to replicate, and whether to do eager or lazy replication. Second, we propose a clustering-based approach to amortize the costs of making these replication decisions. Finally, we propose using a fairness criterion to dictate how replication decisions should be made. We provide both theoretical analysis and efficient algorithms for the optimization problems that arise. We have implemented our framework as a middleware on top of the open-source {CouchDB} key-value store. We evaluate our system on a social graph, and show that our system is able to handle very large graphs efficiently, and that it reduces the network bandwidth consumption significantly.},
+	urldate = {2015-01-31},
+	booktitle = {Proceedings of the 2012 {ACM} {SIGMOD} International Conference on Management of Data},
+	publisher = {{ACM}},
+	author = {Mondal, Jayanta and Deshpande, Amol},
+	year = {2012},
+	keywords = {feed delivery, graph databases, replication, social networks},
+	pages = {145--156}
+}
+
+@article{ron_algorithmic_2010,
+	title = {Algorithmic and Analysis Techniques in Property Testing},
+	volume = {5},
+	issn = {1551-305X},
+	url = {http://dx.doi.org/10.1561/0400000029},
+	doi = {10.1561/0400000029},
+	abstract = {Property testing algorithms are "ultra"-efficient algorithms that decide whether a given object (e.g., a graph) has a certain property (e.g., bipartiteness), or is significantly different from any object that has the property. To this end property testing algorithms are given the ability to perform (local) queries to the input, though the decision they need to make usually concerns properties with a global nature. In the last two decades, property testing algorithms have been designed for many types of objects and properties, amongst them, graph properties, algebraic properties, geometric properties, and more. In this monograph we survey results in property testing, where our emphasis is on common analysis and algorithmic techniques. Among the techniques surveyed are the following: The self-correcting approach, which was mainly applied in the study of property testing of algebraic properties; The enforce-and-test approach, which was applied quite extensively in the analysis of algorithms for testing graph properties (in the dense-graphs model), as well as in other contexts; Szemerédi's Regularity Lemma, which plays a very important role in the analysis of algorithms for testing graph properties (in the dense-graphs model); The approach of Testing by implicit learning, which implies efficient testability of membership in many functions classes; and Algorithmic techniques for testing properties of sparse graphs, which include local search and random walks.},
+	number = {2},
+	urldate = {2015-02-01},
+	journal = {Found. Trends Theor. Comput. Sci.},
+	author = {Ron, Dana},
+	month = feb,
+	year = {2010},
+	pages = {73--205}
+}
+
+@inproceedings{rossi_modeling_2013,
+	address = {New York, {NY}, {USA}},
+	series = {{WSDM} '13},
+	title = {Modeling Dynamic Behavior in Large Evolving Graphs},
+	isbn = {978-1-4503-1869-3},
+	url = {http://doi.acm.org/10.1145/2433396.2433479},
+	doi = {10.1145/2433396.2433479},
+	abstract = {Given a large time-evolving graph, how can we model and characterize the temporal behaviors of individual nodes (and network states)? How can we model the behavioral transition patterns of nodes? We propose a temporal behavior model that captures the "roles" of nodes in the graph and how they evolve over time. The proposed dynamic behavioral mixed-membership model ({DBMM}) is scalable, fully automatic (no user-defined parameters), non-parametric/data-driven (no specific functional form or parameterization), interpretable (identifies explainable patterns), and flexible (applicable to dynamic and streaming networks). Moreover, the interpretable behavioral roles are generalizable and computationally efficient. We applied our model for (a) identifying patterns and trends of nodes and network states based on the temporal behavior, (b) predicting future structural changes, and (c) detecting unusual temporal behavior transitions. The experiments demonstrate the scalability, flexibility, and effectiveness of our model for identifying interesting patterns, detecting unusual structural transitions, and predicting the future structural changes of the network and individual nodes.},
+	urldate = {2015-02-01},
+	booktitle = {Proceedings of the Sixth {ACM} International Conference on Web Search and Data Mining},
+	publisher = {{ACM}},
+	author = {Rossi, Ryan A. and Gallagher, Brian and Neville, Jennifer and Henderson, Keith},
+	year = {2013},
+	keywords = {dynamic mixed-membership models, dynamic network analysis, dynamic roles, graph mining, scalable models},
+	pages = {667--676},
+	file = {ACM Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/IJBSMQA6/Rossi et al. - 2013 - Modeling Dynamic Behavior in Large Evolving Graphs.pdf:application/pdf}
+}
+
+@article{seo_distributed_2013,
+	title = {Distributed Socialite: A Datalog-based Language for Large-scale Graph Analysis},
+	volume = {6},
+	issn = {2150-8097},
+	shorttitle = {Distributed Socialite},
+	url = {http://dx.doi.org/10.14778/2556549.2556572},
+	doi = {10.14778/2556549.2556572},
+	abstract = {Large-scale graph analysis is becoming important with the rise of world-wide social network services. Recently in {SociaLite}, we proposed extensions to Datalog to efficiently and succinctly implement graph analysis programs on sequential machines. This paper describes novel extensions and optimizations of {SociaLite} for parallel and distributed executions to support large-scale graph analysis. With distributed {SociaLite}, programmers simply annotate how data are to be distributed, then the necessary communication is automatically inferred to generate parallel code for cluster of multi-core machines. It optimizes the evaluation of recursive monotone aggregate functions using a delta stepping technique. In addition, approximate computation is supported in {SociaLite}, allowing programmers to trade off accuracy for less time and space. We evaluated {SociaLite} with six core graph algorithms used in many social network analyses. Our experiment with 64 Amazon {EC}2 8-core instances shows that {SociaLite} programs performed within a factor of two with respect to ideal weak scaling. Compared to optimized Giraph, an open-source alternative of Pregel, {SociaLite} programs are 4 to 12 times faster across benchmark algorithms, and 22 times more succinct on average. As a declarative query language, {SociaLite}, with the help of a compiler that generates efficient parallel and approximate code, can be used easily to create many social apps that operate on large-scale distributed graphs.},
+	number = {14},
+	urldate = {2015-02-01},
+	journal = {Proc. {VLDB} Endow.},
+	author = {Seo, Jiwon and Park, Jongsoo and Shin, Jaeho and Lam, Monica S.},
+	month = sep,
+	year = {2013},
+	pages = {1906--1917},
+	file = {ACM Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/PG9P7FEJ/Seo et al. - 2013 - Distributed Socialite A Datalog-based Language fo.pdf:application/pdf}
+}
+
+@inproceedings{sricharan_localizing_2014,
+	address = {New York, {NY}, {USA}},
+	series = {{SIGMOD} '14},
+	title = {Localizing Anomalous Changes in Time-evolving Graphs},
+	isbn = {978-1-4503-2376-5},
+	url = {http://doi.acm.org/10.1145/2588555.2612184},
+	doi = {10.1145/2588555.2612184},
+	abstract = {Given a time-evolving sequence of undirected, weighted graphs, we address the problem of localizing anomalous changes in graph structure over time. In this paper, we use the term `localization' to refer to the problem of identifying abnormal changes in node relationships (edges) that cause anomalous changes in graph structure. While there already exist several methods that can detect whether a graph transition is anomalous or not, these methods are not well suited for localizing the edges which are responsible for a transition being marked as an anomaly. This is a limitation in applications such as insider threat detection, where identifying the anomalous graph transitions is not sufficient, but rather, identifying the anomalous node relationships and associated nodes is key. To this end, we propose a novel, fast method based on commute time distance called {CAD} (Commute-time based Anomaly detection in Dynamic graphs) that detects node relationships responsible for abnormal changes in graph structure. In particular, {CAD} localizes anomalous edges by tracking a measure that combines information regarding changes in graph structure (in terms of commute time distance) as well as changes in edge weights. For large, sparse graphs, {CAD} returns a list of these anomalous edges and associated nodes in O(n{\textbackslash}log n) time per graph instance in the sequence, where \$n\$ is the number of nodes. We analyze the performance of {CAD} on several synthetic and real-world data sets such as the Enron email network, the {DBLP} co-authorship network and a worldwide precipitation network data. Based on experiments conducted, we conclude that {CAD} consistently and efficiently identifies anomalous changes in relationships between nodes over time.},
+	urldate = {2015-02-01},
+	booktitle = {Proceedings of the 2014 {ACM} {SIGMOD} International Conference on Management of Data},
+	publisher = {{ACM}},
+	author = {Sricharan, Kumar and Das, Kamalika},
+	year = {2014},
+	keywords = {anomaly detection, anomaly localization, commute time distance, dynamic graph analysis, random walks, temporal graphs},
+	pages = {1347--1358},
+	file = {ACM Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/EC3ENZ6K/Sricharan and Das - 2014 - Localizing Anomalous Changes in Time-evolving Grap.pdf:application/pdf}
+}
+
+@inproceedings{sun_graphscope:_2007,
+	address = {New York, {NY}, {USA}},
+	series = {{KDD} '07},
+	title = {{GraphScope}: Parameter-free Mining of Large Time-evolving Graphs},
+	isbn = {978-1-59593-609-7},
+	shorttitle = {{GraphScope}},
+	url = {http://doi.acm.org/10.1145/1281192.1281266},
+	doi = {10.1145/1281192.1281266},
+	abstract = {How can we find communities in dynamic networks of socialinteractions, such as who calls whom, who emails whom, or who sells to whom? How can we spot discontinuity time-points in such streams of graphs, in an on-line, any-time fashion? We propose {GraphScope}, that addresses both problems, using information theoretic principles. Contrary to the majority of earlier methods, it needs no user-defined parameters. Moreover, it is designed to operate on large graphs, in a streaming fashion. We demonstrate the efficiency and effectiveness of our {GraphScope} on real datasets from several diverse domains. In all cases it produces meaningful time-evolving patterns that agree with human intuition.},
+	urldate = {2015-01-30},
+	booktitle = {Proceedings of the 13th {ACM} {SIGKDD} International Conference on Knowledge Discovery and Data Mining},
+	publisher = {{ACM}},
+	author = {Sun, Jimeng and Faloutsos, Christos and Papadimitriou, Spiros and Yu, Philip S.},
+	year = {2007},
+	keywords = {graphs, {MDL}, mining, streams},
+	pages = {687--696},
+	file = {ACM Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/3X5WGGQ8/Sun et al. - 2007 - GraphScope Parameter-free Mining of Large Time-ev.pdf:application/pdf}
+}
+
+@inproceedings{sun_beyond_2006,
+	address = {New York, {NY}, {USA}},
+	series = {{KDD} '06},
+	title = {Beyond Streams and Graphs: Dynamic Tensor Analysis},
+	isbn = {1-59593-339-5},
+	shorttitle = {Beyond Streams and Graphs},
+	url = {http://doi.acm.org/10.1145/1150402.1150445},
+	doi = {10.1145/1150402.1150445},
+	abstract = {How do we find patterns in author-keyword associations, evolving over time? Or in Data Cubes, with product-branch-customer sales information? Matrix decompositions, like principal component analysis ({PCA}) and variants, are invaluable tools for mining, dimensionality reduction, feature selection, rule identification in numerous settings like streaming data, text, graphs, social networks and many more. However, they have only two orders, like author and keyword, in the above example.We propose to envision such higher order data as tensors,and tap the vast literature on the topic. However, these methods do not necessarily scale up, let alone operate on semi-infinite streams. Thus, we introduce the dynamic tensor analysis ({DTA}) method, and its variants. {DTA} provides a compact summary for high-order and high-dimensional data, and it also reveals the hidden correlations. Algorithmically, we designed {DTA} very carefully so that it is (a) scalable, (b) space efficient (it does not need to store the past) and (c) fully automatic with no need for user defined parameters. Moreover, we propose {STA}, a streaming tensor analysis method, which provides a fast, streaming approximation to {DTA}.We implemented all our methods, and applied them in two real settings, namely, anomaly detection and multi-way latent semantic indexing. We used two real, large datasets, one on network flow data (100GB over 1 month) and one from {DBLP} (200MB over 25 years). Our experiments show that our methods are fast, accurate and that they find interesting patterns and outliers on the real datasets.},
+	urldate = {2015-02-01},
+	booktitle = {Proceedings of the 12th {ACM} {SIGKDD} International Conference on Knowledge Discovery and Data Mining},
+	publisher = {{ACM}},
+	author = {Sun, Jimeng and Tao, Dacheng and Faloutsos, Christos},
+	year = {2006},
+	pages = {374--383},
+	file = {ACM Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/9AJ6MIQS/Sun et al. - 2006 - Beyond Streams and Graphs Dynamic Tensor Analysis.pdf:application/pdf}
+}
+
+@article{wood_query_2012,
+	title = {Query Languages for Graph Databases},
+	volume = {41},
+	issn = {0163-5808},
+	url = {http://doi.acm.org/10.1145/2206869.2206879},
+	doi = {10.1145/2206869.2206879},
+	abstract = {Query languages for graph databases started to be investigated some 25 years ago. With much current data, such as linked data on the Web and social network data, being graph-structured, there has been a recent resurgence in interest in graph query languages. We provide a brief survey of many of the graph query languages that have been proposed, focussing on the core functionality provided in these languages. We also consider issues such as expressive power and the computational complexity of query evaluation.},
+	number = {1},
+	urldate = {2015-02-01},
+	journal = {{SIGMOD} Rec.},
+	author = {Wood, Peter T.},
+	month = apr,
+	year = {2012},
+	pages = {50--60},
+	file = {ACM Full Text PDF:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/SM2I993I/Wood - 2012 - Query Languages for Graph Databases.pdf:application/pdf}
+}
+
+@misc{_graph_????,
+	title = {Graph data management},
+	url = {http://wp.sigmod.org/?p=1497},
+	abstract = {Graph data management has seen a resurgence in recent years, because of an increasing realization that querying and reasoning about the structure of the interconnections between entities can lead to interesting and deep insights into a variety of phenomena. The application domains where graph or network analytics are regularly applied include social media, finance, communication networks, biological networks, and many others. Despite much work on the topic, graph data management is still a nascent topic with many open questions. At the same time, I feel that the research in the database community is fragmented and somewhat disconnected from application domains, and many important questions are not being investigated in our community. This blog post is an attempt to summarize some of my thoughts on this topic,  and what exciting and important research problems I think are still open.  At its simplest, graph data management is about managing, querying, and analyzing},
+	urldate = {2015-01-30},
+	journal = {{ACM} {SIGMOD} Blog},
+	file = {Snapshot:/Users/avishekanand/Library/Application Support/Zotero/Profiles/m7xry2vl.default/zotero/storage/HE37PDV2/wp.sigmod.org.html:text/html}
+}
