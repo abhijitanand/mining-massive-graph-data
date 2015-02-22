@@ -55,7 +55,75 @@ for example :
 
 
 \subsubsection {k cores }
-\subsubsection {Matching in a Dynamic Streaming Model}
+A bipartite graph can been seen as a hypergraph. 
+In \cite{kCores} we estimate the threshold for the density of the random uniform hypergraph when the k core first appears. Such a threshold is associated with the probability of existence of perfect matchings in teh associated bipartite graphs. Such estimates are quite useful .... 
+
+\subsubsection {Matching in a Streaming Model}
+
+%matching is core to resource allocation problems of various types from the scheduling and Operations Research literature, for example, allocating jobs to machines in cloud computing
+Two natural variants of this problem have been considered in the literature: (1) the edge
+arrival setting, where edges arrive in the stream and (2) the vertex arrival setting, where vertices on one
+side of the graph arrive in the stream together with all their incident edges.
+The latter setting has also
+been studied extensively in the context of online algorithms, where each arriving vertex has to either be
+matched irrevocably or discarded upon arrival.
+
+The basic algorithms for finding matchings rely on the definition of augmenting paths:
+given a matching $M$ in the graph, an augmenting path is an oddlength
+(simple) path with its edges alternating between being in $M$
+and not, and with the two end edges not in $M$. In order to increase the size of the matching, one starts with an unmatched vertex and walks along the augmenting path to reach another unmatched vertex. The unmached edges of the previous matching now are the matched edges and vice versa.
+
+One can employ various methods to find these augmenting paths; namely breadth first search (BFS), depth first search (DFS) and random walk. The BFS and DFS approaches require the full knowledge of the graph and hence are not ideal for streaming models. The random walk method on the one hand chooses each vertex on the augmenting path randomly and is a stateless approach but on the other hand has no gurantees of the convergence in the worst case. 
+
+The other class of algorithms employed for finding online matchings is \emph{greedy} approach where each edge is included in the matching if it does not destroy the matching. At present this is the best single pass algorithm providing $2$ approximation when the edges are streamed in an arbitrary order. The strongest known lower bound for the single pass algorithms is $e/(e-1)\approx 1.58$ which also applies when the edges are grouped by end point~\cite{boundsKap,Goel}.
+
+In the model that we consider, we are given a bipartite graph $G(U,V,E)$, in which $U$ is known to the algorithm, vertices in $V$ are
+unknown, but arrive one at a time, revealing the edges incident on
+them as they arrive. The algorithm has to match a vertex
+as soon as it arrives. 
+In addition each vertex in $V$ has $k$ incident edges and the other end of such edges are chosen uniformly randomly and independently. This model is motivated from a class of multiple choice load balancing problems in which each job ( $u\in U$) chooses $k$ machines uniformly randomly and independently. In \cite{kCores} we prove that there exists a threshold such that when the density of $G$ is below that threshold a (left-) perfect matching (i.e. all jobs are assigned to one of their choices) exists, otherwise not. In~\cite{ballsbins} we propose an algorithm which we call \emph{local search allocation} finds maximum cardinality matching in linear time with high probability.
+Our approach in~\cite{ballsbins} operates by assigning labels to vertices in $V$. The vertices for augmenting path ae chosen based on their labels. The labels are so updated such that at any time the label of a vertex is atmost the shortest distance to an unmatched vertex. In addition to the efficiency of the approach, the algorithm never runs in loops and gives the information when the vertex cannot be matched. Emperical evidence suggests that our approach performs an order of magnitude better than the random walk method.
+
+
+
+As a starting point our proposed research focusses on the following questions.
+
+\begin{enumerate}
+\item Can we extend/adapt local search allocation algorithm to find approximate maximum cardinality matchings in the streaming model  in which a bipartite graph is given by a stream of edges in an arbitrary order? Such a semi streaming algoritm has memory $O(n~ \text{polylog} ~n)$, and the graph vertices are known before processing the stream of edges.
+\item 
+\end{enumerate}
+
+
+state bounds for maximum cardinality matchings in bipartite graphs and general graphs
+explain greedy algorithm ... variants of greedy algorithm improving bounds..not much improvement theretically
+Introduce local search allocation for online setting....the model is different from the above considered models...a new idea based on approximate augmenting path lengths ; simple to implement 
+scope to adapt the algorithm to general graphs ; there are of course problems in breaking the symmetry
+we aim to develop new algorithms based on local search method proposed in .... for computing aproximate matchings for online model
+
+We consider a streaming model 
+
+\subsection{Indexing and Query Processing}
+
+Within the streaming model, there are important applications of matching algorithms like \emph{internet advertisements}, \emph{load balancing in cloud computing}, \emph{switch scheduling} etc. Based on the research problems in the previous section, we now turn our attention to how to utilize those results into building indexing frameworks to efficiently answer \emph{matching-based queries} or simply \emph{mathcing queries}. 
+
+
+In graph database research, the input data is typically organized into an index optimized for a certain kind of query. As an example, a specialized index can be created over an input graph to answer \emph{reachability queries}, i.e., if a pair of nodes are reachable from each other. Similarly, we intend to design efficient indexing methods for streaming graph input to find matchings.
+
+\subsubsection{Matching-based Queries} 
+We consider two types of queries : \emph{standing matching queries} and \emph{adhoc matching queries}. Standing queries (also called as publisher-subscriber queries) are a static set of queries which are checked for satisfaction in the face of changing or dynamic input data. Examples are dense-subgraph queries proposed by Angel et. al.~\cite{} which reports dense subgraphs whenever streaming edges result in a subgraph becoming substantially dense. The query in that case is a desired density coefficient. In our scenario, we could also be interested in potentially new matchings given a stream of incoming edges/nodes. The second class of queries are the more stndard adhoc queries, where user can desire a given type of matching on a given subgraph. As an example, for time-varying graphs a user could be interested in matchings for the graph which was valid in a given time interval.
+
+
+\subsubsection{Research Questions} 
+In this respect we can formulate the following research questions which we intend to answer:
+\begin{itemize}
+	\item \textsf{[RQ I]} How can we \emph{efficiently construct} indexes specialized for answering matching queries ? 
+
+	\item \textsf{[RQ II]} What kind of index-maintenance strategies is needed to be employed to avoid partial or complete index recomp utations ?
+
+	\item \textsf{[RQ II]} What query processing techniques need to be employed for both \emph{standing} and \emph{adhoc} matching queries ?
+
+\end{itemize}
+
 \subsubsection {Temporal Graphs }
 
 \subsection{Project Related Publications}
@@ -68,7 +136,9 @@ for example :
 \subsection{Other Information}
 \subsection{Explanations on the Proposed Investigations}
 \subsection{Information on the Scientific and Financial Involvement of International Cooperation Partners}
-\section{Bibliography}
+
+\bibliographystyle{plain}
+\bibliography{dfg-proposal-ideas}
 
 %General intro to graphs and contemporary application domains
  
