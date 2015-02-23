@@ -56,7 +56,7 @@ for example :
 
 \subsubsection {k cores }
 A bipartite graph can been seen as a hypergraph. 
-In \cite{kCores} we estimate the threshold for the density of the random uniform hypergraph when the k core first appears. Such a threshold is associated with the probability of existence of perfect matchings in teh associated bipartite graphs. Such estimates are quite useful .... 
+In \cite{kCores} we estimate the threshold for the density of the random uniform hypergraph when the k core first appears. Such a threshold is associated with the probability of existence of perfect matchings in the associated bipartite graphs. Such estimates are quite useful .... 
 
 \subsubsection {Matching in a Streaming Model}
 
@@ -69,7 +69,7 @@ been studied extensively in the context of online algorithms, where each arrivin
 matched irrevocably or discarded upon arrival.
 
 The basic algorithms for finding matchings rely on the definition of augmenting paths:
-given a matching $M$ in the graph, an augmenting path is an oddlength
+given a matching $M$ in the graph, an augmenting path is an odd-length
 (simple) path with its edges alternating between being in $M$
 and not, and with the two end edges not in $M$. In order to increase the size of the matching, one starts with an unmatched vertex and walks along the augmenting path to reach another unmatched vertex. The unmached edges of the previous matching now are the matched edges and vice versa.
 
@@ -104,16 +104,13 @@ We consider a streaming model
 
 \subsection{Indexing and Query Processing}
 
-Within the streaming model, there are important applications of matching algorithms like \emph{internet advertisements}, \emph{load balancing in cloud computing}, \emph{switch scheduling} etc. Based on the research problems in the previous section, we now turn our attention to how to utilize those results into building indexing frameworks to efficiently answer \emph{matching-based queries} or simply \emph{mathcing queries}. 
-
-
-In graph database research, the input data is typically organized into an index optimized for a certain kind of query. As an example, a specialized index can be created over an input graph to answer \emph{reachability queries}, i.e., if a pair of nodes are reachable from each other. Similarly, we intend to design efficient indexing methods for streaming graph input to find matchings.
+Within the streaming model, there are important applications of matching algorithms like \emph{internet advertisements}, \emph{load balancing in cloud computing}, \emph{switch scheduling} etc. Based on the research problems in the previous section, we now turn our attention to how to utilize those results into building indexing frameworks to efficiently answer \emph{matching-based queries} or simply \emph{matching queries}. Indexing large graphs to support primitive operations like reachability~\cite{seufert2013ferrari}, shortest paths~\cite{Gubichev:2010}, dense subgraphs~\cite{angel_dense_2013} have been explored in the graph databases literature with reasonable success.  As an example, a specialized index can be created over an input graph to answer \emph{reachability queries}, i.e., if a pair of nodes are reachable from each other. Similarly, we intend to design efficient indexing methods for streaming graph input to find matchings. Similarly for massive graphs, matchings for arbitrary subgraphs can be efficiently computed if some kind of an index is constructed over the input graph.
 
 \subsubsection{Matching-based Queries} 
-We consider two types of queries : \emph{standing matching queries} and \emph{adhoc matching queries}. Standing queries (also called as publisher-subscriber queries) are a static set of queries which are checked for satisfaction in the face of changing or dynamic input data. Examples are dense-subgraph queries proposed by Angel et. al.~\cite{} which reports dense subgraphs whenever streaming edges result in a subgraph becoming substantially dense. The query in that case is a desired density coefficient. In our scenario, we could also be interested in potentially new matchings given a stream of incoming edges/nodes. The second class of queries are the more stndard adhoc queries, where user can desire a given type of matching on a given subgraph. As an example, for time-varying graphs a user could be interested in matchings for the graph which was valid in a given time interval.
+We consider two types of queries : \emph{standing matching queries} and \emph{adhoc matching queries}. Standing queries (also called as publisher-subscriber queries) are a static set of queries which are checked for satisfaction in the face of changing or dynamic input data. Examples are dense-subgraph queries proposed by Angel et. al.~\cite{angel_dense_2013} which reports dense subgraphs whenever streaming edges result in a subgraph becoming substantially dense. The query in that case is a desired density coefficient. In our scenario, we could also be interested in potentially new matchings given a stream of incoming edges/nodes. The second class of queries are the more standard adhoc queries, where user can desire a given type of matching on a given subgraph. As an example, for time-varying graphs a user could be interested in matchings for the graph which was valid in a given time interval.
 
 
-\subsubsection{Research Questions} 
+\subsubsection{Research Questions} 	
 In this respect we can formulate the following research questions which we intend to answer:
 \begin{itemize}
 	\item \textsf{[RQ I]} How can we \emph{efficiently construct} indexes specialized for answering matching queries ? 
@@ -123,6 +120,8 @@ In this respect we can formulate the following research questions which we inten
 	\item \textsf{[RQ II]} What query processing techniques need to be employed for both \emph{standing} and \emph{adhoc} matching queries ?
 
 \end{itemize}
+
+
 
 \subsubsection {Temporal Graphs }
 
