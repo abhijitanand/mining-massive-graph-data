@@ -37,30 +37,7 @@ Traditional research has focussed on largely on \emph{static graphs}. However, a
 We divide the related work survey into two sections: (a) algorithmic foundations on streaming graph primitives, and (b) indexing and querying for streaming graphs.
 
 \subsection{State of the Art}
-
-\note{add something}
-
-
-\subsection{Preliminary Work}
-
-\todo{
-what we did ? How our work would be used in this project
-for example :  
-\begin{itemize}
-	\item (Megha ) Studied  k cores , dense components, matching
-	\item(Avishek) :  
-\end{itemize}
-
-}
-
-
-\subsubsection {k cores }
-A bipartite graph can been seen as a hypergraph. 
-In \cite{kCores} we estimate the threshold for the density of the random uniform hypergraph when the k core first appears. Such a threshold is associated with the probability of existence of perfect matchings in the associated bipartite graphs. Such estimates are quite useful .... 
-
-\subsubsection {Matching in a Streaming Model}
-
-%matching is core to resource allocation problems of various types from the scheduling and Operations Research literature, for example, allocating jobs to machines in cloud computing
+\subsubsection{Matching}
 Two natural variants of this problem have been considered in the literature: (1) the edge
 arrival setting, where edges arrive in the stream and (2) the vertex arrival setting, where vertices on one
 side of the graph arrive in the stream together with all their incident edges.
@@ -73,18 +50,67 @@ given a matching $M$ in the graph, an augmenting path is an odd-length
 (simple) path with its edges alternating between being in $M$
 and not, and with the two end edges not in $M$. In order to increase the size of the matching, one starts with an unmatched vertex and walks along the augmenting path to reach another unmatched vertex. The unmached edges of the previous matching now are the matched edges and vice versa.
 
-One can employ various methods to find these augmenting paths; namely breadth first search (BFS), depth first search (DFS) and random walk. The BFS and DFS approaches require the full knowledge of the graph and hence are not ideal for streaming models. The random walk method on the one hand chooses each vertex on the augmenting path randomly and is a stateless approach but on the other hand has no gurantees of the convergence in the worst case. 
-
+One can employ various methods to find these augmenting paths; namely breadth first search (BFS), depth first search (DFS) and random walk. The BFS and DFS approaches require the full knowledge of the graph and hence are not ideal for streaming models. The random walk method on the one hand chooses each vertex on the augmenting path randomly and is a stateless approach but on the other hand has no gurantees of the convergence in the worst case.
 The other class of algorithms employed for finding online matchings is \emph{greedy} approach where each edge is included in the matching if it does not destroy the matching. At present this is the best single pass algorithm providing $2$ approximation when the edges are streamed in an arbitrary order. The strongest known lower bound for the single pass algorithms is $e/(e-1)\approx 1.58$ which also applies when the edges are grouped by end point~\cite{boundsKap,Goel}.
 
-In the model that we consider, we are given a bipartite graph $G(U,V,E)$, in which $U$ is known to the algorithm, vertices in $V$ are
+\subsubsection{Query Processing}
+
+\subsection{Preliminary Work}
+\subsubsection{Load Balancing and Matching }
+\note{nice lines for load balancing}
+We consider a multiple choice scenario in which we have $n$ machines, $m$ jobs and each job needs to be assigned to one of its $k$ random choices. In addition each bin has capacity $\ell$.
+\note{Shall I also explain the applications like cuckoo hashing and data management here ?}
+The most important question to answer here is that under what conditions such an assignment is possible. 
+In \cite{kCores} we compute a threshold, $c$ such that when the ratio of the number of jobs to that of bins is below $c$ there exists an assignment, otherwise not. The model that we consider above can been seen as a bipartite graph $G$ which then translates our result to computing thresholds for the existence of a perfect matching in $G$.
+
+More precisely we are given a bipartite graph $G(U,V,E)$, in which $U$ is known to the algorithm, vertices in $V$ are
 unknown, but arrive one at a time, revealing the edges incident on
 them as they arrive. The algorithm has to match a vertex
-as soon as it arrives. 
-In addition each vertex in $V$ has $k$ incident edges and the other end of such edges are chosen uniformly randomly and independently. This model is motivated from a class of multiple choice load balancing problems in which each job ( $u\in U$) chooses $k$ machines uniformly randomly and independently. In \cite{kCores} we prove that there exists a threshold such that when the density of $G$ is below that threshold a (left-) perfect matching (i.e. all jobs are assigned to one of their choices) exists, otherwise not. In~\cite{ballsbins} we propose an algorithm which we call \emph{local search allocation} finds maximum cardinality matching in linear time with high probability.
+as soon as it arrives. In addition each vertex in $V$ has $k$ incident edges and the other end of such edges are chosen uniformly randomly and independently. In \cite{kCores} we prove that there exists a threshold such that when the density of $G$ is below that threshold a (left-) perfect matching (i.e. all jobs are assigned to one of their choices) exists, otherwise not.
+
+In~\cite{ballsbins} we propose an algorithm which we call \emph{local search allocation} finds maximum cardinality matching in linear time with high probability.
 Our approach in~\cite{ballsbins} operates by assigning labels to vertices in $V$. The vertices for augmenting path ae chosen based on their labels. The labels are so updated such that at any time the label of a vertex is atmost the shortest distance to an unmatched vertex. In addition to the efficiency of the approach, the algorithm never runs in loops and gives the information when the vertex cannot be matched. Emperical evidence suggests that our approach performs an order of magnitude better than the random walk method.
 
+\todo{
+what we did ? How our work would be used in this project
+for example :  
+\begin{itemize}
+	\item (Megha ) Studied  k cores , dense components, matching
+	\item(Avishek) :  
+\end{itemize}
 
+}
+\note{state bounds for maximum cardinality matchings in bipartite graphs and general graphs
+explain greedy algorithm ... variants of greedy algorithm improving bounds..not much improvement theretically
+Introduce local search allocation for online setting....the model is different from the above considered models...a new idea based on approximate augmenting path lengths ; simple to implement 
+scope to adapt the algorithm to general graphs ; there are of course problems in breaking the symmetry}
+
+%\subsubsection {Thresholds for a Perfect Matching}
+%In \cite{kCores} we estimate the threshold for the density of the random uniform hypergraph when the k core first appears. Such a threshold is associated with the probability of existence of perfect matchings in the associated bipartite graphs. Such estimates are quite useful .... 
+
+\subsubsection{Matching in a semi online model}
+We allow the matching to change.
+
+In~\cite{ballsbins} we propose an algorithm which we call \emph{local search allocation} finds maximum cardinality matching in linear time with high probability.
+Our approach in~\cite{ballsbins} operates by assigning labels to vertices in $V$. The vertices for augmenting path ae chosen based on their labels. The labels are so updated such that at any time the label of a vertex is atmost the shortest distance to an unmatched vertex. In addition to the efficiency of the approach, the algorithm never runs in loops and gives the information when the vertex cannot be matched. Emperical evidence suggests that our approach performs an order of magnitude better than the random walk method.
+
+%\subsubsection {Matching in a Streaming Model}
+%
+%%matching is core to resource allocation problems of various types from the scheduling and Operations Research literature, for example, allocating jobs to machines in cloud computing
+% 
+%
+%
+%In the model that we consider, we are given a bipartite graph $G(U,V,E)$, in which $U$ is known to the algorithm, vertices in $V$ are
+%unknown, but arrive one at a time, revealing the edges incident on
+%them as they arrive. The algorithm has to match a vertex
+%as soon as it arrives. 
+%In addition each vertex in $V$ has $k$ incident edges and the other end of such edges are chosen uniformly randomly and independently. This model is motivated from a class of multiple choice load balancing problems in which each job ( $u\in U$) chooses $k$ machines uniformly randomly and independently. 
+%
+%In \cite{kCores} we prove that there exists a threshold such that when the density of $G$ is below that threshold a (left-) perfect matching (i.e. all jobs are assigned to one of their choices) exists, otherwise not. 
+
+
+
+\subsubsection{Proposed Research}
 
 As a starting point our proposed research focusses on the following questions.
 
@@ -94,13 +120,10 @@ As a starting point our proposed research focusses on the following questions.
 \end{enumerate}
 
 
-state bounds for maximum cardinality matchings in bipartite graphs and general graphs
-explain greedy algorithm ... variants of greedy algorithm improving bounds..not much improvement theretically
-Introduce local search allocation for online setting....the model is different from the above considered models...a new idea based on approximate augmenting path lengths ; simple to implement 
-scope to adapt the algorithm to general graphs ; there are of course problems in breaking the symmetry
+
 we aim to develop new algorithms based on local search method proposed in .... for computing aproximate matchings for online model
 
-We consider a streaming model 
+
 
 \subsection{Indexing and Query Processing}
 
