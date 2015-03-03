@@ -180,6 +180,8 @@ Within the streaming model, there are important applications of matching algorit
 \subsection{Matching-based Queries} 
 We consider two types of queries : \emph{standing matching queries} and \emph{adhoc matching queries}. Standing queries (also called as publisher-subscriber queries) are a static set of queries which are checked for satisfaction in the face of changing or dynamic input data. Examples are dense-subgraph queries proposed by Angel et. al.~\cite{angel_dense_2013} which reports dense subgraphs whenever streaming edges result in a subgraph becoming substantially dense. The query in that case is a desired density coefficient. In our scenario, we could also be interested in potentially new matchings given a stream of incoming edges/nodes. The second class of queries are the more standard adhoc queries, where user can desire a given type of matching on a given subgraph. As an example, for time-varying graphs a user could be interested in matchings for the graph which was valid in a given time interval.
 
+
+
 \subsection{Previous Work}
 Indexing large graphs for supporting certain primitive queries like \emph{reachability queries} was attempted in~\cite{seufert2013ferrari}. A reachability query for a pair of vertices $(u,v)$ returns a positive answer if the graph under consideration contains a directed path starting at vertex $u$ and ending at vertex $v$, and a negative answer otherwise. We impose an explicit bound on the size of the index and flexibly assign approximate reachability ranges to nodes of the graph such that the number of index probes to answer a query is minimized. The resulting tunable index structure generates a better range labeling if the space budget is increased, thus providing a direct control over the trade off between index size and the query processing performance. We showed that, in practice, reachability queries can be answered in the order of microseconds on an off-the-shelf computer – even for the case of massive-scale real world graphs as big as 5 billion edges and 13 million nodes.
 
@@ -209,6 +211,10 @@ In this respect we can formulate the following research questions which we inten
 %\subsection{Other Information}
 %\subsection{Explanations on the Proposed Investigations}
 %\subsection{Information on the Scientific and Financial Involvement of International Cooperation Partners}
+
+
+\input{graph-indexing}
+
 
 \bibliographystyle{plain}
 \bibliography{proposal-outline}
