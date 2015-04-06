@@ -72,10 +72,10 @@ In the next section we start by describing the matching problem and the variants
 %
 %\subsection{State of the Art}
 \subsection{Matchings in Graphs}
-A fundamental problem in graphs is finding a maximum cardinality matching. Given a graph $G$, a matching $M$ in $G$ is a set of pairwise non-adjacent edges; that is, no two edges share a common vertex. An exact solution for finding maximum matchings in bipartite graphs can be found in $O(n^{2.5})$ time with the algorithm of Hopcroft and Karp~\cite{Hopcroft}. A faster randomised algorithm, which runs in time $O(n^{\omega})$ where $\omega$ depends on the running time of the best known matrix multiplication algorithm, is given by Mucha and Sankowski~\cite{MS04}. For massive graphs, the space complexity also plays an important role in addition to the time complexity. In massive graphs the entire graph is not stored in the RAM but the set of edges are presented as a stream from an external storage device. 
-Two natural variants of this problem in the streaming scenario have been considered in the literature: (1) the edge arrival setting, where edges arrive in the stream and (2) the vertex arrival setting, where vertices on one
-side of the graph arrive in the stream together with all their incident edges.
-The latter setting has also
+A fundamental problem in graphs is finding a maximum cardinality matching. Given a graph $G$, a matching $M$ in $G$ is a set of pairwise non-adjacent edges; that is, no two edges share a common vertex. An exact solution for finding maximum matchings in bipartite graphs can be found in $O(n^{2.5})$ time with the algorithm of Hopcroft and Karp~\cite{Hopcroft}. A faster randomised algorithm, which runs in time $O(n^{\omega})$ where $\omega$ depends on the running time of the best known matrix multiplication algorithm, is given by Mucha and Sankowski~\cite{MS04}. 
+
+For massive graphs, the space complexity also plays an important role in addition to the time complexity. In massive graphs the entire graph is not stored in the RAM but the set of edges are presented as a stream from an external storage device. Two natural variants of this problem in the streaming scenario have been considered in the literature: (1) the edge arrival setting, where edges arrive in the stream and (2) the vertex arrival setting, where vertices on one
+side of the graph arrive in the stream together with all their incident edges. The latter setting has also
 been studied extensively in the context of online algorithms, where each arriving vertex has to either be
 matched irrevocably or discarded upon arrival. 
 
@@ -104,6 +104,9 @@ was shown to be solvable in $O(\sqrt{V}|E| \log(|V |))$ time
 by Gabow and Tarjan~\cite{GabowTarjan}.
 
 Mestre~\cite{Mestre}  showed $1/2$- and $(2/3 - \varepsilon)$-approximation algorithms for $b$-matching by extending path-growing approximation algorithms for the $1$-matching problem. Morales et al.~\cite{DeFrancisciMorales} and Georgiadis et al.~\cite{GeorgiadisP13} developed 1/2-approximation algorithms for $b$-matching based on the concept of locally dominant edges.
+\note { More literature survey needed for $b$ matchings }
+
+So far weighted $b$ matchings have been studied in the context of exact and approximate algorithms without a stricter space constraint. This problem finds applicatio in the recommender systems where it becomes essential (because of the size of the concerned graphs) to consider the streaming or semi streaming setting. In particular consider the Netflix model of distributing CD/DVDs among its customers. Assume that we have $n$ customers and $m$ CDs. The preference of each customer for a particular CD is quantified as a weight on the edge between the customer node and the CD node. Now we want to provide atmost $b$ options for CDs to each customer. A maximum weight matching such that each cutomer node has degree at most $b$ in the matching would provide an optimal way of distribution to customers. In this work we als focus on weighted $b$ matchings in various streaming models.
 
 %1. Computing Approximate b-Matchings in Large Graphs and an Application to k-Anonymity
 %Considered sequential and shared memory parallel ( on multicore computers) algorithms that implement a half approximation algorithm for weighted b matching on arbitrary graphs. Based on algorithm by F. Manne and M. Halappanavar
@@ -114,8 +117,7 @@ Mestre~\cite{Mestre}  showed $1/2$- and $(2/3 - \varepsilon)$-approximation algo
 %Maester’s paper : Because maximum weight b-matching can be solved exactly in $O (\sum_vb(v) \min(m \log n, n^2 )$  time , Greedy should be regarded as a tradeoff: we sacrifice optimality in order to get a much simpler algorithm which runs in $O(m \log n)$ time. This tradeoff can be further improved to obtain a linear time 1/ 2 -approximation, our solution builds upon the work of Drake and Hougardy . Let $b = \max_{v \in V} b(v)$, in this section we show:
 %There is a $O(bm)$ time 0.5 -approximation algorithm for $b$-matching
 
-In the next section we describe our matching algorithm for sparse random bipartite graphs and discuss the possible extensions to more general graph models. 
-
+In the next section we describe our previous work on matching algorithm for a special class of sparse random bipartite graphs and present the possible directions on extending our work to more general graph models in streaming models.
 
 \subsubsection{Previous Work}
 We consider a bipartite graph $G(U,V,E)$, in which $U$ is known to the algorithm, vertices in $V$ are
@@ -141,7 +143,7 @@ With (i) $O(n \text{ poly} \log n)$ space and  (ii) amortized $O(1)$ time proces
 \begin{itemize}
 \item  \textsf{[RQ I]} Can we achieve an approximation ration closer to the known lower bound $(e/(e-1))$ for general bipartite graphs ?
 \item \textsf{[RQ II]} What approximation ratios can we achieve with high probability on different models of random graphs like uniformly random or power law graphs ?
-\item \textsf{[RQ III]} What approximation ratios can we achieve for weighted matchings?
+\item \textsf{[RQ III]} What approximation ratios can we achieve for weighted $b$ matchings in bipartite graphs?
 
 \end{itemize}
 
