@@ -1,38 +1,108 @@
 \newpage
 
 \section{Objectives and work programme}
+\label{sec:work-packages}
 
-	\subsection{Anticipated total duration of the project}
-		36 months
+
+\subsection{Anticipated total duration of the project}
+24 months
+
 \subsection{Objectives}
+Most of the real-world graphs like the Web graph, social networks, folksonomies are \emph{large, evolving} and \emph{sparse}. Traditional data models for graphs which (a)rely on multiple passes over the input or (b)are quadratic or worse in processing are prohibitive for such graphs. On the other extreme, the \emph{streaming model}~\cite{Henzinger,Feigenbaum} for graph processing has evolved as a promising paradigm. This model usually constraints the amount of memory that can be used for the processing. Also, it typically prohibits more than a single pass over the input data. Apart from their application in pure streaming based application, the attractiveness of the streaming model stems from the fact that even large static collections can be processed in reasonable amounts of time. However, one of the limitations of such a model is that some fundamental graph problems are known to be hard in such a constrained setup. Specifically, the space requirements in the streaming model is (poly) $\log$ of the input but general graph problems like \emph{graph matching} and \emph{connectivity-based problems} are considered \emph{hard} in (poly) $\log$ space. 
+
+\inote{Introduce the classical semi-streaming model here}
+
+However, on the other hand such graphs are sparse, i.e. $|E| = O (|V|)$, and the $n.polylog(n)$ space requirements of the semi-streaming model is rendered less effective. This is primarily due to the fact that such a space requirement would anyways means that the entire graph is in memory which is unrealistic for practical graphs which typically have tens- or hundreds- of millions of nodes. To this effect, first it would be interesting to explore novel streaming models for sparse real-world graphs. This would require a closer examination of the large, evolving and sparse graphs in terms of large-scale structural analysis to come up with characteristics useful in hypothesizing a feasible semi-streaming model.
+\inote{consider reformulating this argument or re-writing this.} 
+
+%what are the implications for indexing and large graph data management.
+Second, despite the growing research in the design of streaming and semi-streaming algorithms~\cite{Henzinger}, it has remained so far a theoretical endeavour. There still stands a gap between the theoretical reserach and practical usefulness of the various proposed models and algorithms. We hope to fill this gap by proposing  algorithms based on our practical streaming models for processing massive real-world graphs. 
+
+
+Third, such a model is particularly attractive for building and maintaining index structures for efficiently answering graph-based queries like \emph{reachability queries}, \emph{shortest-path queries}, \emph{dense-subgraph queries} etc. The challenges in graph indexing apart from size of the index is in (a) scalable indexing and (b) index maintenance in case of dynamic updates. Scalable indexing techniques demands fewer or constant number of passes over the input (ideally a single pass). Departing from the restrictive streaming input model which requires exactly one pass, if a relaxed model can ensure a \emph{single-amortized} pass, i.e., majority of the input items are not revisited again, there is evidence that many graph problems become tractable. 
+
+
+
+\note{We address the following two problems :
+
+\begin{itemize}
+    \item Propose specialized semi-streaming models for sparse real-world graphs which have even more stringent memory requirements (preferably sub-linear memory requirements)
+
+    \item The usage of semi-streaming models for practical and large scale graph applications
+\end{itemize}
+
+}
+
+\inote{floating para...consider using this wherever required...}
+We operate on the observation that for certain scenarios when the input is not strictly streaming, e.g., large static graphs or dynamic graphs with a slow change rate, one can relax the strict memory and running-time assumptions to realize tractable solutions which are otherwise hard in the general streaming model.  
+
+
+\inote{Move this para into the next sections}
+In the first part of the proposal we plan to study such relaxed models which are beneficial for large graph processing problems. With an emphasis on graph matching and distance problems, we intend to propose bounds and suggest efficient algorithms for finding exact and approximate matching in graphs. In the second part of the proposal, we intend to propose scalable indexing methods for such matching tasks, which we refer to as \emph{matching queries}, based on the algorithms from the first part.
 
 
 \subsection{Work programme incl. proposed research methods}
 
-The work in this project is split into three work packages. WP\ref{wp:generation}   addresses the
-generation of entity rankings, while WP\ref{wp:maintenance}  considers ranking maintenance and event reporting.
-The research achievements obtained in these two work packages will be used in WP\ref{wp:implementation}  to implement a full-fledged
-prototype system that is going to be used further to create a repository of entity rankings over a variety of information sources.
+The work in this project is split into three work packages. WP\ref{wp:model}   addresses the analysis and modelling of sparse real-world graphs, while WP\ref{wp:algos} intends to develop a practical semi-streaming model and propose novel algorithms based on this. The research achievements obtained in these two work packages will be used in WP\ref{wp:indexing} to index large evolving graphs so as to support popular graph queries.
 
  
 \begin{itemize}
-\item WP1: Composition of Semantically Meaningful Rankings
-\item WP2: Ranking Staleness, Maintenance, and Reporting
-\item WP3: Prototype Implementation, Repository Creation, and Benchmarking 
+\item WP1: Analysis and modelling of sparse real-world graphs
+\item WP2: Practical streaming-based model and Algorithms
+\item WP3: Indexing and query processing on large evolving graphs
 \end{itemize}
 
 
-\workpackage{Composition of Semantically Meaningful Rankings}
-\label{wp:generation}
+\workpackage{Analysis and Modelling of Sparse Real-world Graphs}
+\label{wp:model}
+
+\note{Points to be covered tentatively:
+
+\begin{itemize}
+    \item Structural analysis of large graphs like the evolving Web graphs. 
+
+    \item Complementing previous analysis of graphs towards supporting models which help developing the practical semi-streaming models.
+
+    \item Various design decisions based on such analysis.
+\end{itemize}
+
+}
+
+\workpackage{Practical Semi-streaming model and Algorithms}
+\label{wp:algos}
+
+In~\cite{ballsbins} we proposed an algorithm, which we call \emph{local search allocation}, finds maximum cardinality matching in linear time with high probability. Our approach in~\cite{ballsbins} operates by assigning labels to vertices in $V$. The vertices for augmenting path are chosen based on their labels. The labels are so updated such that at any time the label of a vertex is atmost the shortest distance to an unmatched vertex. In addition to the efficiency of the approach, the algorithm never runs in loops and gives the information when the vertex cannot be matched. The time complexity of the algorithm is $O(|E|)$ and the space complexity is $O(|V|)$. This approach is different from the greedy approach which is commonly employed in such a model in the sense that it allows the matching to change as and when necessary. This means that once an edge is selected for the matching, it can be kicked out later on as and when required.
+
+Even though this algorithm has been designed for a more specific class of bipartite graphs, it can be applied directly on more general bipartite graphs. We focus on the following research questions.
+
+With (i) $O(n poly \log n)$ space and  (ii) amortized $O(1)$ time processing of each edge
+\begin{itemize}
+\item  \textsf{[RQ I]} Can we achieve an approximation ration closer to the known lower bound $(e/(e-1))$ for general bipartite graphs ?
+\item \textsf{[RQ II]} What approximation ratios can we achieve with high probability on different models of random graphs like uniformly random or power law graphs ?
+\item \textsf{[RQ III]} What approximation ratios can we achieve for weighted $b$ matchings in bipartite graphs?
+
+\end{itemize}
 
 
 
-\workpackage{Staleness, Maintenance, and Reporting}
-\label{wp:maintenance}
+\workpackage{Indexing and Query Processing on large evolving graphs}
+\label{wp:indexing}
+
+\textbf{Matching-based Queries} 
+We consider two types of queries : \emph{standing matching queries} and \emph{adhoc matching queries}. Standing queries (also called as publisher-subscriber queries) are a static set of queries which are checked for satisfaction in the face of changing or dynamic input data. Examples are dense-subgraph queries proposed by Angel et. al.~\cite{angel_dense_2013} which reports dense subgraphs whenever streaming edges result in a subgraph becoming substantially dense. The query in that case is a desired density coefficient. In our scenario, we could also be interested in potentially new matchings given a stream of incoming edges/nodes. The second class of queries are the more standard adhoc queries, where user can desire a given type of matching on a given subgraph. As an example, for time-varying graphs a user could be interested in matchings for the graph which was valid in a given time interval.
 
 
-\workpackage{Prototype Implementation and Utilization}
-\label{wp:implementation}
+\subsection{Research Questions}     
+In this respect we can formulate the following research questions which we intend to answer:
+\begin{itemize}
+    \item \textsf{[RQ I]} How can we \emph{efficiently construct} indexes specialized for answering matching queries ? 
+
+    \item \textsf{[RQ II]} What kind of index-maintenance strategies is needed to be employed to avoid partial or complete index recomputations ?
+
+    \item \textsf{[RQ II]} What query processing techniques need to be employed for both \emph{standing} and \emph{adhoc} matching queries ?
+
+\end{itemize}
+
 
 
 \subsection*{Work Organization}
@@ -82,15 +152,15 @@ prototype system that is going to be used further to create a repository of enti
 \end{figure}
 
 
-	\subsection{Data handling}
+    \subsection{Data handling}
 
 
-	\subsection{Other information}
+    \subsection{Other information}
 
 None.
 
-	\subsection{Descriptions of proposed investigations involving experiments on humans, human materials or animals}
-		Does not apply.
-	\subsection{Information on scientific and financial involvement of international cooperation partners}
-		Does not apply.
+    \subsection{Descriptions of proposed investigations involving experiments on humans, human materials or animals}
+        Does not apply.
+    \subsection{Information on scientific and financial involvement of international cooperation partners}
+        Does not apply.
 

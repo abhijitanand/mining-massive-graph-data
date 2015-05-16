@@ -1,8 +1,70 @@
 
 \section{State of the art and preliminary work}
 
-
 \subsection*{Preliminary Work}
+
+\note{Sebastian started with one subsection about project aims. Have to consider this as a short intro.. after we finish writing the proposal..For now there is some placeholder text}
+
+\textbf{Project aims.} Graphs encode the interconnections between entities to model relations between them.They have proven to be an intuitive datastructure in modelling, querying and reasoning about real-life relationships. They have been heavily used in link analysis for Web search, social networks analysis, community detection, biological networks and in knowlege representation. There is however two important characteristics of such real world graphs. First, graphs are progressively becoming \emph{massive} and secondly, most of them evolve with time making them \emph{dynamic}. ~\cite{Henzinger,Feigenbaum}
+
+
+\textbf{Relaxed Models of Computation for Graph Problems} Recently, a semi streaming model~\cite{Muthukrishnan03} has been suggested where the algorithms can use $O(n poly \log n)$ bits of space. In addition the semi streaming model allows multiple passes over the data.  In this work we propose a new streaming model in which we fix the time complexity and study the approximations for graph problems while varying the space complexity. To understand this new model consider the \emph{greedy} algorithm for finding maximum cardinality matching where each edge is included in the matching only if neither of its end vertices are in the matching. At present this is the best single pass algorithm providing $2$ approximation when the edges are streamed in an arbitrary order. It uses space $O(n)$ and is a single pass algorithm, i.e., it scans the input data sequentially just once.The approximation factor can be improved by improving the number of passes, i.e., increasing the number of times each edge is processed. In our new model the idea is to fix the time complexity, say to linear in the number of total edges which then implies an amortized $O(1)$ time to process each edge. The efficiency of the algorithms would then be judged by the approximation factor of the result and the space complexity.  
+
+In the next section we start by describing the matching problem and the variants of the data streaming models for graphs. We then compare the basic approaches for finding graph matchings in streaming and non streaming models.
+
+\textbf{Matchings in Graphs}
+A fundamental problem in graphs is finding a maximum cardinality matching. Given a graph $G$, a matching $M$ in $G$ is a set of pairwise non-adjacent edges; that is, no two edges share a common vertex. An exact solution for finding maximum matchings in bipartite graphs can be found in $O(n^{2.5})$ time with the algorithm of Hopcroft and Karp~\cite{Hopcroft}. A faster randomised algorithm, which runs in time $O(n^{\omega})$ where $\omega$ depends on the running time of the best known matrix multiplication algorithm, is given by Mucha and Sankowski~\cite{MS04}. 
+
+For massive graphs, the space complexity also plays an important role in addition to the time complexity. In massive graphs the entire graph is not stored in the RAM but the set of edges are presented as a stream from an external storage device. Two natural variants of this problem in the streaming scenario have been considered in the literature: (1) the edge arrival setting, where edges arrive in the stream and (2) the vertex arrival setting, where vertices on one
+side of the graph arrive in the stream together with all their incident edges. The latter setting has also
+been studied extensively in the context of online algorithms, where each arriving vertex has to either be
+matched irrevocably or discarded upon arrival. 
+
+The basic algorithms for finding matchings rely on the definition of augmenting paths:
+given a matching $M$ in the graph, an augmenting path is an odd-length
+(simple) path with its edges alternating between being in $M$
+and not, and with the two end edges not in $M$. In order to increase the size of the matching, one starts with an unmatched vertex and walks along the augmenting path to reach another unmatched vertex. The unmached edges of the previous matching now are the matched edges and vice versa.
+One can employ various methods to find these augmenting paths; namely breadth first search (BFS), depth first search (DFS) and random walk. The BFS and DFS approaches require the full knowledge of the graph and hence are not ideal for streaming models. The random walk method on the one hand chooses each vertex on the augmenting path randomly and is a stateless approach but on the other hand has no gurantees of the convergence in the worst case.
+The other class of algorithms employed for finding online matchings is \emph{greedy} approach where each edge is included in the matching only if neither of its end vertices are in the matching. At present this is the best single pass algorithm providing $2$ approximation when the edges are streamed in an arbitrary order. The strongest known lower bound for the single pass algorithms is $e/(e-1)\approx 1.58$ which also applies when the edges are grouped by end point~\cite{boundsKap,Goel}.
+%\note{needs to put in right order}
+
+An algorithm for finding a $\bigg( {2\over3}-\varepsilon \bigg)^{-1}$ approximation of maximum matching in bipartite graphs was given by Feigenbaum et al.~\cite{Feigenbaum05} which requires $O\bigg( {1\over \varepsilon}\log {1\over \varepsilon}\bigg)$ passes over the input stream. The arbitrarily good approximation of $1+\varepsilon$ for general graphs in the semi streaming model is achieved by the randomized algorithm of McGregor~\cite{McGregor05} which uses $\Omega((1/\varepsilon)^{\Omega(1/\varepsilon)})$ passes. The time complexity for finding $1+\varepsilon$ maximum matching approximation in bipartite graphs was further improved to $O((1/\varepsilon)^5)$ passes by Eggert et al.~\cite{EKMS11}. Ahn and Guha~\cite{AG11} proposed $1+\varepsilon$ approximation for matchings in general graphs using polynomially many passes in $1/\varepsilon$ using LP based streaming algorithms.
+
+\textbf{Weighted and Unweighted $b$- Matchings} The maximum weight $b$-matching problem is a
+generalization of maximum weight matching in which
+the solver is given a weighted graph and a set of target
+degrees, and must output the maximum weight
+induced subgraph such that each node has its target
+number of neighbors. $b$ matchings find applications in various machine learning problems such as such as classification, spectral clustering, semi-supervised learning and graph embedding~\cite{JH}.
+ Fremuth-Paeger et al.~\cite{FPCJD}  and Huang and Jebara~\cite{JH} describe exact algorithms that use min-cost flow and belief propagation techniques, respectively. Both of these algorithms have running time $O(nm)$, but the belief propagation technique is currently the fastest practical algorithm.
+In problems with dense
+graphs, the running time for $b$-matching solvers is $O(|V|^3)$. For graphs restricted to nonnegative integer weights,
+the bipartite maximum weight $1$-matching problem
+was shown to be solvable in $O(\sqrt{V}|E| \log(|V |))$ time
+by Gabow and Tarjan~\cite{GabowTarjan}.
+
+Mestre~\cite{Mestre}  showed $1/2$- and $(2/3 - \varepsilon)$-approximation algorithms for $b$-matching by extending path-growing approximation algorithms for the $1$-matching problem. Morales et al.~\cite{DeFrancisciMorales} and Georgiadis et al.~\cite{GeorgiadisP13} developed 1/2-approximation algorithms for $b$-matching based on the concept of locally dominant edges.
+%\note { More literature survey needed for $b$ matchings }
+
+So far weighted $b$ matchings have been studied in the context of exact and approximate algorithms without a stricter space constraint. This problem finds applicatio in the recommender systems where it becomes essential (because of the size of the concerned graphs) to consider the streaming or semi streaming setting. In particular consider the Netflix model of distributing CD/DVDs among its customers. Assume that we have $n$ customers and $m$ CDs. The preference of each customer for a particular CD is quantified as a weight on the edge between the customer node and the CD node. Now we want to provide atmost $b$ options for CDs to each customer. A maximum weight matching such that each cutomer node has degree at most $b$ in the matching would provide an optimal way of distribution to customers. In this work we als focus on weighted $b$ matchings in various streaming models.
+
+\textbf{Indexing and Query processing for Large graphs:} Within the streaming model, there are important applications of matching algorithms like \emph{internet advertisements}, \emph{load balancing in cloud computing}, \emph{switch scheduling} etc. Based on the research problems in the previous section, we now turn our attention to how to utilize those results into building indexing frameworks to efficiently answer \emph{matching-based queries} or simply \emph{matching queries}. Indexing large graphs to support primitive operations like reachability~\cite{seufert2013ferrari}, shortest paths~\cite{Gubichev:2010}, dense subgraphs~\cite{angel_dense_2013} have been explored in the graph databases literature with reasonable success.  As an example, a specialized index can be created over an input graph to answer \emph{reachability queries}, i.e., if a pair of nodes are reachable from each other. Similarly, we intend to design efficient indexing methods for streaming graph input to find matchings. Similarly for massive graphs, matchings for arbitrary subgraphs can be efficiently computed if some kind of an index is constructed over the input graph.
+
+\subsection{Preliminary Work}
+
+\note{SM started with a paragraph on the expertise of his group/himself in related areas. We have to stress in this section about how our previous expertise would help taking positive strides towards the objectives laid down in the proposal.}
+
+We consider a bipartite graph $G(U,V,E)$, in which $U$ is known to the algorithm, vertices in $V$ are
+unknown, but arrive one at a time, revealing the edges incident on
+them as they arrive. In addition each vertex in $U$ has $k$ incident edges and the other end of such edges are chosen uniformly randomly and independently. The algorithm has to match a vertex
+as soon as it arrives. This graph model is motivated from a class of load balancing problems in which we have a set of machines and jobs where each job chooses $k$ random machines and needs to be assigned to one of them.
+
+\inote{Mention previous work in abstract..Applies for the next two paras}
+
+
+\textbf{Orientability of Hypergraphs/ Efficient perfect bipartite graph matching: } In \cite{kCores} we compute a threshold such that when the density of $G$ is below that threshold a (left-) perfect matching (i.e. all jobs are assigned to one of their choices) exists, otherwise not. In~\cite{ballsbins} we propose an algorithm, which we call \emph{local search allocation}, finds maximum cardinality matching in linear time with high probability. Our approach in~\cite{ballsbins} operates by assigning labels to vertices in $V$. The vertices for augmenting path are chosen based on their labels. The labels are so updated such that at any time the label of a vertex is atmost the shortest distance to an unmatched vertex. In addition to the efficiency of the approach, the algorithm never runs in loops and gives the information when the vertex cannot be matched. The time complexity of the algorithm is $O(|E|)$ and the space complexity is $O(|V|)$. This approach is different from the greedy approach which is commonly employed in such a model in the sense that it allows the matching to change as and when necessary. This means that once an edge is selected for the matching, it can be kicked out later on as and when required.
+
+\textbf{Indexing graphs for reachability queries} Indexing large graphs for supporting certain primitive queries like \emph{reachability queries} was attempted in~\cite{seufert2013ferrari}. A reachability query for a pair of vertices $(u,v)$ returns a positive answer if the graph under consideration contains a directed path starting at vertex $u$ and ending at vertex $v$, and a negative answer otherwise. We impose an explicit bound on the size of the index and flexibly assign approximate reachability ranges to nodes of the graph such that the number of index probes to answer a query is minimized. The resulting tunable index structure generates a better range labeling if the space budget is increased, thus providing a direct control over the trade off between index size and the query processing performance. We showed that, in practice, reachability queries can be answered in the order of microseconds on an off-the-shelf computer – even for the case of massive-scale real world graphs as big as 5 billion edges and 13 million nodes.
 
 
 \subsection{Project-related publications}

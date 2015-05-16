@@ -27,12 +27,41 @@ prototype system that is going to be used further to create a repository of enti
 
 
 
-\workpackage{Staleness, Maintenance, and Reporting}
+\workpackage{Algorithms in the Semi-streaming model}
 \label{wp:maintenance}
+
+In~\cite{ballsbins} we proposed an algorithm, which we call \emph{local search allocation}, finds maximum cardinality matching in linear time with high probability. Our approach in~\cite{ballsbins} operates by assigning labels to vertices in $V$. The vertices for augmenting path are chosen based on their labels. The labels are so updated such that at any time the label of a vertex is atmost the shortest distance to an unmatched vertex. In addition to the efficiency of the approach, the algorithm never runs in loops and gives the information when the vertex cannot be matched. The time complexity of the algorithm is $O(|E|)$ and the space complexity is $O(|V|)$. This approach is different from the greedy approach which is commonly employed in such a model in the sense that it allows the matching to change as and when necessary. This means that once an edge is selected for the matching, it can be kicked out later on as and when required.
+
+Even though this algorithm has been designed for a more specific class of bipartite graphs, it can be applied directly on more general bipartite graphs. We focus on the following research questions.
+
+With (i) $O(n poly \log n)$ space and  (ii) amortized $O(1)$ time processing of each edge
+\begin{itemize}
+\item  \textsf{[RQ I]} Can we achieve an approximation ration closer to the known lower bound $(e/(e-1))$ for general bipartite graphs ?
+\item \textsf{[RQ II]} What approximation ratios can we achieve with high probability on different models of random graphs like uniformly random or power law graphs ?
+\item \textsf{[RQ III]} What approximation ratios can we achieve for weighted $b$ matchings in bipartite graphs?
+
+\end{itemize}
+
 
 
 \workpackage{Prototype Implementation and Utilization}
 \label{wp:implementation}
+
+\textbf{Matching-based Queries} 
+We consider two types of queries : \emph{standing matching queries} and \emph{adhoc matching queries}. Standing queries (also called as publisher-subscriber queries) are a static set of queries which are checked for satisfaction in the face of changing or dynamic input data. Examples are dense-subgraph queries proposed by Angel et. al.~\cite{angel_dense_2013} which reports dense subgraphs whenever streaming edges result in a subgraph becoming substantially dense. The query in that case is a desired density coefficient. In our scenario, we could also be interested in potentially new matchings given a stream of incoming edges/nodes. The second class of queries are the more standard adhoc queries, where user can desire a given type of matching on a given subgraph. As an example, for time-varying graphs a user could be interested in matchings for the graph which was valid in a given time interval.
+
+
+\subsection{Research Questions}     
+In this respect we can formulate the following research questions which we intend to answer:
+\begin{itemize}
+    \item \textsf{[RQ I]} How can we \emph{efficiently construct} indexes specialized for answering matching queries ? 
+
+    \item \textsf{[RQ II]} What kind of index-maintenance strategies is needed to be employed to avoid partial or complete index recomputations ?
+
+    \item \textsf{[RQ II]} What query processing techniques need to be employed for both \emph{standing} and \emph{adhoc} matching queries ?
+
+\end{itemize}
+
 
 
 \subsection*{Work Organization}
