@@ -20,7 +20,7 @@ public class ComputerGraphDiameter {
     
     public static void main(String[] args) throws IOException {
         
-        String graphFile = (args.length > 0)? args[0] : "/Users/avishekanand/research/data/de-yr-graphs/de-2003.gz";
+        String graphFile = (args.length > 0)? args[0] : "/Users/avishekanand/research/data/de-yr-graphs/de-2004.gz";
                 
         GraphLoaderToJGraphT loader = new GraphLoaderToJGraphT(graphFile);
         

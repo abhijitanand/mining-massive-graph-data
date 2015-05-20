@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.zip.GZIPInputStream;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.graph.AsUnweightedDirectedGraph;
@@ -40,6 +41,7 @@ public class GraphLoaderToJGraphT {
             System.out.println("Nodes : " + nodes + " , edges : " + edges);
         }
         
+        //_input.close();
         // create a graph based on URL objects
         webGraph = constructDirectedWebGraph(_input, nodes);
     }
@@ -69,6 +71,8 @@ public class GraphLoaderToJGraphT {
             new DefaultDirectedGraph<Integer, DefaultEdge>(DefaultEdge.class);
         
         ArrayList<Integer>[] adjacencyLists = new ArrayList[nodes];
+        
+        HashSet<Integer> uniqueNodes = new HashSet<Integer>();
 
         int[] nodeIDs = new int[nodes];
         
@@ -79,6 +83,8 @@ public class GraphLoaderToJGraphT {
                 String[] list = _input.readLine().split("\\s+");
                 
                 int nodeID = Integer.parseInt(list[0]);
+                uniqueNodes.add(nodeID);
+                
                 g.addVertex(nodeID);
                 
                 adjacencyLists[index] = new ArrayList<>();
@@ -90,7 +96,12 @@ public class GraphLoaderToJGraphT {
                 }
                 
                 for (int i = 1; i < list.length; i++){
-                    adjacencyLists[index].add(Integer.parseInt(list[i]));
+                    int target = Integer.parseInt(list[i]);
+                    
+                    if (!uniqueNodes.contains(target)) {
+                        g.addVertex(target);
+                    }
+                    adjacencyLists[index].add(target);
                 }
                 index++;
             }
