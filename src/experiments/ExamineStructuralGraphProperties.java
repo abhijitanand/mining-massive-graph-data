@@ -2,21 +2,22 @@ package experiments;
 
 import input.io.GraphLoaderToJGraphT;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.alg.ConnectivityInspector;
+import org.jgrapht.alg.CycleDetector;
 import org.jgrapht.alg.FloydWarshallShortestPaths;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DirectedSubgraph;
-import org.jgrapht.graph.Subgraph;
 
 /**
  *
  * @author avishekanand
  */
 public class ExamineStructuralGraphProperties {
-    private final DirectedGraph graph;
+    public DirectedGraph<Integer, DefaultEdge> graph;
     
     public ExamineStructuralGraphProperties(DirectedGraph webGraph){
         graph = webGraph;
@@ -24,17 +25,18 @@ public class ExamineStructuralGraphProperties {
     
     public static void main(String[] args) throws IOException {
         
-        String graphFile = (args.length > 0)? args[0] : "/Users/avishekanand/research/data/de-yr-graphs/de-2003.gz";
+        String graphFile = (args.length > 0)? args[0] : "/Users/avishekanand/research/data/de-yr-graphs/de-2001.gz";
                 
         GraphLoaderToJGraphT loader = new GraphLoaderToJGraphT(graphFile);        
         DirectedGraph webGraph = loader.getWebGraph();
         
         ExamineStructuralGraphProperties g = new ExamineStructuralGraphProperties(webGraph);
-        DirectedSubgraph<Integer, DefaultEdge>[] connectedComponents = g.computeConnectedComponents();
-        double diameter = g.computeDiameter(connectedComponents);
+//        DirectedSubgraph<Integer, DefaultEdge>[] connectedComponents = g.computeConnectedComponents();
         
-        
-        System.out.println("Overal Diameter : " + diameter);
+//        double diameter = g.computeDiameter(connectedComponents);
+//        System.out.println("Overal Diameter : " + diameter);
+//        
+        g.findCores(8, 8);
         
     }
     
@@ -43,7 +45,7 @@ public class ExamineStructuralGraphProperties {
         
         List<Set<Integer>> connectedSets = ci.connectedSets();
         
-        System.out.println("Connected components : " + connectedSets.size());
+        System.out.println("\tConnected components : " + connectedSets.size());
         
         
         DirectedSubgraph<Integer, DefaultEdge>[] sg = new DirectedSubgraph[connectedSets.size()];
@@ -59,11 +61,21 @@ public class ExamineStructuralGraphProperties {
             double loggfd = (edges > 0) ? Math.log(edges)/(double)Math.log(nodes) : 0.0 ;
             
             idx++;
-            System.out.println("nodes: " + nodes + " edges: " + edges + " gfd : " + gfd + " loggfd : " + loggfd);
+            System.out.println("\tnodes: " + nodes + " edges: " + edges + " gfd : " + gfd + " loggfd : " + loggfd);
         }
         
         return sg;
     }
+    
+    
+   public int[] findConnectedComponentsReps(DirectedSubgraph<Integer, DefaultEdge>[] components){
+       int[] centres = new int[components.length];
+       
+       for (DirectedSubgraph<Integer, DefaultEdge> c : components) {
+               
+        }
+       return centres;
+   }
     
     public double computeDiameter(){
         FloydWarshallShortestPaths<Integer, DefaultEdge> fwsp = new FloydWarshallShortestPaths<>(graph);
@@ -76,6 +88,12 @@ public class ExamineStructuralGraphProperties {
         double diameter = 0.0;
         
         for (DirectedSubgraph<Integer, DefaultEdge> directedSubgraph : sg) {
+            
+            if (hasCycles(directedSubgraph)) {
+                //System.out.println(" Component has Cycles..");
+            }else {
+                System.out.println("component is acyclic..");
+            }
             FloydWarshallShortestPaths<Integer, DefaultEdge> fwsp = new FloydWarshallShortestPaths(directedSubgraph);
             
             double d = fwsp.getDiameter();
@@ -84,5 +102,38 @@ public class ExamineStructuralGraphProperties {
         }
         
         return diameter;
+    }
+    
+    public boolean hasCycles(DirectedGraph g){
+        CycleDetector<Integer, DefaultEdge> cd = new CycleDetector<>(g);
+        return cd.detectCycles();
+    }
+    
+    public DirectedGraph<Integer, DefaultEdge> findCores(int kcore, int lcore){
+        int removedVertices = 0;
+        
+            System.out.print ("Initial graph V : " + graph.vertexSet().size() + " , E : " + graph.edgeSet().size());
+            Set<Integer> vertexSet = graph.vertexSet();
+            
+            HashSet<Integer> removalSet = new HashSet<Integer>();
+            
+            for (int vertex : vertexSet) {
+                int outdegree = graph.outDegreeOf(vertex);
+                int indegree = graph.inDegreeOf(vertex);
+                
+                if(outdegree < kcore  || indegree < lcore){
+                    //retain the node along with all edges
+                    removedVertices++;
+                    removalSet.add(vertex);
+                    //System.out.println("Removed V : " + vertex + " E : " + outdegree);
+                }
+            }
+            
+            graph.removeAllVertices(removalSet);
+            
+            System.out.print(" Final graph V : " + graph.vertexSet().size() + " , E : " + graph.edgeSet().size());
+            System.out.print(" Removed " + removedVertices + " vertices..for k,l : " + kcore + " , " + lcore);
+            System.out.println("");
+            return graph;
     }
 }
