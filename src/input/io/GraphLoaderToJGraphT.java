@@ -1,17 +1,16 @@
 package input.io;
 
+import gnu.trove.TIntObjectHashMap;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.zip.GZIPInputStream;
 import org.jgrapht.DirectedGraph;
-import org.jgrapht.graph.AsUnweightedDirectedGraph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 
@@ -38,7 +37,7 @@ public class GraphLoaderToJGraphT {
             nodes = Integer.parseInt(line[3]);
             edges = Integer.parseInt(line[6]);
             
-            System.out.println("Nodes : " + nodes + " , edges : " + edges);
+            //System.out.println("Nodes : " + nodes + " , edges : " + edges);
         }
         
         //_input.close();
@@ -57,7 +56,6 @@ public class GraphLoaderToJGraphT {
         GraphLoaderToJGraphT graphLoader = new GraphLoaderToJGraphT("/Users/avishekanand/research/data/de-yr-graphs/de-2000.gz");
         
         System.out.println(graphLoader.webGraph.toString());
-        
         
     }
 
@@ -124,5 +122,27 @@ public class GraphLoaderToJGraphT {
             e.printStackTrace();
         }
         return g;
+    }
+    
+    
+    public TIntObjectHashMap<String> createIdToLabelMappings(String mapFile) throws FileNotFoundException, IOException{
+        TIntObjectHashMap<String> nodeToIdMappings = new TIntObjectHashMap<>();
+        
+        BufferedReader br = new BufferedReader(new InputStreamReader (
+                                                new GZIPInputStream(new FileInputStream(mapFile))));
+         
+         while (br.ready()) {            
+            String[] line = br.readLine().split("\\s+");
+            
+            String node = line[0];
+            int id = Integer.parseInt(line[1]);
+            
+            //System.out.println(node + "\t" + id);
+            
+            nodeToIdMappings.put(id, node);
+        }
+        br.close();
+        
+        return nodeToIdMappings;
     }
 }

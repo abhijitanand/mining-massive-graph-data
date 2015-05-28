@@ -122,6 +122,7 @@ public class GraphLoader {
         
         return nodeToIdMappings;
     }
+    
     private NodeDegree[] compressInputGraph(String filename) throws FileNotFoundException, IOException {
         BufferedReader br = new BufferedReader(new FileReader(filename));
         

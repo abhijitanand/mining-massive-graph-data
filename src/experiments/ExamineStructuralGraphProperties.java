@@ -53,29 +53,11 @@ public class ExamineStructuralGraphProperties {
         
         for (Set<Integer> set : connectedSets) {
             sg[idx] = new DirectedSubgraph(graph,set, null);
-            
-            int nodes = set.size();
-            int edges = sg[idx].edgeSet().size();
-            
-            double gfd = (edges > 0) ? edges/(double)nodes : 0.0 ;
-            double loggfd = (edges > 0) ? Math.log(edges)/(double)Math.log(nodes) : 0.0 ;
-            
             idx++;
-            System.out.println("\tnodes: " + nodes + " edges: " + edges + " gfd : " + gfd + " loggfd : " + loggfd);
         }
         
         return sg;
     }
-    
-    
-   public int[] findConnectedComponentsReps(DirectedSubgraph<Integer, DefaultEdge>[] components){
-       int[] centres = new int[components.length];
-       
-       for (DirectedSubgraph<Integer, DefaultEdge> c : components) {
-               
-        }
-       return centres;
-   }
     
     public double computeDiameter(){
         FloydWarshallShortestPaths<Integer, DefaultEdge> fwsp = new FloydWarshallShortestPaths<>(graph);
