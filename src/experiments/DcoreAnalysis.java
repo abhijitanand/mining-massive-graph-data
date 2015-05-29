@@ -16,6 +16,7 @@ import org.jgrapht.graph.DirectedSubgraph;
 public class DcoreAnalysis {
 
     public String COLOR_TOKENIZER = ":";
+    
     public int SAMPLE_SIZE = 5;
     
     private void colorConnectedComponents(DirectedSubgraph<Integer, DefaultEdge>[] connectedComponents, 
@@ -44,6 +45,8 @@ public class DcoreAnalysis {
                 //check if the last is the same as the new color
                 if (lastColor != color) {
                     colors.put(vertex, colorString + COLOR_TOKENIZER + color);
+                }else{
+                   //break;
                 }
             }
         }

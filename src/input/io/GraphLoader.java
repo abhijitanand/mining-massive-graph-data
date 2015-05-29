@@ -22,6 +22,9 @@ import java.util.zip.GZIPOutputStream;
  * @author avishekanand
  */
 public class GraphLoader {
+    
+    private int PROGRESS_COUNTER = 1000000;
+    
     public GraphLoader(){
         
     }
@@ -29,13 +32,22 @@ public class GraphLoader {
     private void encodeFile(String filename, String outfile, String mapFile) throws IOException{
         //get node identifiers from triad
         TObjectIntHashMap<String> nodeMappings = loadMapFile(mapFile);
+        System.out.println("Map file initialized...");
         
         ArrayList<Integer>[] adjacencyList = new ArrayList[nodeMappings.size()];
         //construct write adjacency lists
         int nodeCount = 0;
         int edgeCounts = 0;
         
-        BufferedReader br = new BufferedReader(new FileReader(filename));
+        BufferedReader br;
+        
+        if (filename.endsWith(".gz")) {
+            br = new BufferedReader(new InputStreamReader (
+                                         new GZIPInputStream(new FileInputStream(filename))));
+        }else{
+            br = new BufferedReader(new FileReader(filename));
+        }
+        
         while (br.ready()){
             String line = br.readLine();
             String[] edge = line.split("\\s+");
@@ -50,6 +62,10 @@ public class GraphLoader {
             }
             adjacencyList[source].add(target);
             edgeCounts++;
+            
+            if (edgeCounts%PROGRESS_COUNTER == 0) {
+                System.out.println("Processed " + edgeCounts + " edges..");
+            }
         }
         br.close();
         
@@ -108,6 +124,8 @@ public class GraphLoader {
          BufferedReader br = new BufferedReader(new InputStreamReader (
                                                 new GZIPInputStream(new FileInputStream(mapFile))));
          
+         System.out.println("Loading Map file..");
+         int nodes = 0;
          while (br.ready()) {            
             String[] line = br.readLine().split("\\s+");
             
@@ -117,14 +135,26 @@ public class GraphLoader {
              //System.out.println(node + "\t" + id);
             
             nodeToIdMappings.adjustOrPutValue(node, id, id);
+            
+            if(nodes++%PROGRESS_COUNTER == 0){
+                System.out.println("Loading Map File : " + nodes + " processed...");
+            }
         }
+         
+        System.out.println("Loaded Map File : " + nodes + " nodes");
         br.close();
         
         return nodeToIdMappings;
     }
     
     private NodeDegree[] compressInputGraph(String filename) throws FileNotFoundException, IOException {
-        BufferedReader br = new BufferedReader(new FileReader(filename));
+        BufferedReader br;
+        if (filename.endsWith(".gz")) {
+            br = new BufferedReader(new InputStreamReader (
+                                         new GZIPInputStream(new FileInputStream(filename))));
+        }else{
+            br = new BufferedReader(new FileReader(filename));
+        }
         
         TObjectIntHashMap<String> targetCounter = new TObjectIntHashMap<>();
         
