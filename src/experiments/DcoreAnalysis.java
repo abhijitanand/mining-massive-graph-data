@@ -5,6 +5,8 @@ import input.io.GraphLoaderToJGraphT;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DirectedSubgraph;
@@ -18,6 +20,8 @@ public class DcoreAnalysis {
     public String COLOR_TOKENIZER = ":";
     
     public int SAMPLE_SIZE = 5;
+    
+    private static final Logger log = Logger.getLogger( DcoreAnalysis.class.getName() );    
     
     private void colorConnectedComponents(DirectedSubgraph<Integer, DefaultEdge>[] connectedComponents, 
                             int[] representatives, TIntObjectHashMap<String> colors) {
@@ -60,7 +64,11 @@ public class DcoreAnalysis {
 
         TIntObjectHashMap<String> colors = new TIntObjectHashMap<>();
         
+        long time = System.currentTimeMillis();
         for (int k = 6; k < 2000; k++) {
+            log.log(Level.INFO, "Finding cores for k = " + 6 + " time taken :  "
+                            + (time - System.currentTimeMillis())/1000 + " seconds");
+            
             if (g.graph.vertexSet().isEmpty()) {
                 break;
             }
@@ -82,31 +90,27 @@ public class DcoreAnalysis {
                 int nodes = vertexSet.size();
                 int edges = connectedComponents[i].edgeSet().size();
 
-                String samples = labels.get(representatives[i]) + "(C)";
+                //populate samples with labels (actual strings if label map is )
+                String samples = getLabel(representatives[i], labels) + "(C)"; 
                 int sampleCount = 0;
                 for (int vertex : vertexSet) {
                     if (representatives[i] == vertex) {
                         continue;
                     }
-                    samples = samples + ", " + labels.get(vertex);
+                    samples = samples + ", " + getLabel(vertex, labels);
                     if (sampleCount++ > SAMPLE_SIZE) {
                         break;
                     }
-                }
-                
+                 }
                 
                 //double gfd = (edges > 0) ? edges/(double)nodes : 0.0 ;
                 double loggfd = (edges > 0) ? Math.log(edges) / (double) Math.log(nodes) : 0.0;
 
                 DecimalFormat df2 = new DecimalFormat( "#.####" );
-                if (labels != null) {
-                    System.out.println(nodes + "\t" + edges+ "\t" + df2.format(loggfd)
-                        +  "\t" + colors.get(representatives[i])  + "\t"  +
+                System.out.println(nodes + "\t" + edges+ "\t" + df2.format(loggfd)
+                        +  "\t" + getLabel(representatives[i], labels)  + "\t"  +
                         samples);
-                } else {
-                    System.out.println(nodes + "\t" + edges+ "\t" + df2.format(loggfd) + "\t"  +
-                        labels.get(representatives[i]) +  "\t" + colors.get(representatives[i]));
-                }
+                
             }
         }
     }
@@ -150,9 +154,13 @@ public class DcoreAnalysis {
         String graphFile = (args.length > 0) ? args[0] : "/Users/avishekanand/research/data/de-yr-graphs/de-2003.gz";
         String mapfile = (args.length > 1) ? args[1] : null;
 
+        log.log(Level.INFO, "Loading the web graph from : " + graphFile);
+        long time = System.currentTimeMillis();
         GraphLoaderToJGraphT loader = new GraphLoaderToJGraphT(graphFile);
         DirectedGraph webGraph = loader.getWebGraph();
-
+        log.log(Level.INFO, "Loaded the web graph in " + (System.currentTimeMillis()- time)/1000 + " seconds");
+        
+        
         DcoreAnalysis dcoreAnalysis = new DcoreAnalysis();
         
         TIntObjectHashMap<String> mappings = null;
@@ -169,4 +177,7 @@ public class DcoreAnalysis {
         System.out.println("nodes\tedges\tGFD\tColor\tSamples");
     }
 
+    private String getLabel(int representative, TIntObjectHashMap<String> labels) {
+        return (labels != null) ? labels.get(representative) : "" + representative;
+    }
 }

@@ -1,5 +1,6 @@
 package input.io;
 
+import experiments.DcoreAnalysis;
 import gnu.trove.TIntObjectHashMap;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -9,6 +10,8 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.graph.DefaultDirectedGraph;
@@ -19,6 +22,7 @@ import org.jgrapht.graph.DefaultEdge;
  * @author avishekanand
  */
 public class GraphLoaderToJGraphT {
+    private static final Logger log = Logger.getLogger( GraphLoaderToJGraphT.class.getName() );    
     
     BufferedReader _input;
     
@@ -36,7 +40,6 @@ public class GraphLoaderToJGraphT {
             
             nodes = Integer.parseInt(line[3]);
             edges = Integer.parseInt(line[6]);
-            
             //System.out.println("Nodes : " + nodes + " , edges : " + edges);
         }
         
@@ -81,9 +84,12 @@ public class GraphLoaderToJGraphT {
                 String[] list = _input.readLine().split("\\s+");
                 
                 int nodeID = Integer.parseInt(list[0]);
-                uniqueNodes.add(nodeID);
                 
+                if (uniqueNodes.contains(nodeID)) {
+                    System.out.println("Error: node has more than one adjacency lists");
+                }
                 g.addVertex(nodeID);
+                uniqueNodes.add(nodeID);
                 
                 adjacencyLists[index] = new ArrayList<>();
                 nodeIDs[index] = nodeID;
@@ -104,8 +110,11 @@ public class GraphLoaderToJGraphT {
                 index++;
             }
             
-
+            _input.close();
+            log.log(Level.INFO, "Creating Graph from Adjacency Lists for " + adjacencyLists.length + " nodes");
             // add edges to create linking structure
+            int stepSize = adjacencyLists.length/20;
+            
             for (int i = 0; i < adjacencyLists.length; i++) {
                 int source = nodeIDs[i];
                 
@@ -115,6 +124,10 @@ public class GraphLoaderToJGraphT {
                 
                 for (int target : adjacencyLists[i]){
                     g.addEdge(source, target);
+                }
+                
+                if (i%stepSize == 0) {
+                    log.log(Level.INFO, i + " nodes processed");
                 }
             }
             

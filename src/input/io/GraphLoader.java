@@ -162,9 +162,11 @@ public class GraphLoader {
         int edges = 0;
         //first iteration for compression
         while (br.ready()){
-            String line = br.readLine();
-            String target = line.split("\\s+")[1];
+            String[] line = br.readLine().split("\\s+");
+            String source = line[0];
+            String target = line[1];
             
+            targetCounter.adjustOrPutValue(source, 1, 1);
             targetCounter.adjustOrPutValue(target, 1, 1);
             edges++;
         }
