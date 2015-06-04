@@ -22,24 +22,64 @@ public class LSAJgraphT {
 
     private static final Logger log = Logger.getLogger(GraphLoaderToJGraphT.class.getName());
 
+    private static int identifyTreeStructures(UndirectedGraph<String, DefaultEdge> bipartiteGraph,
+                                                        HashSet<String> left, HashSet<String> right) {
+        int count = 0;
+        
+        for (String source : left) {
+            boolean isTree = true;
+            for (DefaultEdge edge : bipartiteGraph.edgesOf(source)) {
+                String target = bipartiteGraph.getEdgeTarget(edge);
+                //System.out.println(source + ", " + target + " : " + bipartiteGraph.edgesOf(target).size() + "," + bipartiteGraph.degreeOf(target));
+                if (bipartiteGraph.degreeOf(target) > 1) {
+                    isTree = false;
+                    break;
+                }
+            }
+            count = (isTree==true) ? count+1 : count;
+        }
+        
+        return count;
+    }
+
     //Allocation Mapping
     HashMap<Integer, Integer> allocation;
 
-    private final UndirectedGraph<String, DefaultEdge> inputGraph;
+    private  UndirectedGraph<String, DefaultEdge> inputGraph = null;
 
     private final String EMPTY_CHOICE = "-1";
-
-    private static HashSet<String> rightSet = new HashSet<>();
     
-    private static HashSet<String> leftSet = new HashSet<>();
-    
-    private static Set<DefaultEdge> matchedEdges = new HashSet<DefaultEdge>();
-        
-    public LSAJgraphT(UndirectedGraph<String, DefaultEdge> graph) {
-        allocation = new HashMap<>();
+    private final int LOOP_LIMIT = 100;
 
-        this.inputGraph = graph;
+    public UndirectedGraph<String, DefaultEdge> getInputGraph() {
+        return inputGraph;
     }
+
+    public  HashSet<String> getRightSet() {
+        return rightSet;
+    }
+
+    public  HashSet<String> getLeftSet() {
+        return leftSet;
+    }
+
+    public void setInputGraph(UndirectedGraph<String, DefaultEdge> inputGraph) {
+        this.inputGraph = inputGraph;
+    }
+
+    private  HashSet<String> rightSet ;
+    
+    private  HashSet<String> leftSet ;
+    
+    private  Set<DefaultEdge> matchedEdges ;
+        
+    public LSAJgraphT(UndirectedGraph<String, DefaultEdge> graph, HashSet<String> left, HashSet<String> right) {
+        this.inputGraph = graph;
+        leftSet = left;
+        rightSet = right;
+        matchedEdges = new HashSet<>();
+    }
+    
 
     public static void main(String[] args) throws IOException {
 
@@ -49,65 +89,102 @@ public class LSAJgraphT {
         BufferedReader br = new BufferedReader(new FileReader(graphFile));
 
         long time = System.currentTimeMillis();
-        UndirectedGraph<String, DefaultEdge> bipartiteGraph = graphConstructor.constructBipartiteUndirectedUnweightedGraph(br, 2, 4, leftSet, rightSet);
-        log.log(Level.INFO, "Bipartite graph constructed in " + (System.currentTimeMillis() - time) / 1000 + " seconds  ");
-
         
-        LSAJgraphT lsa = new LSAJgraphT(bipartiteGraph);
-
-        //run lsa with run bounds
-        time = System.currentTimeMillis();
-        lsa.run(10);
-        System.out.println("Khosla Matching done in  " + (System.currentTimeMillis() - time) / 1000 + " seconds matching size : " + lsa.getMatching().size());
+        HashSet<String> left = new HashSet<>();
+        HashSet<String> right = new HashSet<>();
+        
+        UndirectedGraph<String, DefaultEdge> bipartiteGraph = 
+                graphConstructor.constructBipartiteUndirectedUnweightedGraph(br, 2, 4, left, right);
+        
+        int treeComponents = identifyTreeStructures(bipartiteGraph,left,right);
+        
+        log.log(Level.INFO, "Number of Tree components :  " + treeComponents + " Left set: " + left.size() + " right set : " + right.size());
+        log.log(Level.INFO, "Bipartite graph constructed in " + 
+            (System.currentTimeMillis() - time) / 1000 + " seconds  ");
+        
+        int[] loopLimits = {1, 2, 4, 5, 8, 10, 50, 100, 1000, 10000, 100000, 1000000};
+        for (int loopLimit : loopLimits) {
+            LSAJgraphT lsa = new LSAJgraphT(bipartiteGraph, left, right);
+            //run lsa with run bounds
+            time = System.currentTimeMillis();
+            lsa.run(loopLimit);
+            System.out.println("Khosla Matching done in  " + (System.currentTimeMillis() - time) / 1000 + 
+                                    " seconds matching size : " + lsa.getMatching().size() + " , Loop Limit : " + loopLimit);
+        
+        }
+        
         
         time = System.currentTimeMillis();
         HopcroftKarpBipartiteMatching<String, DefaultEdge> alg
-                = new HopcroftKarpBipartiteMatching<String, DefaultEdge>(bipartiteGraph, leftSet, rightSet);
+                = new HopcroftKarpBipartiteMatching<String, DefaultEdge>(bipartiteGraph, left, right);
         Set<DefaultEdge> match = alg.getMatching();
         System.out.println("Hopcroft Matching done in  " + (System.currentTimeMillis() - time) / 1000 + " seconds matching size : " + match.size());
 
         
     }
 
-    private void run(int support) {
+    private Set<DefaultEdge> run(int loopLimit) {
 
         //initialize labels 
         HashMap<String, Integer> labels = new HashMap<>();
+        
+        for (String bucket : rightSet) {
+            labels.put(bucket, 0);
+        }
 
         //initialize mappings
         HashMap<String, String> matching = new HashMap<>();
 
         for (String currentNode : leftSet) {
             Set<String> choices = neighborsOfNode(currentNode);
-
+            
             //determine the choice with the lowest label value
             Pair<String, String> topChoices = getBestCandidates(choices, labels);
 
-            String bestChoice = topChoices.fst;
-            String nextBestChoice = (topChoices.snd != null) ? topChoices.snd : EMPTY_CHOICE;
+            String bestLocationChoice = topChoices.fst;
+            //String nextBestLocationChoice = (topChoices.snd != null) ? topChoices.snd : EMPTY_CHOICE;
+            String nextBestLocationChoice = topChoices.snd ;
 
+            //If the best choice > n-1, then we discard the item
+            if (bestLocationChoice == null || labels.get(bestLocationChoice) > loopLimit) {
+                continue;
+            }
+            
             //iterate until the bestchoice is unoccupied
-            while (isOccupied(bestChoice, matching)) {
+            while (isOccupied(bestLocationChoice, matching)) {
                 //Update matching and evict already matched item
-                currentNode = updateMatching(currentNode, bestChoice, matching);
+                currentNode = updateMatching(currentNode, bestLocationChoice, matching);
 
                 //update labels 
-                updateLabels(bestChoice, nextBestChoice, labels);
+                updateLabels(bestLocationChoice, nextBestLocationChoice, labels,loopLimit);
 
                 //re-evaluate the choices for the evicted item
                 choices = neighborsOfNode(currentNode);
                 topChoices = getBestCandidates(choices, labels);
 
-                bestChoice = topChoices.fst;
-                nextBestChoice = topChoices.snd;
+                bestLocationChoice = topChoices.fst;
+                nextBestLocationChoice = topChoices.snd;
+                
+                //If the best choice > n-1, then we discard the item
+                if (bestLocationChoice == null || labels.get(bestLocationChoice) > loopLimit) {
+                    break;
+                }
             }
+            
+            //If the best choice > n-1, then we discard the item
+            if (bestLocationChoice == null || labels.get(bestLocationChoice) > loopLimit) {
+                continue;
+            }
+                
             //finally insert the current node into the empty best choice
-            currentNode = updateMatching(currentNode, bestChoice, matching);
-            updateLabels(bestChoice, nextBestChoice, labels);
+            updateMatching(currentNode, bestLocationChoice, matching);
+            updateLabels(bestLocationChoice, nextBestLocationChoice, labels,loopLimit);
         }
 
         //construct matching
         constructMatching(matching);
+        
+        return matchedEdges;
     }
     
     public Set<DefaultEdge> getMatching(){
@@ -122,15 +199,15 @@ public class LSAJgraphT {
         int bestlabel = Integer.MAX_VALUE;
         int nextBestlabel = Integer.MAX_VALUE;
 
-        String bestChoice = "F";
-        String nextBestChoice = "S";
+        String bestChoice = null;
+        String nextBestChoice = null;
 
         //System.out.print("Finding best choice from : ");
         for (String choice : choices) {
             int label;
-            if (!labels.containsKey(choice)) {
-                labels.put(choice, 0);
-            }
+//            if (!labels.containsKey(choice)) {
+//                labels.put(choice, 0);
+//            }
             label = labels.get(choice);
 
             //System.out.print(choice + "(" + label + ")");
@@ -150,22 +227,29 @@ public class LSAJgraphT {
         return matching.containsKey(bestChoice) ? true : false;
     }
 
-    private String updateMatching(String currentNode, String location, HashMap<String, String> matching) {
+    private String updateMatching(String currentNode, String bestMatchedNeighbor, HashMap<String, String> matching) {
         String evictedItem;
-        if (!matching.containsKey(location)) {
+//        if (!matching.containsKey(location)) {
+//
+//        }
+        evictedItem = matching.get(bestMatchedNeighbor);
 
-        }
-        evictedItem = matching.get(location);
-
-        matching.put(location, currentNode);
+        matching.put(bestMatchedNeighbor, currentNode);
 
         return evictedItem;
     }
 
-    private void updateLabels(String bestChoice, String nextBestChoice, HashMap<String, Integer> labels) {
-        int nextBestLabel = (nextBestChoice.equals(EMPTY_CHOICE)) ? Integer.MAX_VALUE : labels.get(nextBestChoice);
+    private void updateLabels(String bestLocationChoice, String nextBestLocationChoice, 
+                                                        HashMap<String, Integer> labels, int looplimit) {
+        //System.out.println("\tNext Best Location : " + nextBestLocationChoice);
+//        int nextBestLabel = (nextBestLocationChoice == null) ? 
+//                                rightSet.size() : labels.get(nextBestLocationChoice);
 
-        labels.put(bestChoice, nextBestLabel + 1);
+        int nextBestLabel = (nextBestLocationChoice == null) ? 
+                                looplimit: labels.get(nextBestLocationChoice);
+
+        labels.put(bestLocationChoice, nextBestLabel + 1);
+        //System.out.println("\t" + bestLocationChoice + " : " + labels.get(bestLocationChoice));
     }
 
     private Set<String> neighborsOfNode(String currentNode) {
