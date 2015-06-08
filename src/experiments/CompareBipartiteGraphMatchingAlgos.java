@@ -22,17 +22,16 @@ import org.jgrapht.graph.UndirectedSubgraph;
  * @author avishekanand
  */
 public class CompareBipartiteGraphMatchingAlgos {
-    
+
     private static final Logger log = Logger.getLogger(GraphLoaderToJGraphT.class.getName());
-    
+
     public static void main(String[] args) throws IOException {
 
         String graphFile = (args.length > 0) ? args[0]
-            : "/Users/avishekanand/research/data/delicious/deli-wiki-head.tsv";
+            : "/Users/avishekanand/research/data/delicious/deli-wiki.tsv";
 
 //        String graphFile = (args.length > 0) ? args[0] 
 //                        : "/Users/avishekanand/research/data/delicious/sample.tsv";
-//        
         GraphLoaderToJGraphT graphConstructor = new GraphLoaderToJGraphT();
         BufferedReader br = new BufferedReader(new FileReader(graphFile));
 
@@ -51,14 +50,11 @@ public class CompareBipartiteGraphMatchingAlgos {
         log.log(Level.INFO, "Bipartite graph constructed in "
             + (System.currentTimeMillis() - time) / 1000 + " seconds  ");
 
-        
         //compare algos in connected components
         //compareOnConnectedComponents(bipartiteGraph);
-
         compareWithVaryingLoopLimits(bipartiteGraph, left, right);
     }
-    
-    
+
     private static int identifyTreeStructures(UndirectedGraph<String, DefaultEdge> bipartiteGraph,
         HashSet<String> left, HashSet<String> right) {
         int count = 0;
@@ -83,29 +79,28 @@ public class CompareBipartiteGraphMatchingAlgos {
         //find connected Components
         ConnectivityInspector<String, DefaultEdge> ci = new ConnectivityInspector<>(bipartiteGraph);
         List<Set<String>> connectedSets = ci.connectedSets();
-        
+
         for (Set<String> vertexSet : connectedSets) {
             UndirectedSubgraph<String, DefaultEdge> connectedComponent = new UndirectedSubgraph(bipartiteGraph, vertexSet, null);
-            
-            Pair<HashSet<String>,HashSet<String>> partitions = getLeftAndRightSets(connectedComponent);
-            System.out.println("Connected Component Size : " + connectedComponent.vertexSet().size() + 
-                                                        ", edges : " + connectedComponent.edgeSet().size());
-            
+
+            Pair<HashSet<String>, HashSet<String>> partitions = getLeftAndRightSets(connectedComponent);
+            System.out.println("Connected Component Size : " + connectedComponent.vertexSet().size()
+                + ", edges : " + connectedComponent.edgeSet().size());
+
             // Hopcroft matching
             long time = System.currentTimeMillis();
             HopcroftKarpBipartiteMatching<String, DefaultEdge> alg
                 = new HopcroftKarpBipartiteMatching<String, DefaultEdge>(bipartiteGraph, partitions.fst, partitions.snd);
             Set<DefaultEdge> hopcroft = alg.getMatching();
             System.out.println("Hopcroft Matching done in  " + (System.currentTimeMillis() - time) / 1000
-            + " seconds matching size : " + hopcroft.size());
+                + " seconds matching size : " + hopcroft.size());
 
-            
             // Khosla Matching
             KhoslaMatching lsa = null;
             HashSet<String> left = partitions.fst;
             HashSet<String> right = partitions.snd;
             int looplimit = 0;
-            
+
             if (left.size() > right.size()) {
                 lsa = new KhoslaMatching(connectedComponent, left, right);
                 looplimit = right.size();
@@ -114,47 +109,40 @@ public class CompareBipartiteGraphMatchingAlgos {
                 lsa.LEFT_PRIMARY = false;
                 looplimit = left.size();
             }
-            
+
             time = System.currentTimeMillis();
-            lsa.run(looplimit, hopcroft);
+            lsa.run(looplimit);
             Set<DefaultEdge> khosla = lsa.getMatching();
             System.out.println("Khosla Matching done in  " + (System.currentTimeMillis() - time) / 1000
                 + " seconds matching size : " + khosla.size() + " , Loop Limit : " + looplimit);
 
             if (khosla.size() != hopcroft.size()) {
-             //   lsa.checkAugmentingPath();
-                System.out.println("Size Mismatch..." + (- khosla.size() + hopcroft.size()));
+                //   lsa.checkAugmentingPath();
+                System.out.println("Size Mismatch..." + (-khosla.size() + hopcroft.size()));
             }
         }
     }
 
-    private static Pair<HashSet<String>,HashSet<String>> getLeftAndRightSets(UndirectedSubgraph connectedComponent) {
+    private static Pair<HashSet<String>, HashSet<String>> getLeftAndRightSets(UndirectedSubgraph connectedComponent) {
         HashSet<String> leftSet = new HashSet<>();
         HashSet<String> rightSet = new HashSet<>();
-        
+
         Set<DefaultEdge> edgeSet = connectedComponent.edgeSet();
         for (DefaultEdge edge : edgeSet) {
             leftSet.add((String) connectedComponent.getEdgeSource(edge));
             rightSet.add((String) connectedComponent.getEdgeTarget(edge));
         }
-        
-        return new Pair(leftSet,rightSet);
+
+        return new Pair(leftSet, rightSet);
     }
 
-
     private static void compareWithVaryingLoopLimits(UndirectedGraph<String, DefaultEdge> bipartiteGraph, HashSet<String> left, HashSet<String> right) {
-        
-        long time = System.currentTimeMillis();
-        HopcroftKarpBipartiteMatching<String, DefaultEdge> alg
-            = new HopcroftKarpBipartiteMatching<String, DefaultEdge>(bipartiteGraph, left, right);
-        Set<DefaultEdge> hopcroft = alg.getMatching();
-        System.out.println("Hopcroft Matching done in  " + (System.currentTimeMillis() - time) / 1000
-            + " seconds matching size : " + hopcroft.size());
 
-        /////////Khosla Matching////////////
+        long time;
+        
         Set<DefaultEdge> khosla = null;
-        //int[] loopLimits = {1, 2, 4, 5, 8, 10, 50, 100, 1000, 10000, 100000, right.size()};
-        int[] loopLimits = {right.size()};
+        int[] loopLimits = {1, 2, 4, 5, 8, 10, 50, 100, 1000, 10000, 100000, right.size()};
+        //int[] loopLimits = {right.size()};
         for (int loopLimit : loopLimits) {
             KhoslaMatching lsa = null;
 
@@ -167,13 +155,20 @@ public class CompareBipartiteGraphMatchingAlgos {
 
             //run lsa with run bounds
             time = System.currentTimeMillis();
-            lsa.run(loopLimit, hopcroft);
+            lsa.run(loopLimit);
             khosla = lsa.getMatching();
             System.out.println("Khosla Matching done in  " + (System.currentTimeMillis() - time) / 1000
                 + " seconds matching size : " + khosla.size() + " , Loop Limit : " + loopLimit);
-            
-            lsa.checkAugmentingPath();
+
+            //lsa.checkAugmentingPath();
         }
+
+        time = System.currentTimeMillis();
+        HopcroftKarpBipartiteMatching<String, DefaultEdge> alg
+            = new HopcroftKarpBipartiteMatching<String, DefaultEdge>(bipartiteGraph, left, right);
+        Set<DefaultEdge> hopcroft = alg.getMatching();
+        System.out.println("Hopcroft Matching done in  " + (System.currentTimeMillis() - time) / 1000
+            + " seconds matching size : " + hopcroft.size());
     }
 
 }

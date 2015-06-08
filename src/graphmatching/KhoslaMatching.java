@@ -2,7 +2,6 @@ package graphmatching;
 
 import com.sun.tools.javac.util.Pair;
 import input.io.GraphLoaderToJGraphT;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -28,8 +27,8 @@ public class KhoslaMatching {
     private Set<DefaultEdge> matchedEdges;
 
     public boolean LEFT_PRIMARY = true;
-    
-    private HashMap<String, Integer> labels ;
+
+    private HashMap<String, Integer> labels;
 
     //private 
     public KhoslaMatching(UndirectedGraph<String, DefaultEdge> graph, HashSet<String> left, HashSet<String> right) {
@@ -38,8 +37,8 @@ public class KhoslaMatching {
         rightSet = right;
         matchedEdges = new HashSet<>();
     }
-    
-    public Set<DefaultEdge> run(int loopLimit, Set<DefaultEdge> hopcroft) {
+
+    public Set<DefaultEdge> run(int loopLimit) {
 
         ///Track Discarded edges
         HashSet<DefaultEdge> discarded = new HashSet<>();
@@ -53,21 +52,10 @@ public class KhoslaMatching {
         //initialize mappings
         HashMap<String, String> matching = new HashMap<>();
 
-        //prep the matching set with 1-choice edges
-//        for (String currentNode : leftSet) {
-//            Set<String> choices = neighborsOfNode(currentNode);
-//            
-//            if (choices.size() == 1) {
-//                Pair<String, String> topChoices = getBestCandidates(choices, labels);
-//                String bestLocationChoice = topChoices.fst;
-//                updateMatching(currentNode, bestLocationChoice, matching);
-//                updateLabels(bestLocationChoice, null, labels, loopLimit);
-//            }
-//
-//        }
         for (String currentNode : leftSet) {
-            if (currentNode.equals("person")) {
-                System.out.println("Encountered Person");
+            
+            if (currentNode.equals("module")) {
+                System.out.println("");
             }
             if (matching.containsKey(currentNode)) {
                 continue;
@@ -80,7 +68,7 @@ public class KhoslaMatching {
             Pair<String, String> topChoices = getBestCandidates(choices, labels);
 
             String bestLocationChoice = topChoices.fst;
-            
+
             //String nextBestLocationChoice = (topChoices.snd != null) ? topChoices.snd : EMPTY_CHOICE;
             String nextBestLocationChoice = topChoices.snd;
 
@@ -89,20 +77,6 @@ public class KhoslaMatching {
                 DefaultEdge edge = inputGraph.getEdge(currentNode, bestLocationChoice);
                 discarded.add(edge);
 
-//                if (hopcroft.contains(edge)) {
-//                    System.out.print("\tDiscarded Nodes : " + currentNode);
-//                for (String choice : choices) {
-//                    System.out.print("--" + choice + " ( " + labels.get(choice) + ")");
-//                }
-//                System.out.println("");
-//                
-//                String residentNode = matching.get(bestLocationChoice);
-//                System.out.print("Resident Node : " + residentNode);
-//                for (String choice : neighborsOfNode(residentNode)) {
-//                    System.out.print("--" + choice + " ( " + labels.get(choice) + ")");
-//                }
-//                System.out.println("");
-//                } 
                 continue;
             }
 
@@ -110,9 +84,6 @@ public class KhoslaMatching {
             while (isOccupied(bestLocationChoice, matching)) {
                 //Update matching and evict already matched item
                 currentNode = updateMatching(currentNode, bestLocationChoice, matching);
-                if (currentNode.equals("person")) {
-                   System.out.println("Evicted node -- Encountered Person");
-                }
                 
                 //update labels 
                 updateLabels(bestLocationChoice, nextBestLocationChoice, labels, loopLimit);
@@ -140,6 +111,7 @@ public class KhoslaMatching {
             //finally insert the current node into the empty best choice
             updateMatching(currentNode, bestLocationChoice, matching);
             updateLabels(bestLocationChoice, nextBestLocationChoice, labels, loopLimit);
+
         }
 
         //construct matching
@@ -171,6 +143,8 @@ public class KhoslaMatching {
 
             //System.out.print(choice + "(" + label + ")");
             if (label < bestlabel) {
+                nextBestlabel = bestlabel;
+                nextBestChoice = bestChoice;
                 bestlabel = label;
                 bestChoice = choice;
             } else if (label < nextBestlabel) {
@@ -247,7 +221,7 @@ public class KhoslaMatching {
             }
         }
     }
-    
+
     public UndirectedGraph<String, DefaultEdge> getInputGraph() {
         return inputGraph;
     }
@@ -265,7 +239,6 @@ public class KhoslaMatching {
 
         HashMap<String, String> fwdMatching = new HashMap<>();
         HashMap<String, String> invMatching = new HashMap<>();
-        
 
         //initialized matching
         HashSet<String> boundVertices = new HashSet<>();
@@ -281,8 +254,8 @@ public class KhoslaMatching {
         }
 
         HashSet<String> nodesWithfreeVertices = new HashSet<>();
-        
-        //find bound vertices with free vertices
+
+        //find bound vertices which are connected with free vertices
         for (String candidate : boundVertices) {
             HashSet<String> neighbors = undirectedNeighborsOfNode(candidate);
             neighbors.removeAll(boundVertices);
@@ -292,123 +265,111 @@ public class KhoslaMatching {
             }
         }
 
-        
         int cnt = 0;
         for (String nodeWithFreeVertex : nodesWithfreeVertices) {
 //            ArrayList<String> path = doBFS(nodeWithFreeVertex, fwdMatching, 
 //                                        invMatching, boundVertices, nodesWithfreeVertices);
-            
+
             String partner = (fwdMatching.containsKey(nodeWithFreeVertex))
-                                ? fwdMatching.get(nodeWithFreeVertex)
-                                : invMatching.get(nodeWithFreeVertex);
-        
+                ? fwdMatching.get(nodeWithFreeVertex)
+                : invMatching.get(nodeWithFreeVertex);
+
             LinkedList<String> dfsPath = new LinkedList<>();
             dfsPath.add(nodeWithFreeVertex);
             
-            boolean hasAugPath = doDFS(partner, dfsPath, boundVertices, nodesWithfreeVertices, true);
+            if (nodeWithFreeVertex.equals("2")) {
+                System.out.println("");
+            }
+
+            boolean hasAugPath = doDFS(partner, dfsPath, boundVertices, nodesWithfreeVertices, 
+                                                        fwdMatching, invMatching, true);
             if (hasAugPath) {
-                printAugmentingPath(dfsPath, boundVertices);
+                printAugmentingPath(dfsPath, boundVertices, fwdMatching, invMatching);
                 cnt++;
             }
         }
         System.out.println("Has " + cnt + " augmenting paths..");
     }
 
-    private ArrayList<String> doBFS(String nodeWithFreeVertex, 
-                                    HashMap<String, String> fwdMatching, 
-                                    HashMap<String, String> invMatching,
-                                    HashSet<String> boundVertices,
-                                    HashSet<String> nodesWithfreeVertices) {
+    private boolean doDFS(String current, LinkedList<String> dfsPath,
+        HashSet<String> boundVertices,
+        HashSet<String> nodesWithfreeVertices,
+        HashMap<String, String> fwdMatching,
+        HashMap<String, String> invMatching,
+        boolean outgoing) {
+        dfsPath.add(current);
 
-        LinkedList<String> toBeVisited = new LinkedList<>();
+        //base case
+        if (nodesWithfreeVertices.contains(current) && outgoing) {
+            return true;
+        }
 
-        String partner = (fwdMatching.containsKey(nodeWithFreeVertex))
-            ? fwdMatching.get(nodeWithFreeVertex)
-            : invMatching.get(nodeWithFreeVertex);
-        boolean hasAugmentingPath = false;
-        toBeVisited.add(partner);
-
-        ArrayList<String> path = new ArrayList<String>();
-        path.add(nodeWithFreeVertex);
-        path.add(partner);
-
-        while (!toBeVisited.isEmpty() && !hasAugmentingPath) {
-            String current = toBeVisited.remove();
-
+        // in case of an incoming bound node choose the matched counterpart
+        if (!outgoing) {
+            String cand = fwdMatching.containsKey(current) ? fwdMatching.get(current)
+                : invMatching.get(current);
+            
+            //flip switch
+            outgoing = outgoing ? false : true;
+            return doDFS(cand, dfsPath, boundVertices, nodesWithfreeVertices, fwdMatching, invMatching,
+                true);
+        } else {
             HashSet<String> candidates = undirectedNeighborsOfNode(current);
-            candidates.removeAll(path);
+            candidates.removeAll(dfsPath);
+            //candidates.retainAll(boundVertices);
+
+            //flip switch
+            outgoing = outgoing ? false : true;
 
             for (String candidate : candidates) {
-                if (nodesWithfreeVertices.contains(candidate)) {
-                    hasAugmentingPath = true;
-                    System.out.println("Aug Path Found : " + nodeWithFreeVertex
-                        + "--> " + candidate);
-                    break;
-                } else if (boundVertices.contains(candidate)) {
-                    toBeVisited.add(candidate);
+                boolean hasAugPath = doDFS(candidate, dfsPath, boundVertices, nodesWithfreeVertices,
+                    fwdMatching, invMatching, outgoing);
+                if (hasAugPath) {
+                    return true;
+                } else {
+                    dfsPath.remove(candidate);
                 }
             }
         }
-        return path;
-    }
-
-    private boolean doDFS(String current, LinkedList<String> dfsPath, 
-                                          HashSet<String> boundVertices, 
-                                          HashSet<String> nodesWithfreeVertices,
-                                          boolean canBeAugmenting) {
-        dfsPath.add(current);
-        
-        //base case
-        if (nodesWithfreeVertices.contains(current) && canBeAugmenting) {
-            return true;
-        }
-        
-        HashSet<String> candidates = undirectedNeighborsOfNode(current);
-        candidates.removeAll(dfsPath);
-        candidates.retainAll(boundVertices);
-        
-        //flip switch
-        canBeAugmenting = canBeAugmenting ? false : true;
-        
-        for (String candidate : candidates) {
-            boolean hasAugPath = doDFS(candidate, dfsPath, boundVertices, nodesWithfreeVertices, canBeAugmenting);
-            if (hasAugPath) {
-                return true;
-            } else{
-                dfsPath.remove(candidate);
-            }
-        }
-        
         return false;
     }
 
-    private void printAugmentingPath(LinkedList<String> dfsPath, HashSet<String> boundVertices) {
-        System.out.println("Augmenting Path of path length : " + (dfsPath.size()+2));
+    private void printAugmentingPath(LinkedList<String> dfsPath, HashSet<String> boundVertices, HashMap<String, String> fwdMatching, HashMap<String, String> invMatching) {
         
+        if ((dfsPath.size() + 2) > 6) {
+            return ;
+        }
+        
+        System.out.println("Augmenting Path of path length : " + (dfsPath.size() + 2));
         String freeVertex = "";
-        System.out.print("\t Free Vertex --> "  );
+        
+        System.out.println("\t Free Vertex --> ");
         for (String node : dfsPath) {
             String printnode = node;
             if (labels.containsKey(node)) {
                 printnode = node + " (" + labels.get(node) + ") ";
             }
-            System.out.print (printnode + " --> ");
+            
+            if (fwdMatching.containsKey(node)) {
+                printnode = printnode + " <==> " + fwdMatching.get(node);
+            } else if (invMatching.containsKey(node)) {
+                printnode = printnode + " <==> " + invMatching.get(node);
+            }
+            System.out.println("\t" + printnode);
             freeVertex = node;
         }
-        
+
         HashSet<String> freecandidates = undirectedNeighborsOfNode(freeVertex);
         freecandidates.removeAll(boundVertices);
-        
+
         for (String freecandidate : freecandidates) {
             freeVertex = freecandidate;
             if (labels.containsKey(freecandidate)) {
                 freeVertex = freeVertex + "FV ( " + labels.get(freecandidate) + ")";
             }
         }
-        
-        
+
         System.out.print(freeVertex);
         System.out.println("");
-        
     }
 }
