@@ -53,7 +53,8 @@ public class GraphLoaderToJGraphT {
         //_input.close();
         // create a graph based on URL objects
         //webGraph = constructDirectedWebGraph(_input, nodes);
-        webGraph = constructDirectedWebGraphArray(_input, nodes);
+        //webGraph = constructDirectedWebGraphArray(_input, nodes);
+        webGraph = constructDirectedWebGraphUnknownVertices(_input);
     }
 
     public BufferedReader getReader(String inputFile) throws FileNotFoundException, IOException {
@@ -64,9 +65,10 @@ public class GraphLoaderToJGraphT {
     }
 
     public static void main(String[] args) throws IOException {
-        GraphLoaderToJGraphT graphLoader = new GraphLoaderToJGraphT("/Users/avishekanand/research/data/de-yr-graphs/de-2000.gz");
-
-        System.out.println(graphLoader.webGraph.toString());
+        GraphLoaderToJGraphT graphLoader = new GraphLoaderToJGraphT("/Users/avishekanand/research/data/graphlog/out/de-2000.gz");
+        //GraphLoaderToJGraphT graphLoader = new GraphLoaderToJGraphT("/Users/avishekanand/research/data/de-yr-graphs/de-2000.gz");
+//
+        //System.out.println(graphLoader.webGraph.toString());
 
     }
 
@@ -218,6 +220,49 @@ public class GraphLoaderToJGraphT {
                 }
             }
 
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return g;
+    }
+    
+    
+    private DirectedGraph<Integer, DefaultEdge> constructDirectedWebGraphUnknownVertices(BufferedReader _input) throws IOException {
+        DirectedGraph<Integer, DefaultEdge> g
+                = new DefaultDirectedGraph<Integer, DefaultEdge>(DefaultEdge.class);
+        int edgeCount = 0;
+        try {
+            // add vertices
+            while (_input.ready()) {
+                String[] list = _input.readLine().split("\\s+");
+
+                int nodeID = Integer.parseInt(list[0]);
+
+                if (!g.containsVertex(nodeID)) {
+                    g.addVertex(nodeID);
+                }
+                
+                //cases where a node doesnt have edges
+                if (list.length <= 1) {
+                    edgeCount++;
+                    continue;
+                }
+
+                for (int i = 1; i < list.length; i++) {
+                    int target = Integer.parseInt(list[i]);
+
+                    if (!g.containsVertex(target)) {
+                        g.addVertex(target);
+                    }
+                    
+                    g.addEdge(nodeID, target);
+                    edgeCount++;
+                }
+            }
+
+            _input.close();
+            log.log(Level.INFO, "Created Graph from Adjacency Lists for " + g.vertexSet().size() + " nodes and " + edgeCount + " edges");
+            
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
