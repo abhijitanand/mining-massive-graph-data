@@ -1,6 +1,5 @@
 package input.io;
 
-import experiments.DcoreAnalysis;
 import gnu.trove.TIntObjectHashMap;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
