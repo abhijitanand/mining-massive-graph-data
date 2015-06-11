@@ -4,13 +4,16 @@ import com.sun.tools.javac.util.Pair;
 import graphmatching.KhoslaMatching;
 import input.io.GraphLoaderToJGraphT;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.GZIPInputStream;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.alg.HopcroftKarpBipartiteMatching;
@@ -27,14 +30,22 @@ public class CompareBipartiteGraphMatchingAlgos {
 
     public static void main(String[] args) throws IOException {
 
-        String graphFile = (args.length > 0) ? args[0]
+        String filename = (args.length > 0) ? args[0]
             : "/Users/avishekanand/research/data/delicious/deli-wiki.tsv";
 
+        
 //        String graphFile = (args.length > 0) ? args[0] 
 //                        : "/Users/avishekanand/research/data/delicious/sample.tsv";
         GraphLoaderToJGraphT graphConstructor = new GraphLoaderToJGraphT();
-        BufferedReader br = new BufferedReader(new FileReader(graphFile));
-
+        
+        BufferedReader br;
+        if (filename.endsWith(".gz")) {
+            br = new BufferedReader(new InputStreamReader (
+                                         new GZIPInputStream(new FileInputStream(filename))));
+        }else{
+            br = new BufferedReader(new FileReader(filename));
+        }
+        
         long time = System.currentTimeMillis();
 
         HashSet<String> left = new HashSet<>();

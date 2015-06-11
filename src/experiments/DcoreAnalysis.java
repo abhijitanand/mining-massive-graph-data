@@ -169,7 +169,6 @@ public class DcoreAnalysis {
         }
         
         ExamineStructuralGraphProperties g = new ExamineStructuralGraphProperties(webGraph);
-
         dcoreAnalysis.findCoreWiseSizeDistribution(g, mappings);
     }
 
