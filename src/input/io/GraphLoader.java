@@ -50,7 +50,7 @@ public class GraphLoader {
         
         while (br.ready()){
             String line = br.readLine();
-            String[] edge = line.split("\\s+");
+            String[] edge = line.split("\t");
             
             int source = nodeMappings.get(edge[0]);
             int target = nodeMappings.get(edge[1]);
@@ -162,7 +162,7 @@ public class GraphLoader {
         int edges = 0;
         //first iteration for compression
         while (br.ready()){
-            String[] line = br.readLine().split("\\s+");
+            String[] line = br.readLine().split("\t");
             String source = line[0];
             String target = line[1];
             

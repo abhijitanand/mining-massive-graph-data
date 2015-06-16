@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +23,7 @@ import org.jgrapht.graph.SimpleGraph;
  *
  * @author avishekanand
  */
-public class GraphLoaderToJGraphT {
+public class GraphLoaderToJGraphT<V,E> {
 
     private static final Logger log = Logger.getLogger(GraphLoaderToJGraphT.class.getName());
 
@@ -341,6 +342,27 @@ public class GraphLoaderToJGraphT {
             
         }
         return g;
+    }
+    
+    
+    public HashMap<String, String> createIdToLabelMappingsString(String mapFile) throws FileNotFoundException, IOException {
+        HashMap<String,String> nodeToIdMappings = new HashMap<>();
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(
+                new GZIPInputStream(new FileInputStream(mapFile))));
+
+        while (br.ready()) {
+            String[] line = br.readLine().split("\\s+");
+
+            String node = line[0];
+            String id = line[1];
+
+            //System.out.println(node + "\t" + id);
+            nodeToIdMappings.put(id, node);
+        }
+        br.close();
+
+        return nodeToIdMappings;
     }
     
     
