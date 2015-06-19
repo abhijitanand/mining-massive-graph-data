@@ -24,6 +24,8 @@ import org.jgrapht.graph.SimpleGraph;
  */
 public class GraphLoaderToJGraphT {
 
+     public String DELIMITOR = "\t";
+    
     private static final Logger log = Logger.getLogger(GraphLoaderToJGraphT.class.getName());
 
     BufferedReader _input = null;
@@ -351,7 +353,7 @@ public class GraphLoaderToJGraphT {
                 new GZIPInputStream(new FileInputStream(mapFile))));
 
         while (br.ready()) {
-            String[] line = br.readLine().split("\\s+");
+            String[] line = br.readLine().split(DELIMITOR);
 
             String node = line[0];
             int id = Integer.parseInt(line[1]);

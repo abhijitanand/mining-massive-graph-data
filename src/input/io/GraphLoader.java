@@ -25,6 +25,8 @@ public class GraphLoader {
     
     private int PROGRESS_COUNTER = 1000000;
     
+    public String DELIMITOR = "\t";
+    
     public GraphLoader(){
         
     }
@@ -50,7 +52,12 @@ public class GraphLoader {
         
         while (br.ready()){
             String line = br.readLine();
-            String[] edge = line.split("\\s+");
+            String[] edge = line.split(DELIMITOR);
+            
+            if (edge.length == 1) {
+                System.out.println("Only 1 vertex..malformed input");
+                continue;
+            }
             
             int source = nodeMappings.get(edge[0]);
             int target = nodeMappings.get(edge[1]);
@@ -94,7 +101,7 @@ public class GraphLoader {
                     continue;
                 }
                 
-                bw.write("\t" + target);
+                bw.write(DELIMITOR + target);
                 //System.out.print("\t" + target);
             }
             bw.write("\n");
@@ -112,7 +119,7 @@ public class GraphLoader {
         //BufferedWriter bw = new BufferedWriter(new FileWriter(mapFile));
         
         for (NodeDegree node : compressInputGraph) {
-            bw.write(node.nodeName + "\t" + node.id + "\n");
+            bw.write(node.nodeName + DELIMITOR + node.id + "\n");
         }
         bw.close();
     }
@@ -127,7 +134,7 @@ public class GraphLoader {
          System.out.println("Loading Map file..");
          int nodes = 0;
          while (br.ready()) {            
-            String[] line = br.readLine().split("\\s+");
+            String[] line = br.readLine().split(DELIMITOR);
             
             String node = line[0];
             int id = Integer.parseInt(line[1]);
@@ -162,7 +169,12 @@ public class GraphLoader {
         int edges = 0;
         //first iteration for compression
         while (br.ready()){
-            String[] line = br.readLine().split("\\s+");
+            String[] line = br.readLine().split(DELIMITOR);
+            
+            if (line.length == 1) {
+                System.out.println("Only 1 vertex..malformed input");
+                continue;
+            }
             String source = line[0];
             String target = line[1];
             
