@@ -58,6 +58,7 @@ public class GraphLoader {
                 System.out.println("Only 1 vertex..malformed input");
                 continue;
             }
+
             
             int source = nodeMappings.get(edge[0]);
             int target = nodeMappings.get(edge[1]);
@@ -175,6 +176,7 @@ public class GraphLoader {
                 System.out.println("Only 1 vertex..malformed input");
                 continue;
             }
+
             String source = line[0];
             String target = line[1];
             

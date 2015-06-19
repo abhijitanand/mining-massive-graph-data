@@ -65,9 +65,9 @@ public class DcoreAnalysis {
         TIntObjectHashMap<String> colors = new TIntObjectHashMap<>();
         
         long time = System.currentTimeMillis();
-        for (int k = 6; k < 2000; k++) {
-            log.log(Level.INFO, "Finding cores for k = " + 6 + " time taken :  "
-                            + (time - System.currentTimeMillis())/1000 + " seconds");
+        for (int k = 1; k < 2000; k++) {
+            log.log(Level.INFO, "Finding cores for k = " + k + " time taken :  "
+                            + ( System.currentTimeMillis()-time)/1000 + " seconds");
             
             if (g.graph.vertexSet().isEmpty()) {
                 break;
