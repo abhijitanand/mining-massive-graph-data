@@ -347,6 +347,62 @@ public class GraphLoaderToJGraphT<V,E> {
     }
     
     
+    public UndirectedGraph<String, DefaultEdge> constructUndirectedUnweightedGeneralGraph(BufferedReader _input, int nodeOffsetInFile, 
+                                                        int edgeOffset) throws IOException {
+        UndirectedGraph<String, DefaultEdge> g =
+            new SimpleGraph<String, DefaultEdge>(DefaultEdge.class);
+
+        int edgeCount = 0;
+        int vertexCount = 0;
+        
+        String[] list = {"nukll"};
+        try {
+            // add vertices
+            while (_input.ready()) {
+                list = _input.readLine().split("\\s+");
+
+                String source = list[nodeOffsetInFile];
+                
+                if (!g.containsVertex(source)){
+                    g.addVertex(source);                    
+                    vertexCount++;
+                }
+                
+                //cases where a node doesnt have edges
+                if (list.length <= nodeOffsetInFile+1) {
+                    edgeCount++;
+                    continue;
+                }
+
+                for (int i = edgeOffset; i < list.length; i++) {
+                    String target = list[i];
+
+                    if (!g.containsVertex(target)) {
+                        g.addVertex(target);
+                        vertexCount++;
+                    }
+                    
+                    if (!g.containsEdge(source,target) && !source.equals(target)){
+                        g.addEdge(source, target);
+                        edgeCount++;
+                    }
+                }
+            }
+
+            _input.close();
+            log.log(Level.INFO, "Creating Graph from Adjacency Lists for " + vertexCount + " nodes and " + edgeCount + " edges");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();            
+        }
+        catch(Exception e){
+            for (String string : list) {
+                    System.out.println(string + "");
+                }
+            
+        }
+        return g;
+    }
+    
     public HashMap<String, String> createIdToLabelMappingsString(String mapFile) throws FileNotFoundException, IOException {
         HashMap<String,String> nodeToIdMappings = new HashMap<>();
 

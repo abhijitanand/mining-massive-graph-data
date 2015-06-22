@@ -20,17 +20,16 @@ public class KhoslaMatchingBipartiteGraph {
 
     private final UndirectedGraph<String, DefaultEdge> inputGraph;
 
-    private HashSet<String> rightSet;
+    private final HashSet<String> rightSet;
 
-    private HashSet<String> leftSet;
+    private final HashSet<String> leftSet;
 
-    private Set<DefaultEdge> matchedEdges;
+    private final Set<DefaultEdge> matchedEdges;
 
     public boolean LEFT_PRIMARY = true;
 
     private HashMap<String, Integer> labels;
 
-    //private 
     public KhoslaMatchingBipartiteGraph(UndirectedGraph<String, DefaultEdge> graph, HashSet<String> left, HashSet<String> right) {
         this.inputGraph = graph;
         leftSet = left;
@@ -42,21 +41,18 @@ public class KhoslaMatchingBipartiteGraph {
 
         ///Track Discarded edges
         HashSet<DefaultEdge> discarded = new HashSet<>();
+        
         //initialize labels 
         labels = new HashMap<>();
-
         for (String bucket : rightSet) {
             labels.put(bucket, 0);
         }
 
-        //initialize mappings
+        //initialize matching
         HashMap<String, String> matching = new HashMap<>();
 
         for (String currentNode : leftSet) {
             
-            if (currentNode.equals("module")) {
-                System.out.println("");
-            }
             if (matching.containsKey(currentNode)) {
                 continue;
             }
@@ -68,15 +64,12 @@ public class KhoslaMatchingBipartiteGraph {
             Pair<String, String> topChoices = getBestCandidates(choices, labels);
 
             String bestLocationChoice = topChoices.fst;
-
-            //String nextBestLocationChoice = (topChoices.snd != null) ? topChoices.snd : EMPTY_CHOICE;
             String nextBestLocationChoice = topChoices.snd;
 
             //If the best choice > n-1, then we discard the item
             if (bestLocationChoice == null || labels.get(bestLocationChoice) >= loopLimit) {
                 DefaultEdge edge = inputGraph.getEdge(currentNode, bestLocationChoice);
                 discarded.add(edge);
-
                 continue;
             }
 
@@ -89,9 +82,7 @@ public class KhoslaMatchingBipartiteGraph {
                 updateLabels(bestLocationChoice, nextBestLocationChoice, labels, loopLimit);
 
                 //re-evaluate the choices for the evicted item
-                //choices = neighborsOfNode(currentNode);
-                choices = undirectedNeighborsOfNode(currentNode);
-                topChoices = getBestCandidates(choices, labels);
+                topChoices = getBestCandidates(undirectedNeighborsOfNode(currentNode), labels);
 
                 bestLocationChoice = topChoices.fst;
                 nextBestLocationChoice = topChoices.snd;
@@ -117,12 +108,8 @@ public class KhoslaMatchingBipartiteGraph {
         //construct matching
         constructMatching(matching);
 
-//        return matchedEdges;
-        return discarded;
-    }
-
-    public Set<DefaultEdge> getMatching() {
         return matchedEdges;
+        //return discarded;
     }
 
     private Pair<String, String> getBestCandidates(Set<String> choices, HashMap<String, Integer> labels) {
@@ -176,28 +163,6 @@ public class KhoslaMatchingBipartiteGraph {
         labels.put(bestLocationChoice, nextBestLabel + 1);
     }
 
-    /**
-     * Assumes undirected edge semantics
-     *
-     * @param currentNode
-     * @return
-     */
-    private HashSet<String> neighborsOfNode(String currentNode) {
-
-        HashSet<String> choices = new HashSet<>();
-
-        //Construct a set of neighbors
-        for (DefaultEdge edge : inputGraph.edgesOf(currentNode)) {
-            if (LEFT_PRIMARY) {
-                choices.add(inputGraph.getEdgeTarget(edge));
-            } else {
-                choices.add(inputGraph.getEdgeSource(edge));
-            }
-
-        }
-        return choices;
-    }
-
     private HashSet<String> undirectedNeighborsOfNode(String currentNode) {
 
         HashSet<String> choices = new HashSet<>();
@@ -226,6 +191,10 @@ public class KhoslaMatchingBipartiteGraph {
         return inputGraph;
     }
 
+    public Set<DefaultEdge> getMatching() {
+        return matchedEdges;
+    }
+    
     public HashSet<String> getRightSet() {
         return rightSet;
     }
@@ -267,8 +236,6 @@ public class KhoslaMatchingBipartiteGraph {
 
         int cnt = 0;
         for (String nodeWithFreeVertex : nodesWithfreeVertices) {
-//            ArrayList<String> path = doBFS(nodeWithFreeVertex, fwdMatching, 
-//                                        invMatching, boundVertices, nodesWithfreeVertices);
 
             String partner = (fwdMatching.containsKey(nodeWithFreeVertex))
                 ? fwdMatching.get(nodeWithFreeVertex)
@@ -276,10 +243,6 @@ public class KhoslaMatchingBipartiteGraph {
 
             LinkedList<String> dfsPath = new LinkedList<>();
             dfsPath.add(nodeWithFreeVertex);
-            
-            if (nodeWithFreeVertex.equals("2")) {
-                System.out.println("");
-            }
 
             boolean hasAugPath = doDFS(partner, dfsPath, boundVertices, nodesWithfreeVertices, 
                                                         fwdMatching, invMatching, true);
@@ -316,7 +279,6 @@ public class KhoslaMatchingBipartiteGraph {
         } else {
             HashSet<String> candidates = undirectedNeighborsOfNode(current);
             candidates.removeAll(dfsPath);
-            //candidates.retainAll(boundVertices);
 
             //flip switch
             outgoing = outgoing ? false : true;
