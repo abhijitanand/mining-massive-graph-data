@@ -1,7 +1,7 @@
 package experiments;
 
 import com.sun.tools.javac.util.Pair;
-import graphmatching.KhoslaMatching;
+import graphmatching.KhoslaMatchingBipartiteGraph;
 import input.io.GraphLoaderToJGraphT;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -107,16 +107,16 @@ public class CompareBipartiteGraphMatchingAlgos {
                 + " seconds matching size : " + hopcroft.size());
 
             // Khosla Matching
-            KhoslaMatching lsa = null;
+            KhoslaMatchingBipartiteGraph lsa = null;
             HashSet<String> left = partitions.fst;
             HashSet<String> right = partitions.snd;
             int looplimit = 0;
 
             if (left.size() > right.size()) {
-                lsa = new KhoslaMatching(connectedComponent, left, right);
+                lsa = new KhoslaMatchingBipartiteGraph(connectedComponent, left, right);
                 looplimit = right.size();
             } else {
-                lsa = new KhoslaMatching(bipartiteGraph, right, left);
+                lsa = new KhoslaMatchingBipartiteGraph(bipartiteGraph, right, left);
                 lsa.LEFT_PRIMARY = false;
                 looplimit = left.size();
             }
@@ -155,12 +155,12 @@ public class CompareBipartiteGraphMatchingAlgos {
         int[] loopLimits = {1, 2, 4, 5, 8, 10, 50, 100, 1000, 10000, 100000, right.size()};
         //int[] loopLimits = {right.size()};
         for (int loopLimit : loopLimits) {
-            KhoslaMatching lsa = null;
+            KhoslaMatchingBipartiteGraph lsa = null;
 
             if (left.size() > right.size()) {
-                lsa = new KhoslaMatching(bipartiteGraph, left, right);
+                lsa = new KhoslaMatchingBipartiteGraph(bipartiteGraph, left, right);
             } else {
-                lsa = new KhoslaMatching(bipartiteGraph, right, left);
+                lsa = new KhoslaMatchingBipartiteGraph(bipartiteGraph, right, left);
                 lsa.LEFT_PRIMARY = false;
             }
 

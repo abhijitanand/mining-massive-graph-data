@@ -14,7 +14,7 @@ import org.jgrapht.graph.DefaultEdge;
  *
  * @author avishekanand
  */
-public class KhoslaMatching {
+public class KhoslaMatchingBipartiteGraph {
 
     private static final Logger log = Logger.getLogger(GraphLoaderToJGraphT.class.getName());
 
@@ -31,7 +31,7 @@ public class KhoslaMatching {
     private HashMap<String, Integer> labels;
 
     //private 
-    public KhoslaMatching(UndirectedGraph<String, DefaultEdge> graph, HashSet<String> left, HashSet<String> right) {
+    public KhoslaMatchingBipartiteGraph(UndirectedGraph<String, DefaultEdge> graph, HashSet<String> left, HashSet<String> right) {
         this.inputGraph = graph;
         leftSet = left;
         rightSet = right;
