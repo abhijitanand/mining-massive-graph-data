@@ -293,29 +293,33 @@ public class GraphLoaderToJGraphT<V, E> {
         int edgeCount = 0;
         int vertexCount = 0;
         int lineCount = 0;
-        String[] list = {"nukll"};
+        int edgesDiscarded = 0;
+        String[] list = {"null"};
         try {
             // add vertices
             while (_input.ready()) {
-                
+                list = _input.readLine().split("\\s+");
                 //Skip header lines
                 if (lineCount < header) {
                     lineCount++;
                     continue;
                 }
-                
-                list = _input.readLine().split("\\s+");
-
                 String source = list[nodeOffsetInFile];
-
+                
                 if (!g.containsVertex(source) && !rightSet.contains(source)) {
                     g.addVertex(source);
                     vertexCount++;
 
                     //maintain left set
                     leftSet.add(source);
+                } else if (rightSet.contains(source)) {
+                    System.out.println("[present in right set]. Discarding vertex : " + source);
+                    continue;
                 }
-
+                
+                if(source.equals("food")){
+                    System.out.println("food encountered..");
+                }
                 //cases where a node doesnt have edges
                 if (list.length <= nodeOffsetInFile + 1) {
                     edgeCount++;
@@ -335,14 +339,16 @@ public class GraphLoaderToJGraphT<V, E> {
                         rightSet.add(target);
                         edgeCount++;
                     } else if (leftSet.contains(target)) {
-                        System.out.println("Not Bipartite : " + source + "-->" + target);
+                        //System.out.println("Not Bipartite : " + source + "-->" + target);
+                        edgesDiscarded++;
                     }
                 }
                 lineCount++;
             }
 
             _input.close();
-            log.log(Level.INFO, "Creating Graph from Adjacency Lists for " + vertexCount + " nodes and " + edgeCount + " edges");
+            log.log(Level.INFO, "Creating Graph from Adjacency Lists for " + vertexCount + " nodes and " + edgeCount + " edges; ");
+            log.log(Level.INFO, "Edges discarded :  " + edgesDiscarded);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (Exception e) {

@@ -1,9 +1,7 @@
 package experiments.data;
 
 import Diameter.DiameterBFS;
-import com.sun.tools.javac.util.Pair;
 import graphmatching.KhoslaMatchingBipartiteGraph;
-import graphmatching.generalgraphs.BallBinImplementation;
 import graphmatching.generalgraphs.AllNodeLabelling;
 import input.io.GraphLoaderToJGraphT;
 import java.io.BufferedReader;
@@ -12,16 +10,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
 import org.jgrapht.UndirectedGraph;
-import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.alg.HopcroftKarpBipartiteMatching;
 import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.UndirectedSubgraph;
 
 /**
  *
@@ -32,33 +27,22 @@ public class GeneralGraphMatchingAlgosOnBipartiteGraphs {
     private static final Logger log = Logger.getLogger(GraphLoaderToJGraphT.class.getName());
 
     public static void main(String[] args) throws IOException {
-
-//        String filename = (args.length > 0) ? args[0]: "/Users/avishekanand/research/data/delicious/deli-wiki.tsv";
-//        String filename = (args.length > 0) ? args[0] : "/Users/avishekanand/Downloads/Webscope_G3/ydata-ygroups-user-group-membership-graph-v1_0.txt";
-        String filename = (args.length > 0) ? args[0]: "/Users/avishekanand/research/data/delicious/sample.tsv";
-
-        int headerSpan = (args.length > 1) ? Integer.parseInt(args[1]) : 1;
-        int sourceOffset = (args.length > 1) ? Integer.parseInt(args[2]) : 0;
-        int targetOffset = (args.length > 1) ? Integer.parseInt(args[3]) : 1;
+        String filename = (args.length > 0) ? args[0]: "/Users/avishekanand/research/data/delicious/deli-wiki.tsv";
+//        String filename = (args.length > 0) ? args[0] : "/Users/avishekanand/research/data/delicious/yahoo/webscope-bipartite-g1/ydata-ysm-advertiser-phrase-graph-v1_0.txt.gz";
+//        String filename = (args.length > 0) ? args[0] : "/Users/avishekanand/research/data/delicious/yahoo/webscope-bipartite-g1/sample-cycle.txt";
+//        String filename = (args.length > 0) ? args[0]: "/Users/avishekanand/research/data/delicious/sample.tsv";
+// 1, 0, 1 for yahoo data
+        int headerSpan = (args.length > 1) ? Integer.parseInt(args[1]) : 0;
+        int sourceOffset = (args.length > 1) ? Integer.parseInt(args[2]) : 2;
+        int targetOffset = (args.length > 1) ? Integer.parseInt(args[3]) : 4;
 
         GraphLoaderToJGraphT graphConstructor = new GraphLoaderToJGraphT();
 
         BufferedReader br = getReaderFromFile(filename);
 
         long time = System.currentTimeMillis();
-
-        time = System.currentTimeMillis();
-        UndirectedGraph<String, DefaultEdge> generalGraph
-            = graphConstructor.constructUndirectedUnweightedGeneralGraph(br, sourceOffset, targetOffset,headerSpan);
-
-        log.log(Level.INFO, "Edges : " + generalGraph.edgeSet().size() + " Vertices : "
-            + generalGraph.vertexSet().size());
-        log.log(Level.INFO, "General graph constructed in "
-            + (System.currentTimeMillis() - time) / 1000 + " seconds  ");
-
-        //experiments with general graphs
-        compareWithVaryingLoopLimitsGeneralGraphs(generalGraph);
-
+        
+        
         HashSet<String> left = new HashSet<>();
         HashSet<String> right = new HashSet<>();
 
@@ -74,41 +58,21 @@ public class GeneralGraphMatchingAlgosOnBipartiteGraphs {
         //compareOnConnectedComponents(bipartiteGraph);
         compareWithVaryingLoopLimits(bipartiteGraph, left, right);
 
+
+        time = System.currentTimeMillis();
+//        UndirectedGraph<String, DefaultEdge> generalGraph
+//            = graphConstructor.constructUndirectedUnweightedGeneralGraph(br, sourceOffset, targetOffset,headerSpan);
+//
+//        log.log(Level.INFO, "Edges : " + generalGraph.edgeSet().size() + " Vertices : "
+//            + generalGraph.vertexSet().size());
+//        log.log(Level.INFO, "General graph constructed in "
+//            + (System.currentTimeMillis() - time) / 1000 + " seconds  ");
+
+        //experiments with general graphs
+        compareWithVaryingLoopLimitsGeneralGraphs(bipartiteGraph);
+
     }
-
-    private static int identifyTreeStructures(UndirectedGraph<String, DefaultEdge> bipartiteGraph,
-        HashSet<String> left, HashSet<String> right) {
-        int count = 0;
-
-        for (String source : left) {
-            boolean isTree = true;
-            for (DefaultEdge edge : bipartiteGraph.edgesOf(source)) {
-                String target = bipartiteGraph.getEdgeTarget(edge);
-                //System.out.println(source + ", " + target + " : " + bipartiteGraph.edgesOf(target).size() + "," + bipartiteGraph.degreeOf(target));
-                if (bipartiteGraph.degreeOf(target) > 1) {
-                    isTree = false;
-                    break;
-                }
-            }
-            count = (isTree == true) ? count + 1 : count;
-        }
-
-        return count;
-    }
-
-    private static Pair<HashSet<String>, HashSet<String>> getLeftAndRightSets(UndirectedSubgraph connectedComponent) {
-        HashSet<String> leftSet = new HashSet<>();
-        HashSet<String> rightSet = new HashSet<>();
-
-        Set<DefaultEdge> edgeSet = connectedComponent.edgeSet();
-        for (DefaultEdge edge : edgeSet) {
-            leftSet.add((String) connectedComponent.getEdgeSource(edge));
-            rightSet.add((String) connectedComponent.getEdgeTarget(edge));
-        }
-
-        return new Pair(leftSet, rightSet);
-    }
-
+   
     private static void compareWithVaryingLoopLimits(UndirectedGraph<String, DefaultEdge> bipartiteGraph, HashSet<String> left, HashSet<String> right) {
 
         long time = System.currentTimeMillis();
@@ -137,6 +101,7 @@ public class GeneralGraphMatchingAlgosOnBipartiteGraphs {
 
             //run lsa with run bounds
             time = System.currentTimeMillis();
+            lsa.isBipartite();
             lsa.run(loopLimit);
             khosla = lsa.getMatching();
             System.out.println("Khosla-Bipartite Matching done in  " + (System.currentTimeMillis() - time) / 1000
@@ -145,12 +110,12 @@ public class GeneralGraphMatchingAlgosOnBipartiteGraphs {
             //lsa.checkAugmentingPath();
         }
 
-        time = System.currentTimeMillis();
-        HopcroftKarpBipartiteMatching<String, DefaultEdge> alg
-            = new HopcroftKarpBipartiteMatching<String, DefaultEdge>(bipartiteGraph, left, right);
-        Set<DefaultEdge> hopcroft = alg.getMatching();
-        System.out.println("Hopcroft Matching done in  " + (System.currentTimeMillis() - time) / 1000
-            + " seconds matching size : " + hopcroft.size());
+//        time = System.currentTimeMillis();
+//        HopcroftKarpBipartiteMatching<String, DefaultEdge> alg
+//            = new HopcroftKarpBipartiteMatching<String, DefaultEdge>(bipartiteGraph, left, right);
+//        Set<DefaultEdge> hopcroft = alg.getMatching();
+//        System.out.println("Hopcroft Matching done in  " + (System.currentTimeMillis() - time) / 1000
+//            + " seconds matching size : " + hopcroft.size());
     }
 
   private static void compareWithVaryingLoopLimitsGeneralGraphs(UndirectedGraph<String, DefaultEdge> generalGraph) {

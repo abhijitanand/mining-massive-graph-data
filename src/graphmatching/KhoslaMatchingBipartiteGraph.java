@@ -129,6 +129,9 @@ public class KhoslaMatchingBipartiteGraph {
         //System.out.print("Finding best choice from : ");
         for (String choice : choices) {
             int label;
+            if(!labels.containsKey(choice)){
+                System.out.println("Choice not present in labels..not a bipartite graph : " + choice);
+            }
             label = labels.get(choice);
 
             //System.out.print(choice + "(" + label + ")");
@@ -210,7 +213,7 @@ public class KhoslaMatchingBipartiteGraph {
         if (count > 0) {
             System.out.println("Invalid Matching with nodes repeated : " + count);
         } else{
-            //System.out.println("Valid Matching with edges : " + matchedEdges.size());
+            System.out.println("Valid Matching with edges : " + matchedEdges.size());
         }
         
     }
@@ -362,5 +365,26 @@ public class KhoslaMatchingBipartiteGraph {
 
         System.out.print(freeVertex);
         System.out.println("");
+    }
+    
+    public boolean isBipartite(){
+        Set<DefaultEdge> edgeSet = inputGraph.edgeSet();
+        
+        for (DefaultEdge edge : edgeSet) {
+            String edgeSource = inputGraph.getEdgeSource(edge);
+            String edgeTarget = inputGraph.getEdgeTarget(edge);
+            
+            if (leftSet.contains(edgeSource) && leftSet.contains(edgeTarget) ||
+                    rightSet.contains(edgeSource) && rightSet.contains(edgeTarget)){
+                System.out.println("Graph is not Bipartite : " + edgeSource + " , " + edgeTarget);
+                if(leftSet.contains(edgeSource)){
+                    System.out.println("Present in leftset");
+                }else{
+                    System.out.println("Present in rightset");
+                }
+                return false;
+            }
+        }
+        return true;
     }
 }
