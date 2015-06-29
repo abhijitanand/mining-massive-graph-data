@@ -213,7 +213,7 @@ public class KhoslaMatchingBipartiteGraph {
         if (count > 0) {
             System.out.println("Invalid Matching with nodes repeated : " + count);
         } else{
-            System.out.println("Valid Matching with edges : " + matchedEdges.size());
+            //System.out.println("Valid Matching with edges : " + matchedEdges.size());
         }
         
     }

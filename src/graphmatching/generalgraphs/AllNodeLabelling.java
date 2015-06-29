@@ -362,7 +362,7 @@ public class AllNodeLabelling {
             System.out.println("Invalid Matching with nodes repeated : " + count);
             return false;
         } else{
-            System.out.println("Valid Matching with edges : " + matchedEdges.size());
+            //System.out.println("Valid Matching with edges : " + matchedEdges.size());
             return true;
         }
         
