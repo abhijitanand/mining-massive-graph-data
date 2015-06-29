@@ -30,12 +30,10 @@ public class CompareBipartiteGraphMatchingAlgos {
 
     public static void main(String[] args) throws IOException {
 
-        String filename = (args.length > 0) ? args[0]
-            : "/Users/avishekanand/research/data/delicious/deli-wiki.tsv";
+        String filename = (args.length > 0) ? args[0]: "/Users/avishekanand/research/data/delicious/deli-wiki.tsv";
 
+//        String filename = (args.length > 0) ? args[0] : "/Users/avishekanand/research/data/delicious/sample.tsv";
         
-//        String graphFile = (args.length > 0) ? args[0] 
-//                        : "/Users/avishekanand/research/data/delicious/sample.tsv";
         GraphLoaderToJGraphT graphConstructor = new GraphLoaderToJGraphT();
         
         BufferedReader br;
@@ -52,7 +50,7 @@ public class CompareBipartiteGraphMatchingAlgos {
         HashSet<String> right = new HashSet<>();
 
         UndirectedGraph<String, DefaultEdge> bipartiteGraph
-            = graphConstructor.constructBipartiteUndirectedUnweightedGraph(br, 2, 4, left, right);
+            = graphConstructor.constructBipartiteUndirectedUnweightedGraph(br, 2, 4, left, right,0);
 
         int treeComponents = identifyTreeStructures(bipartiteGraph, left, right);
 

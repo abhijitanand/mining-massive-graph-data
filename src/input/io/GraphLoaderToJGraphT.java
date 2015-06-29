@@ -23,20 +23,20 @@ import org.jgrapht.graph.SimpleGraph;
  *
  * @author avishekanand
  */
-public class GraphLoaderToJGraphT<V,E> {
+public class GraphLoaderToJGraphT<V, E> {
 
-     public String DELIMITOR = "\t";
-    
+    public String DELIMITOR = "\t";
+
     private static final Logger log = Logger.getLogger(GraphLoaderToJGraphT.class.getName());
 
     BufferedReader _input = null;
 
     DirectedGraph<Integer, DefaultEdge> webGraph;
 
-    public GraphLoaderToJGraphT(){
+    public GraphLoaderToJGraphT() {
 
     }
-     
+
     public GraphLoaderToJGraphT(String input) throws IOException {
         _input = getReader(input);
 
@@ -61,7 +61,7 @@ public class GraphLoaderToJGraphT<V,E> {
 
     public BufferedReader getReader(String inputFile) throws FileNotFoundException, IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(
-                new GZIPInputStream(new FileInputStream(inputFile))));
+            new GZIPInputStream(new FileInputStream(inputFile))));
 
         return br;
     }
@@ -80,7 +80,7 @@ public class GraphLoaderToJGraphT<V,E> {
 
     private DirectedGraph<Integer, DefaultEdge> constructDirectedWebGraph(BufferedReader _input, int nodes) throws IOException {
         DirectedGraph<Integer, DefaultEdge> g
-                = new DefaultDirectedGraph<Integer, DefaultEdge>(DefaultEdge.class);
+            = new DefaultDirectedGraph<Integer, DefaultEdge>(DefaultEdge.class);
 
         ArrayList<Integer>[] adjacencyLists = new ArrayList[nodes];
 
@@ -155,7 +155,7 @@ public class GraphLoaderToJGraphT<V,E> {
 
     private DirectedGraph<Integer, DefaultEdge> constructDirectedWebGraphArray(BufferedReader _input, int nodes) throws IOException {
         DirectedGraph<Integer, DefaultEdge> g
-                = new DefaultDirectedGraph<Integer, DefaultEdge>(DefaultEdge.class);
+            = new DefaultDirectedGraph<Integer, DefaultEdge>(DefaultEdge.class);
 
         int[][] adjacencyLists = new int[nodes][];
 
@@ -227,11 +227,10 @@ public class GraphLoaderToJGraphT<V,E> {
         }
         return g;
     }
-    
-    
+
     private DirectedGraph<Integer, DefaultEdge> constructDirectedWebGraphUnknownVertices(BufferedReader _input) throws IOException {
         DirectedGraph<Integer, DefaultEdge> g
-                = new DefaultDirectedGraph<Integer, DefaultEdge>(DefaultEdge.class);
+            = new DefaultDirectedGraph<Integer, DefaultEdge>(DefaultEdge.class);
         int edgeCount = 0;
         try {
             // add vertices
@@ -243,7 +242,7 @@ public class GraphLoaderToJGraphT<V,E> {
                 if (!g.containsVertex(nodeID)) {
                     g.addVertex(nodeID);
                 }
-                
+
                 //cases where a node doesnt have edges
                 if (list.length <= 1) {
                     edgeCount++;
@@ -256,7 +255,7 @@ public class GraphLoaderToJGraphT<V,E> {
                     if (!g.containsVertex(target)) {
                         g.addVertex(target);
                     }
-                    
+
                     g.addEdge(nodeID, target);
                     edgeCount++;
                 }
@@ -264,7 +263,7 @@ public class GraphLoaderToJGraphT<V,E> {
 
             _input.close();
             log.log(Level.INFO, "Created Graph from Adjacency Lists for " + g.vertexSet().size() + " nodes and " + edgeCount + " edges");
-            
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -272,46 +271,53 @@ public class GraphLoaderToJGraphT<V,E> {
     }
 
     /**
-     * 
+     *
      * Constructs a bi-partite graph from the input files.
-     * 
+     *
      * Here is the list of following ignores:
-     * 
-     * 1) Ignores edges which have source = destination
-     * 2) Ignore edges if the destination is already present in the source set
-     * 
+     *
+     * 1) Ignores edges which have source = destination 2) Ignore edges if the
+     * destination is already present in the source set
+     *
      * @param _input
      * @param nodeOffsetInFile
      * @param edgeOffset
      * @return
-     * @throws IOException 
+     * @throws IOException
      */
-    public UndirectedGraph<String, DefaultEdge> constructBipartiteUndirectedUnweightedGraph(BufferedReader _input, int nodeOffsetInFile, 
-                                                        int edgeOffset, HashSet<String> leftSet, HashSet<String> rightSet) throws IOException {
-        UndirectedGraph<String, DefaultEdge> g =
-            new SimpleGraph<String, DefaultEdge>(DefaultEdge.class);
+    public UndirectedGraph<String, DefaultEdge> constructBipartiteUndirectedUnweightedGraph(BufferedReader _input, int nodeOffsetInFile,
+        int edgeOffset, HashSet<String> leftSet, HashSet<String> rightSet, int header) throws IOException {
+        UndirectedGraph<String, DefaultEdge> g
+            = new SimpleGraph<String, DefaultEdge>(DefaultEdge.class);
 
         int edgeCount = 0;
         int vertexCount = 0;
-        
+        int lineCount = 0;
         String[] list = {"nukll"};
         try {
             // add vertices
             while (_input.ready()) {
+                
+                //Skip header lines
+                if (lineCount < header) {
+                    lineCount++;
+                    continue;
+                }
+                
                 list = _input.readLine().split("\\s+");
 
                 String source = list[nodeOffsetInFile];
-                
-                if (!g.containsVertex(source) && !rightSet.contains(source)){
-                    g.addVertex(source);                    
+
+                if (!g.containsVertex(source) && !rightSet.contains(source)) {
+                    g.addVertex(source);
                     vertexCount++;
-                    
+
                     //maintain left set
                     leftSet.add(source);
                 }
-                
+
                 //cases where a node doesnt have edges
-                if (list.length <= nodeOffsetInFile+1) {
+                if (list.length <= nodeOffsetInFile + 1) {
                     edgeCount++;
                     continue;
                 }
@@ -323,53 +329,60 @@ public class GraphLoaderToJGraphT<V,E> {
                         g.addVertex(target);
                         vertexCount++;
                     }
-                    
-                    if (!g.containsEdge(source,target) && !source.equals(target) && !leftSet.contains(target)){
+
+                    if (!g.containsEdge(source, target) && !source.equals(target) && !leftSet.contains(target)) {
                         g.addEdge(source, target);
                         rightSet.add(target);
                         edgeCount++;
+                    } else if (leftSet.contains(target)) {
+                        System.out.println("Not Bipartite : " + source + "-->" + target);
                     }
                 }
+                lineCount++;
             }
 
             _input.close();
             log.log(Level.INFO, "Creating Graph from Adjacency Lists for " + vertexCount + " nodes and " + edgeCount + " edges");
         } catch (MalformedURLException e) {
-            e.printStackTrace();            
-        }
-        catch(Exception e){
+            e.printStackTrace();
+        } catch (Exception e) {
             for (String string : list) {
-                    System.out.println(string + "");
-                }
-            
+                System.out.println(string + "");
+            }
+
         }
         return g;
     }
-    
-    
-    public UndirectedGraph<String, DefaultEdge> constructUndirectedUnweightedGeneralGraph(BufferedReader _input, int nodeOffsetInFile, 
-                                                        int edgeOffset) throws IOException {
-        UndirectedGraph<String, DefaultEdge> g =
-            new SimpleGraph<String, DefaultEdge>(DefaultEdge.class);
+
+    public UndirectedGraph<String, DefaultEdge> constructUndirectedUnweightedGeneralGraph(BufferedReader _input, int nodeOffsetInFile,
+        int edgeOffset, int header) throws IOException {
+        UndirectedGraph<String, DefaultEdge> g
+            = new SimpleGraph<String, DefaultEdge>(DefaultEdge.class);
 
         int edgeCount = 0;
         int vertexCount = 0;
+        int lineCount = 0;
         
-        String[] list = {"nukll"};
+        String[] list = {"null"};
         try {
             // add vertices
             while (_input.ready()) {
                 list = _input.readLine().split("\\s+");
-
-                String source = list[nodeOffsetInFile];
-                
-                if (!g.containsVertex(source)){
-                    g.addVertex(source);                    
-                    vertexCount++;
+                //Skip header lines
+                if (lineCount < header) {
+                    lineCount++;
+                    continue;
                 }
                 
+                String source = list[nodeOffsetInFile];
+
+                if (!g.containsVertex(source)) {
+                    g.addVertex(source);
+                    vertexCount++;
+                }
+
                 //cases where a node doesnt have edges
-                if (list.length <= nodeOffsetInFile+1) {
+                if (list.length <= nodeOffsetInFile + 1) {
                     edgeCount++;
                     continue;
                 }
@@ -381,8 +394,8 @@ public class GraphLoaderToJGraphT<V,E> {
                         g.addVertex(target);
                         vertexCount++;
                     }
-                    
-                    if (!g.containsEdge(source,target) && !source.equals(target)){
+
+                    if (!g.containsEdge(source, target) && !source.equals(target)) {
                         g.addEdge(source, target);
                         edgeCount++;
                     }
@@ -392,22 +405,21 @@ public class GraphLoaderToJGraphT<V,E> {
             _input.close();
             log.log(Level.INFO, "Creating Graph from Adjacency Lists for " + vertexCount + " nodes and " + edgeCount + " edges");
         } catch (MalformedURLException e) {
-            e.printStackTrace();            
-        }
-        catch(Exception e){
+            e.printStackTrace();
+        } catch (Exception e) {
             for (String string : list) {
-                    System.out.println(string + "");
-                }
-            
+                System.out.println(string + "");
+            }
+
         }
         return g;
     }
-    
+
     public HashMap<String, String> createIdToLabelMappingsString(String mapFile) throws FileNotFoundException, IOException {
-        HashMap<String,String> nodeToIdMappings = new HashMap<>();
+        HashMap<String, String> nodeToIdMappings = new HashMap<>();
 
         BufferedReader br = new BufferedReader(new InputStreamReader(
-                new GZIPInputStream(new FileInputStream(mapFile))));
+            new GZIPInputStream(new FileInputStream(mapFile))));
 
         while (br.ready()) {
             String[] line = br.readLine().split("\\s+");
@@ -422,13 +434,12 @@ public class GraphLoaderToJGraphT<V,E> {
 
         return nodeToIdMappings;
     }
-    
-    
+
     public TIntObjectHashMap<String> createIdToLabelMappings(String mapFile) throws FileNotFoundException, IOException {
         TIntObjectHashMap<String> nodeToIdMappings = new TIntObjectHashMap<>();
 
         BufferedReader br = new BufferedReader(new InputStreamReader(
-                new GZIPInputStream(new FileInputStream(mapFile))));
+            new GZIPInputStream(new FileInputStream(mapFile))));
 
         while (br.ready()) {
             String[] line = br.readLine().split(DELIMITOR);

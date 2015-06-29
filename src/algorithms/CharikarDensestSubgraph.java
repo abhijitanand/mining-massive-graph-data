@@ -108,7 +108,7 @@ public class CharikarDensestSubgraph<V, E> {
     public static void main(String[] args) throws FileNotFoundException, IOException {
         String graphFile = (args.length > 0) ? args[0]
             : "/Users/avishekanand/research/data/delicious/deli-wiki-head.tsv";
-
+        int headerSpan = (args.length > 1) ? Integer.parseInt(args[1]): 0;
 //        String graphFile = (args.length > 0) ? args[0] 
 //                        : "/Users/avishekanand/research/data/delicious/sample.tsv";
         GraphLoaderToJGraphT graphConstructor = new GraphLoaderToJGraphT();
@@ -118,7 +118,7 @@ public class CharikarDensestSubgraph<V, E> {
         HashSet<String> right = new HashSet<>();
 
         UndirectedGraph<String, DefaultEdge> bipartiteGraph
-            = graphConstructor.constructBipartiteUndirectedUnweightedGraph(br, 2, 4, left, right);
+            = graphConstructor.constructBipartiteUndirectedUnweightedGraph(br, 2, 4, left, right, headerSpan);
         
         
         CharikarDensestSubgraph<String, DefaultEdge> charikarDensestSubgraph = new CharikarDensestSubgraph<>(bipartiteGraph);

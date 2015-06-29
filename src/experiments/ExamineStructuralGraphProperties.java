@@ -42,15 +42,12 @@ public class ExamineStructuralGraphProperties {
     
     public DirectedSubgraph<Integer, DefaultEdge>[] computeConnectedComponents(){
         ConnectivityInspector<Integer, DefaultEdge> ci = new ConnectivityInspector<>(graph);
-        
         List<Set<Integer>> connectedSets = ci.connectedSets();
         
         System.out.println("\tConnected components : " + connectedSets.size());
-        
-        
         DirectedSubgraph<Integer, DefaultEdge>[] sg = new DirectedSubgraph[connectedSets.size()];
-        int idx = 0;
         
+        int idx = 0;
         for (Set<Integer> set : connectedSets) {
             sg[idx] = new DirectedSubgraph(graph,set, null);
             idx++;
