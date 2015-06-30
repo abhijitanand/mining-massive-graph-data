@@ -130,6 +130,10 @@ public class AllNodeLabelling {
         int nextBestLabel = (nextBestBin == null)
             ? looplimit - 1 : labels.get(nextBestBin);
 
+        int prev = labels.get(bestBin);
+        if (prev > (nextBestLabel + 2)) {
+            System.out.println("Label decreases : " + prev + " --> " + (nextBestLabel + 2));
+        }
         labels.put(bestBin, nextBestLabel + 2);
         
         //update label for bestBall

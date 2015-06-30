@@ -26,12 +26,14 @@ public class CompareGeneralGraphMatchingAlgos {
 
     public static void main(String[] args) throws IOException {
 
-        String filename = (args.length > 0) ? args[0]: "/Users/avishekanand/research/data/delicious/deli-wiki.tsv";
+//        String filename = (args.length > 0) ? args[0]: "/Users/avishekanand/research/data/delicious/deli-wiki.tsv";
 //        String filename = (args.length > 0) ? args[0] : "/Users/avishekanand/research/data/delicious/sample.tsv";
-
-        int headerSpan = (args.length > 1) ? Integer.parseInt(args[1]) : 0;
-        int sourceOffset = (args.length > 1) ? Integer.parseInt(args[2]) : 2;
-        int targetOffset = (args.length > 1) ? Integer.parseInt(args[3]) : 4;
+        String filename = (args.length > 0) ? args[0]: "/Users/avishekanand/research/data/delicious/amazon-graph.txt";
+//        String filename = (args.length > 0) ? args[0]: "/Users/avishekanand/research/data/delicious/handgraph.txt";
+        
+        int headerSpan = (args.length > 1) ? Integer.parseInt(args[1]) : 4;
+        int sourceOffset = (args.length > 1) ? Integer.parseInt(args[2]) : 0;
+        int targetOffset = (args.length > 1) ? Integer.parseInt(args[3]) : 1;
 
         GraphLoaderToJGraphT graphConstructor = new GraphLoaderToJGraphT();
         BufferedReader br = getReaderFromFile(filename);
