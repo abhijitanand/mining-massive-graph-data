@@ -28,10 +28,13 @@ public class CompareGeneralGraphMatchingAlgos {
 
 //        String filename = (args.length > 0) ? args[0]: "/Users/avishekanand/research/data/delicious/deli-wiki.tsv";
 //        String filename = (args.length > 0) ? args[0] : "/Users/avishekanand/research/data/delicious/sample.tsv";
-        String filename = (args.length > 0) ? args[0]: "/Users/avishekanand/research/data/delicious/amazon-graph.txt";
+//        String filename = (args.length > 0) ? args[0] : "/Users/avishekanand/research/data/delicious/yahoo/webscope-bipartite-g3/ydata-ygroups-user-group-membership-graph-v1_0.txt.gz";
+          String filename = (args.length > 0) ? args[0] : "/Users/avishekanand/research/data/delicious/yahoo/webscope-bipartite-g1/ydata-ysm-advertiser-phrase-graph-v1_0.txt.gz";
+
+//        String filename = (args.length > 0) ? args[0]: "/Users/avishekanand/research/data/delicious/amazon-graph.txt";
 //        String filename = (args.length > 0) ? args[0]: "/Users/avishekanand/research/data/delicious/handgraph.txt";
         
-        int headerSpan = (args.length > 1) ? Integer.parseInt(args[1]) : 4;
+        int headerSpan = (args.length > 1) ? Integer.parseInt(args[1]) : 1;
         int sourceOffset = (args.length > 1) ? Integer.parseInt(args[2]) : 0;
         int targetOffset = (args.length > 1) ? Integer.parseInt(args[3]) : 1;
 
@@ -67,10 +70,10 @@ public class CompareGeneralGraphMatchingAlgos {
         int diameterLB = diameterBFS.findDiameterUpperBound();
         log.log(Level.INFO, "Diameter Estimation done in " + (System.currentTimeMillis() - time)/1000 + " seconds");
         
-        int[] loopLimits = {1, 5, 10, 100, 1000, 10000, 100000, diameterLB};
+        int[] loopLimits = {1, 5, 10, 50, 100, 1000, 10000, 100000, diameterLB};
 //        int[] loopLimits = {diam};
         for (int loopLimit : loopLimits) {
-            if (loopLimit > diameterLB) {
+            if (loopLimit > 5*diameterLB) {
                 continue;
             }
             AllNodeLabelling lsa = new AllNodeLabelling(generalGraph);

@@ -139,7 +139,12 @@ public class AllNodeLabelling {
         //update label for bestBall
         Pair<String, String> topChoices = getBestCandidates(undirectedNeighborsOfNode(bestBin, incomingBall), binLabels);
         
+        prev = labels.get(incomingBall);
         int ballNewLabel = (topChoices.fst == null) ? looplimit : labels.get(topChoices.fst)+2;
+        
+        if (prev > ballNewLabel) {
+//            System.out.println("Label decreases : " + prev + " --> " + ballNewLabel);
+        }
         labels.put(incomingBall, ballNewLabel);
     }
 

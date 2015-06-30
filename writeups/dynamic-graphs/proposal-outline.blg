@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99d (TeX Live 2013)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: proposal-outline.aux
+The style file: plain.bst
+Database file #1: proposal-outline.bib
+Warning--can't use both volume and number fields in agrawal1989efficient
+Warning--empty booktitle in Henzinger
+Warning--empty publisher in Henzinger
+Warning--empty publisher in ballsbins
+You've used 27 entries,
+            2118 wiz_defined-function locations,
+            669 strings with 9622 characters,
+and the built_in function-call counts, 11972 in all, are:
+= -- 1239
+> -- 482
+< -- 21
++ -- 195
+- -- 162
+* -- 788
+:= -- 1779
+add.period$ -- 95
+call.type$ -- 27
+change.case$ -- 161
+chr.to.int$ -- 0
+cite$ -- 31
+duplicate$ -- 527
+empty$ -- 974
+format.name$ -- 162
+if$ -- 2685
+int.to.chr$ -- 0
+int.to.str$ -- 27
+missing$ -- 28
+newline$ -- 138
+num.names$ -- 54
+pop$ -- 207
+preamble$ -- 1
+purify$ -- 135
+quote$ -- 0
+skip$ -- 406
+stack$ -- 0
+substring$ -- 846
+swap$ -- 210
+text.length$ -- 21
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 106
+warning$ -- 4
+while$ -- 118
+width$ -- 29
+write$ -- 314
+(There were 4 warnings)

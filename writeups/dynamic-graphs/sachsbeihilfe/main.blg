@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99d (TeX Live 2013)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: main.aux
+The style file: plain.bst
+Database file #1: references.bib
+Warning--empty booktitle in Henzinger
+Warning--empty publisher in Henzinger
+Warning--empty publisher in ballsbins
+You've used 22 entries,
+            2118 wiz_defined-function locations,
+            675 strings with 8747 characters,
+and the built_in function-call counts, 9595 in all, are:
+= -- 992
+> -- 378
+< -- 17
++ -- 149
+- -- 124
+* -- 665
+:= -- 1443
+add.period$ -- 75
+call.type$ -- 22
+change.case$ -- 126
+chr.to.int$ -- 0
+cite$ -- 25
+duplicate$ -- 413
+empty$ -- 774
+format.name$ -- 124
+if$ -- 2134
+int.to.chr$ -- 0
+int.to.str$ -- 22
+missing$ -- 22
+newline$ -- 113
+num.names$ -- 48
+pop$ -- 135
+preamble$ -- 1
+purify$ -- 104
+quote$ -- 0
+skip$ -- 330
+stack$ -- 0
+substring$ -- 712
+swap$ -- 157
+text.length$ -- 17
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 88
+warning$ -- 3
+while$ -- 95
+width$ -- 24
+write$ -- 263
+(There were 3 warnings)

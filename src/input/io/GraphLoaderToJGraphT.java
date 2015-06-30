@@ -313,13 +313,10 @@ public class GraphLoaderToJGraphT<V, E> {
                     //maintain left set
                     leftSet.add(source);
                 } else if (rightSet.contains(source)) {
-                    System.out.println("[present in right set]. Discarding vertex : " + source);
+                    //System.out.println("[present in right set]. Discarding vertex : " + source);
                     continue;
                 }
                 
-                if(source.equals("food")){
-                    System.out.println("food encountered..");
-                }
                 //cases where a node doesnt have edges
                 if (list.length <= nodeOffsetInFile + 1) {
                     edgeCount++;
