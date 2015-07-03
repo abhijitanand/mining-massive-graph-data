@@ -74,7 +74,8 @@ public class CompareGeneralGraphMatchingAlgos {
 //        int[] loopLimits = {5, 10, 100, 1000, 10000, 100000, diameterLB};
         int[] loopLimits = {100};
         for (int loopLimit : loopLimits) {
-            if (loopLimit > 2*diameterLB) {
+
+            if (loopLimit > diameterLB) {
 
                 continue;
             }
@@ -87,8 +88,11 @@ public class CompareGeneralGraphMatchingAlgos {
             khosla = lsa.getMatching();
             System.out.println("Khosla Matching on General Graphs done in  " + (System.currentTimeMillis() - time) / 1000
                 + " seconds matching size : " + khosla.size() + " , Loop Limit : " + loopLimit);
-
-            lsa.checkAugmentingPath();
+            if (loopLimit == diameterLB) {
+                System.out.println("Computing Augmenting Paths...");
+                lsa.checkAugmentingPath();
+            }
+            
         }
         log.log(Level.INFO, "Khosla Matchings Done..");
     }
