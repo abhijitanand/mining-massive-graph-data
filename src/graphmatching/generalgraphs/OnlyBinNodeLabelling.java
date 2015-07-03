@@ -12,13 +12,13 @@ import org.jgrapht.graph.DefaultEdge;
  *
  * @author avishekanand
  */
-public class AllNodeLabelling {
+public class OnlyBinNodeLabelling {
 
     private final UndirectedGraph<String, DefaultEdge> inputGraph;
     private final Set<DefaultEdge> matchedEdges;
     private HashMap<String, Integer> binLabels;
 
-    public AllNodeLabelling(UndirectedGraph<String, DefaultEdge> graph) {
+    public OnlyBinNodeLabelling(UndirectedGraph<String, DefaultEdge> graph) {
         this.inputGraph = graph;
 
         matchedEdges = new HashSet<>();
@@ -153,20 +153,6 @@ public class AllNodeLabelling {
         }
         labels.put(bestBin, nextBestLabel);
 
-        //update label for bestBall
-        Pair<String, String> topChoices = getBestCandidates(undirectedNeighborsOfNode(bestBin, incomingBall), binLabels);
-
-        
-        prev = labels.get(incomingBall);
-        int ballNewLabel = (topChoices.fst == null) ? looplimit : labels.get(topChoices.fst)+2;
-        
-        if (prev > ballNewLabel) {
-//            System.out.println("Label decreases : " + prev + " --> " + ballNewLabel);
-        }
-        
-        labels.put(incomingBall, ballNewLabel);
-
-        change += ballNewLabel - prev;
         return change;
     }
 

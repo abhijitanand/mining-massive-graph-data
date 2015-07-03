@@ -2,6 +2,7 @@ package experiments.data;
 
 import Diameter.DiameterBFS;
 import graphmatching.generalgraphs.AllNodeLabelling;
+import graphmatching.generalgraphs.OnlyBinNodeLabelling;
 import input.io.GraphLoaderToJGraphT;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -44,7 +45,8 @@ public class CompareGeneralGraphMatchingAlgos {
 
         time = System.currentTimeMillis();
         UndirectedGraph<String, DefaultEdge> generalGraph
-            = graphConstructor.constructUndirectedUnweightedGeneralGraph(br, sourceOffset, targetOffset, headerSpan);
+            = graphConstructor.constructUndirectedUnweightedGeneralGraph(br, 
+                                            sourceOffset, targetOffset, headerSpan);
 
         log.log(Level.INFO, "Edges : " + generalGraph.edgeSet().size() + " Vertices : "
             + generalGraph.vertexSet().size());
@@ -69,14 +71,15 @@ public class CompareGeneralGraphMatchingAlgos {
         
         int diameterLB = diameterBFS.findDiameterUpperBound();
         log.log(Level.INFO, "Diameter Estimation done in " + (System.currentTimeMillis() - time)/1000 + " seconds");
-        
-        int[] loopLimits = {1, 5, 10, 50, 100, 1000, 10000, 100000, diameterLB};
-//        int[] loopLimits = {diam};
+//        int[] loopLimits = {5, 10, 100, 1000, 10000, 100000, diameterLB};
+        int[] loopLimits = {100};
         for (int loopLimit : loopLimits) {
-            if (loopLimit > 5*diameterLB) {
+            if (loopLimit > 2*diameterLB) {
+
                 continue;
             }
-            AllNodeLabelling lsa = new AllNodeLabelling(generalGraph);
+            //AllNodeLabelling lsa = new AllNodeLabelling(generalGraph);
+            OnlyBinNodeLabelling lsa = new OnlyBinNodeLabelling(generalGraph);
             //KhoslaMatchingGeneralGraphsBallBinImplementation lsa = new KhoslaMatchingGeneralGraphsBallBinImplementation(generalGraph);    
             //run lsa with run bounds
             time = System.currentTimeMillis();
@@ -85,7 +88,7 @@ public class CompareGeneralGraphMatchingAlgos {
             System.out.println("Khosla Matching on General Graphs done in  " + (System.currentTimeMillis() - time) / 1000
                 + " seconds matching size : " + khosla.size() + " , Loop Limit : " + loopLimit);
 
-            //lsa.checkAugmentingPath();
+            lsa.checkAugmentingPath();
         }
         log.log(Level.INFO, "Khosla Matchings Done..");
     }
