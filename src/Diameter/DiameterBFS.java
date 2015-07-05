@@ -28,7 +28,7 @@ import org.jgrapht.traverse.BreadthFirstIterator;
 public class DiameterBFS<K, V> {
 
     private final UndirectedGraph<K, V> graph;
-    
+
     private static final Logger log = Logger.getLogger(GraphLoaderToJGraphT.class.getName());
 
     public DiameterBFS(UndirectedGraph<K, V> graph) {
@@ -36,55 +36,56 @@ public class DiameterBFS<K, V> {
     }
 
     /**
-     * 
-     * We use a couple of heuristics here :
-     * 1) We compute the diameter estimate only for the largest connected component
-     * 2) we do a BFS followed by a Dijkstra's between the source and the last visited vertex
-     * 
-     * 
-     * In principle we can optimize to find the longest path estimate in the first BFS,
-     * with careful examination we actually do 3 BFS currently, which is reasonable for
-     * sparse graphs
-     * 
-     * @return 
+     *
+     * We use a couple of heuristics here : 1) We compute the diameter estimate
+     * only for the largest connected component 2) we do a BFS followed by a
+     * Dijkstra's between the source and the last visited vertex
+     *
+     *
+     * In principle we can optimize to find the longest path estimate in the
+     * first BFS, with careful examination we actually do 3 BFS currently, which
+     * is reasonable for sparse graphs
+     *
+     * @return
      */
     public int findDiameterUpperBound() {
-        
+
         ConnectivityInspector<K, V> ci = new ConnectivityInspector<>(graph);
         List<Set<K>> connectedSets = ci.connectedSets();
-        
-        
-        //find largest connected component
-        int maxConnectedComponentSize = 0;
-        K source = null;
+
+        HashSet<K> sources = new HashSet<>();
         for (Set<K> connectedSet : connectedSets) {
-            int size = connectedSet.size();
-            if (maxConnectedComponentSize < size) {
-                maxConnectedComponentSize = size;
-                Iterator<K> iter = connectedSet.iterator();
-                source = iter.next();
-            }
+            Iterator<K> iter = connectedSet.iterator();
+            K source = iter.next();
+            sources.add(source);
         }
         
-        BreadthFirstIterator<K, V> biter = new BreadthFirstIterator(graph,source);
-        biter.setCrossComponentTraversal(false);
-        
-        
-        K destination = null;
-        while (biter.hasNext()) {
-            destination = biter.next();
+        int maxDiameter = 0;
+        for (K source : sources) {
+            BreadthFirstIterator<K, V> biter = new BreadthFirstIterator(graph, source);
+            biter.setCrossComponentTraversal(false);
+
+            K destination = null;
+            while (biter.hasNext()) {
+                destination = biter.next();
+            }
+
+            DijkstraShortestPath dsp = new DijkstraShortestPath(graph, source, destination);
+            int diameter = (int) dsp.getPathLength();
+            
+            if (maxDiameter < diameter) {
+                System.out.println("Updated Diam " + maxDiameter + " to " + diameter);
+            }
+            maxDiameter = maxDiameter < diameter ? diameter : maxDiameter;
+            
+
         }
 
-        DijkstraShortestPath dsp = new DijkstraShortestPath(graph, source, destination);
-        int diameter = (int) dsp.getPathLength();
         
-        
-        log.log(Level.INFO, "Connected components : " + connectedSets.size() 
-                    + " largest size : " + maxConnectedComponentSize);
-        log.log(Level.INFO, "Diameter Lower Bound : " + diameter + " , diam. estimate : " + 2*diameter);
-        
+        log.log(Level.INFO, "Diameter Lower Bound : " + maxDiameter + " , diam. estimate : " + 2 * maxDiameter);
+
         //The actual diameter could be twice as large
-        return 2*diameter;
+        return 2 * maxDiameter;
     }
 
     public void testBFS() {
