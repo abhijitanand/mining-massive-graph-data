@@ -72,7 +72,7 @@ grestore
 
 \begin{document}
 
-\title{A Faster Algorithm for Cuckoo Insertion and Bipartite Matching in Large Graphs%\thanks{Grants or other notes
+\title{A Faster Algorithm for Cuckoo Insertion and Bipartite Matching in Large Graphs \footnote{An extended abstract of this work appeared in the \emph{Proceedings of the 21st Annual European Symposium on Algorithms(ESA '13).}}%\thanks{Grants or other notes
 %about the article that should go on the front page should be
 %placed here. General acknowledgments should be placed at the end of the article.}
 }
@@ -86,14 +86,14 @@ grestore
 
 %\authorrunning{Short form of author list} % if too long for running head
 
-\institute{F. Author \at
+\institute{Avishek Anand \at
               first address \\
               Tel.: +123-45-678910\\
               Fax: +123-45-678910\\
               \email{fauthor@example.com}           %  \\
 %             \emph{Present address:} of F. Author  %  if needed
            \and
-           S. Author \at
+           Megha Khosla \at
               second address
 }
 
@@ -202,10 +202,13 @@ grestore
 %
 \maketitle
 \abstract{Hash tables are ubiquitous in computer science for their use in storing large sets of data. Cuckoo hashing is an efficient technique of creating large hash tables with high space utilization and offers a guaranteed constant access time. We are given $n$ locations and $m$ items. Each item has to be placed in one of the $k\ge2$ locations chosen by $k$ random hash functions. By allowing more than one choice for a single item, cuckoo hashing resembles multiple choice allocations schemes. In addition it supports dynamically changing the location of an item among its possible locations. We propose and analyze an insertion algorithm for cuckoo hashing that runs in \emph{linear time} with high probability and in expectation. Previous work on total allocation time has analysed breadth first search, and it was shown  to be linear only in \emph{expectation}. Our algorithm finds an assignment (with probability 1) whenever it exists. In contrast, the other known insertion method also called  \emph{random walk insertion} may run indefinitely even for a solvable instance.
-We present experimental results comparing the performance of our algorithm with the random walk method. 
+We present experimental results comparing the performance of our algorithm with the random walk method, also for the case when each location can hold more than one item.
 
 As a corollary we obtain a linear time algorithm(with high probability and in expectation) for finding perfect matchings in a special class of sparse random bipartite graphs. We also perform experiments for finding maximum matchings in general large bipartite graphs and report an order of magnitude improvement in the running time as compared to Hopkraft Karp matching algorithm.
+
 } 
+\keywords{Cuckoo Hashing, Bipartite Matching, Load Balancing}
+
 
 \section{Introduction}
 In computer science, hash table~\cite{bookC:09} is a data structure that maps items (keys) to locations (values) using a hash function. More precisely, given a universe $U$ of items and a hash table $H$ of size $n \in \mathbb{N}$, a hash function
@@ -262,10 +265,11 @@ The allocation problem in cuckoo hashing can also be phrased in terms of \emph{o
 In fact, this is a random (multi)hypergraph $H^*_{n,m,k}$ (or random (multi)graph $G^*_{n,m}$ for $k=2$) with $n$ vertices and $m$ edges where each edge is drawn uniformly at random ( with replacement) from the set of all $k$-multisubsets of the vertex set. An $\la$-orientation of a graph then amounts to a mapping of each edge to one of its vertices such that no vertex receives more than $\la$ edges. $\la$ is also called the maximum load capacity. In our algorithm, we focus on $\la=1$. Here, we give an overview of existing work for general $\la$ for completeness.
 
 For the case $k = 2$, several allocation algorithms and their analysis are closely connected to the cores of the associated
-graph. The $\la$ core of a graph is the maximum vertex induced subgraph with minimum degree at least $\la$. 
+graph. The $\la$ core of a graph is the maximum vertex induced subgraph with minimum degree at least $\la$. As another application, the above described problem can also be seen as a load balancing problem with locations representing the \emph{machines} and the items representing the \emph{jobs}.
+
 For example, Czumaj and Stemann~\cite{ina:cs01} gave a linear time algorithm achieving maximum load $O(m/n)$ based on computation of all cores. The main idea was to repeatedly choose a
 vertex $v$ with minimum degree and remove it from the
-graph, and assigning all its incident edges (balls) to vertex (bin) $v$. 
+graph, and assigning all its incident edges (items) to vertex (location) $v$. 
 
 Cain, Sanders, and Wormald~\cite{1283433}  used a variation of the above approach and gave a linear time algorithm for computing an optimal allocation (asymptotically almost surely). Their algorithm first guesses the optimal load among the two likely values values ($\lceil m/n\rceil $ or $\lceil m/n\rceil +1$). The algorithm starts with load value say $\la=\lceil m/n\rceil $. Each time a vertex with degree at most $\la$ and its incident edges are assigned to $v$. The above rule also called the mindegree rule will first reduce the graph to its $\la+1$ core. After that some edge $(u,v)$ is picked according to some priority rule and assigned to one of its vertices. Again the mindegree rule is applied with respect to some conditions. In case the algorithm fails it is repeated after incrementing the load value.
 
@@ -297,7 +301,7 @@ For some integer $t\in[n]$ and the subset of vertex set $V' \subset V$ let ~$N_{
 and 
 \[ N_{t}(V') := \{ v_j \in V~| ~d(v_i,V') \le t  \} .\]
 \subsection{Our Contribution}
-Our aim here is to minimize the total insertion time in cuckoo hashing, thereby minimizing the total time required to construct the hash table.   We propose a deterministic strategy of how to select a vertex for placing an item when all its choices are occupied.
+Our aim here is to minimize the total insertion time in cuckoo hashing, thereby minimizing the total time required to construct the hash table. We propose a deterministic strategy of how to select a vertex for placing an item when all its choices are occupied.
 We assign to each vertex $v_i\in V$ an integer label, $L(v_i)$. Initially all vertices have $0$ as their labels. Note that at this stage, for all  $j\in [n]$, $L(v_j) =d(v_j,F)$, i.e., the labels of all vertices represent their shortest distances from $F$. When an item $x$ appears, it chooses the vertex with the least label from among its $k$ choices. If the vertex is free, the item is placed on it. Otherwise, the previous item is kicked out . The label of the location is then updated and set to one more than the minimum label of the remaining $k-1$ choices of the item $x$. The kicked out item chooses the location with minimum label from its $k$ choices and the above procedure is repeated till an empty location is found. 
 Note that to maintain the labels of the vertices as their shortest distances from $F$ we would require to update labels of the neighbors of the affected vertex and the labels of their neighbors and so on. This corresponds to performing a breadth first search (bfs) starting from the affected vertex. We avoid the bfs and perform only local updations. Therefore, we also call our method as \emph{local search allocation}. 
 
@@ -412,9 +416,9 @@ We first note that the label of a free vertex always remain $0$, i.e.,
 We will now show that throughout the algorithm the label of a vertex is at most one more than the label of any of its immediate neighbors (neighbors at distance $1$). More precisely,
 \begin{align}\label{obs2}
 \forall p\in [M], \forall (u,v)\in E_p, ~~~~~ L_p(u)\le L_p(v)+1. \end{align}
-We prove \eqref{obs2} by induction on the number of moves performed by the algorithm. Initially when no ball has appeared all vertices have $0$ as their labels. When the first ball is assigned, i.e., there is a single vertex say $u$ such that $L_1(u)=1$. Clearly, \eqref{obs2} holds after the first move. Assume that \eqref{obs2} holds after $p$ moves.
+We prove \eqref{obs2} by induction on the number of moves performed by the algorithm. Initially when no item has appeared all vertices have $0$ as their labels. When the first item is assigned, i.e., there is a single vertex say $u$ such that $L_1(u)=1$. Clearly, \eqref{obs2} holds after the first move. Assume that \eqref{obs2} holds after $p$ moves.
 
-For the ($p+1$)th move let $w\in V$ be some vertex which is assigned a ball $x$. Consider an edge $(u,v)\in E_p$ such that $u\neq w$ and $v\neq w$. Note that the labels of all vertices $v \in V\setminus w$ remain unchanged in the ($p+1$)th move. Therefore by induction hypothesis, \eqref{obs2} is true for all edges which does not contain $w$. By Step $2$ of Algorithm~\ref{algo:orientEdge} the new label of $w$ is one more than the minimum of the labels of its $k-1$ neighbors, i.e, \[L_{p+1}(w) =  \min_{w'\in x\setminus w} L_{p+1}(w') +1.\] Therefore \eqref{obs2} holds for all edges originating from $w$. Now consider a vertex $u\in V$ such that $(u,w)\in E_p$. Now by induction hypothesis we have $L_{p+1}(u)=L_p(u)\le L_p(w) +1.$ Note that the vertex $w$ was chosen because it had the minimum label among the $k$ possible choices for the ball $x$, i.e., 
+For the ($p+1$)th move let $w\in V$ be some vertex which is assigned an item $x$. Consider an edge $(u,v)\in E_p$ such that $u\neq w$ and $v\neq w$. Note that the labels of all vertices $v \in V\setminus w$ remain unchanged in the ($p+1$)th move. Therefore by induction hypothesis, \eqref{obs2} is true for all edges which does not contain $w$. By Step $2$ of Algorithm~\ref{algo:orientEdge} the new label of $w$ is one more than the minimum of the labels of its $k-1$ neighbors, i.e, \[L_{p+1}(w) =  \min_{w'\in x\setminus w} L_{p+1}(w') +1.\] Therefore \eqref{obs2} holds for all edges originating from $w$. Now consider a vertex $u\in V$ such that $(u,w)\in E_p$. Now by induction hypothesis we have $L_{p+1}(u)=L_p(u)\le L_p(w) +1.$ Note that the vertex $w$ was chosen because it had the minimum label among the $k$ possible choices for the item $x$, i.e., 
 \[ L_p(w) \le \min_{w'\in x} L_{p} (w') = \min_{w'\in x\setminus w} L_{p+1} (w') < L_{p+1}(w).\] We therefore obtain
 $ L_{p+1}(u)\le L_p(w) +1 < L_{p+1}(w) +1,$
 thereby completing the induction step.
@@ -474,7 +478,7 @@ For any fixed $\varepsilon>0$, let $m=(1-\varepsilon) c_k^* n$ balls are assigne
 We perform the following stripping process on $G$.
 We start with $G$ and in each step remove all its free vertices and the edges they are contained in. Note that by removing the edges, we have removed the balls placed on the corresponding vertices, thereby creating a new set of free vertices. For step $i$ of the stripping process, we denote the set of vertices by $V_i$ and the set of free vertices by $F_i$ and let $G_i$ be the corresponding allocation graph. The number of occupied vertices in $G_i$ is then equal to $|V_i|-|F_i|$. As each vertex holds at most one ball, the number of remaining balls is $|V_i|-|F_i|$.
 
-Let $H=(V,E')$ be a $k$-uniform hypergraph with $n$ vertices representing the locations and $m$ edges representing the items. Each edge consists of $k$ vertices or $k$ choices of the ball.
+Let $H=(V,E')$ be a $k$-uniform hypergraph with $n$ vertices representing the locations and $m$ edges representing the items. Each edge consists of $k$ vertices or $k$ choices of the item.
 Note that the number of occupied vertices in $G$ is equal to the number of edges in $H$. Similarly $G_i$ corresponds to a subgraph in $H$ induced on the vertex set $V_i$. Let us denote it by $H[V_i]$. 
 The number of occupied vertices in $G_i$, i.e. $|V_{i}|-|F_{i}|$, then is the number of edges in $H[V_i]$. By Theorem~\ref{thm:density}, with probability $1-o(1)$ we have $|F_{i}|\ge \delta |V_{i}|$.  Also by the stripping process we obtain $|V_{i+1}| = |V_{i}|- |F_{i}| $. We can therefore conclude that, with probability $1-o(1)$,  $|V_{i+1}| \le (1-\delta) |V_{i}|$.
 Therefore, after $t\ge 1$ iterations of removing free vertices we obtain  $|V_{t}|\le (1-\delta )^{t}|V|$. We can now choose $t=\lceil{\ln_{(1-\delta)}\alpha}\rceil$ to deduce that $ |V_{t}| <\alpha |V|$. We complete the proof by substituting $S= V\setminus V_t \ge (1-\alpha) n$ and $C= \lceil{\log_{(1-\delta)} \alpha}\rceil$.
@@ -483,14 +487,14 @@ Therefore, after $t\ge 1$ iterations of removing free vertices we obtain  $|V_{t
 We remark that the above lemma has already been proved in~\cite{art:fps10} (in the hypergraph setting). A similar result has also been proved in~\cite{fm12} (in the bipartite matching setting) for $k\ge 8$.
 With respect to an allocation graph recall that we denote the set of vertices furthest from $F$ by $R$. Also for an integer $s$, $N_s(R)$ denotes the set of vertices at distance at most $s$ from $R$. The next lemma states that the neighborhood of $R$ expands suitably with high probability. We remark that the estimate, for expansion factor, presented here is not the best possible but nevertheless suffices for our analysis. 
 \begin{lemma}\label{lem:expan}
-For any fixed $\varepsilon>0$, let $m=(1-\varepsilon) c_k^* n$ balls are assigned to $n$ bins using $k$ random choices for each ball and $G=(V,E)$ be the corresponding allocation graph. Then for any $0<\alpha < {1\over k-1}$ and every integer $s$ such that $1\le | N_{s}(R)|\le \alpha n$,  there exists a constant $\zeta>0$ such that $G$  satisfies the following with probability $1-n^{-\zeta}$.
+For any fixed $\varepsilon>0$, let $m=(1-\varepsilon) c_k^* n$ balls are assigned to $n$ bins using $k$ random choices for each item and $G=(V,E)$ be the corresponding allocation graph. Then for any $0<\alpha < {1\over k-1}$ and every integer $s$ such that $1\le | N_{s}(R)|\le \alpha n$,  there exists a constant $\zeta>0$ such that $G$  satisfies the following with probability $1-n^{-\zeta}$.
 
 \[
 	|N_{s}(R) | >  \left( k-1- {\log e^{k}(k-1) \over \log{1\over \alpha(k-1)}}\right)  | N_{s-1}(R)| . \]
 	
 \end{lemma}
 \begin{proof}
-Recall that in the allocation graph $G$,  $R$ is the set of vertices furthest from the set of free vertices. The set of vertices at distance at most $s$ from $R$ is denoted by $N_{s}(R)$. Note that each occupied vertex in $G$ holds one ball. By construction of the allocation graph $N_{s}(R)$ is the set of vertices representing the choices of balls placed on vertices in $N_{s-1}(R)$. In the hypergraph setting where each ball corresponds to an edge, $|N_{s}(R)|$ is the number of vertices spanned by the set of edges of size  $|N_{s-1}(R)|$. We can now use Lemma~\ref{lem:expanhyper} to obtain the desired result.
+Recall that in the allocation graph $G$,  $R$ is the set of vertices furthest from the set of free vertices. The set of vertices at distance at most $s$ from $R$ is denoted by $N_{s}(R)$. Note that each occupied vertex in $G$ holds one item. By construction of the allocation graph $N_{s}(R)$ is the set of vertices representing the choices of items placed on vertices in $N_{s-1}(R)$. In the hypergraph setting where each item corresponds to an edge, $|N_{s}(R)|$ is the number of vertices spanned by the set of edges of size  $|N_{s-1}(R)|$. We can now use Lemma~\ref{lem:expanhyper} to obtain the desired result.
 \end{proof}
 We define $\mu: =   {\log e^{k}(k-1)/ \log {(- \alpha(k-1))}} .$ For some fixed $\gamma >0$ we set 
 \begin{equation} \label{eq:alpha}
