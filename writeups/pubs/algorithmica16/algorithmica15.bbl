@@ -45,6 +45,17 @@ A.~Frieze, P.~Melsted, and M.~Mitzenmacher.
 \newblock An analysis of random-walk cuckoo hashing.
 \newblock {\em SIAM Journal on Computing}, 40(2):291--308, 2011.
 
+\bibitem{gnu}
+M.~Galassi, J.~Davies, J.~Theiler, B.~Gough, G.~Jungman, M.~Booth, and
+  F.~Rossi.
+\newblock Gnu scientific library reference manual.
+\newblock {\em URL:http://www. gnu. org/software/gsl}, 2003.
+
+\bibitem{hopcroft1973n}
+John~E Hopcroft and Richard~M Karp.
+\newblock An n\^{}5/2 algorithm for maximum matchings in bipartite graphs.
+\newblock {\em SIAM Journal on computing}, 2(4):225--231, 1973.
+
 \bibitem{art:kmw09}
 A.~Kirsch, M.~Mitzenmacher, and U.~Wieder.
 \newblock More robust hashing: Cuckoo hashing with a stash.
@@ -67,5 +78,13 @@ M.~Mitzenmacher and S.~Vadhan.
 R.~Pagh and F.~F. Rodler.
 \newblock Cuckoo hashing.
 \newblock In {\em E{SA} '01}, pages 121--133, 2001.
+
+\bibitem{zubiaga2013harnessing}
+Arkaitz Zubiaga, Victor Fresno, Raquel Martinez, and Alberto~Perez
+  Garcia-Plaza.
+\newblock Harnessing folksonomies to produce a social classification of
+  resources.
+\newblock {\em IEEE transactions on knowledge and data engineering},
+  25(8):1801--1813, 2013.
 
 \end{thebibliography}
