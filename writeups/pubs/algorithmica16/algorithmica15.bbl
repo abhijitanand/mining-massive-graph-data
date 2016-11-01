@@ -1,0 +1,71 @@
+\begin{thebibliography}{10}
+
+\bibitem{inp:ans:09}
+Y.~Arbitman, M.~Naor, and G.~Segev.
+\newblock De-amortized cuckoo hashing: Provable worst-case performance and
+  experimental results.
+\newblock In {\em Proceedings of the 36th International Colloquium on Automata,
+  Languages and Programming: Part I}, ICALP '09, pages 107--118, 2009.
+
+\bibitem{bookC:09}
+T.~H. Cormen, C.~E. Leiserson, R.~L. Rivest, and C.~Stein.
+\newblock {\em Introduction to Algorithms}.
+\newblock The MIT Press, 3rd edition, 2009.
+
+\bibitem{d:09}
+M.~Dietzfelbinger and U.~Schellbach.
+\newblock On risks of using cuckoo hashing with simple universal hash classes.
+\newblock In {\em Proceedings of the twentieth Annual ACM-SIAM Symposium on
+  Discrete Algorithms}, SODA '09, pages 795--804, 2009.
+
+\bibitem{inc:fpss03}
+D.~Fotakis, R.~Pagh, P.~Sanders, and P.~Spirakis.
+\newblock Space efficient hash tables with worst case constant access time.
+\newblock In {\em S{TACS} '03}, volume 2607 of {\em Lecture Notes in Computer
+  Science}, pages 271--282. 2003.
+
+\bibitem{fp12}
+N.~Fountoulakis and K.~Panagiotou.
+\newblock Sharp load thresholds for cuckoo hashing.
+\newblock {\em Random Structures \& Algorithms}, 41(3):306--333, 2012.
+
+\bibitem{art:fps10}
+N.~Fountoulakis, K.~Panagiotou, and A.~Steger.
+\newblock On the insertion time of cuckoo hashing.
+\newblock {\em CoRR}, abs/1006.1231, 2010.
+
+\bibitem{fm12}
+A.~Frieze and P.~Melsted.
+\newblock Maximum matchings in random bipartite graphs and the space
+  utilization of cuckoo hash tables.
+\newblock {\em Random Structures \& Algorithms}, 41(3):334--364, 2012.
+
+\bibitem{art:fmm11}
+A.~Frieze, P.~Melsted, and M.~Mitzenmacher.
+\newblock An analysis of random-walk cuckoo hashing.
+\newblock {\em SIAM Journal on Computing}, 40(2):291--308, 2011.
+
+\bibitem{art:kmw09}
+A.~Kirsch, M.~Mitzenmacher, and U.~Wieder.
+\newblock More robust hashing: Cuckoo hashing with a stash.
+\newblock {\em SIAM J. Comput.}, 39(4):1543--1561, December 2009.
+
+\bibitem{inp:l12}
+M.~Lelarge.
+\newblock A new approach to the orientation of random hypergraphs.
+\newblock In {\em Proceedings of the Twenty-Third Annual ACM-SIAM Symposium on
+  Discrete Algorithms}, SODA '12, pages 251--264, 2012.
+
+\bibitem{ms:08}
+M.~Mitzenmacher and S.~Vadhan.
+\newblock Why simple hash functions work: exploiting the entropy in a data
+  stream.
+\newblock In {\em Proceedings of the nineteenth annual ACM-SIAM symposium on
+  Discrete algorithms}, SODA '08, pages 746--755, 2008.
+
+\bibitem{inp:pr01}
+R.~Pagh and F.~F. Rodler.
+\newblock Cuckoo hashing.
+\newblock In {\em E{SA} '01}, pages 121--133, 2001.
+
+\end{thebibliography}
