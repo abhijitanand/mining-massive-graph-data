@@ -45,8 +45,29 @@ In Figure~\ref{fig:1} we give a comparison of the total number of moves (average
     \end{figure}
 
 We remark that local search allocation has some additional cost, i.e., the extra space required to store the labels. Though this space is $O(n)$, local search allocation is still useful for the applications where the size of objects (representing the items) to be allocated is much larger than the labels which are integers. Moreover, with high probability, the maximum label of any vertex is $O(\log n)$. Many integer compression methods~\cite{inp:sgl10} have been proposed for compressing small integers and can be potentially useful in our setting for further optimizations. Also in most of the load balancing problems, the speed of finding an assignment is a much desired and the most important requirement.
-
-We also consider the case when each bin can hold more than one ball. To adapt LSA for this setting we make a small change, i.e., the label of a vertex (bin) stays 0 until it is fully filled. Algorithm~\ref{algo:orientEdgegen} gives the modified procedure for the general bin capacities. Here {\sc{Balls}}$(v)$ gives the number of balls already placed in $v$. Let the bin capacity or maximum load allowed be $s$. Figure~\ref{fig:totalGen} suggests that the total number of moves are linear in the number of bins for the cases $k=3,4$ where the maximum bin capacity is greater than $1$.
+\begin{algorithm}[h!]
+\caption{AssignBall ($x, \mathbf{L},\mathbf{T}$)}
+\label{algo:orientEdgegen}
+\begin{algorithmic}[1]
+\STATE Choose an item $v$ among the $k$ choices of $x$ with minimum label $L(v)$.
+\IF{$(L(v)>=n-1)$ }
+\STATE $\mathbf{EXIT}$  ~~~~~~~~~~~~~~~~~~~~~~~ $\rhd${\textbf{Allocation does not exist}}
+\ELSE
+\IF{$({\textsc{Items}}(v)> s-1)$ }
+\STATE $L(v) \leftarrow 1+ \min{(L(u)| u \neq v \text{~and $u \in x$})}$
+\ENDIF
+\IF{$(\textsc{Items}(v)==s )$}
+\STATE Choose an item (call it b) randomly from the $s$ items in v
+\STATE $y\leftarrow b$~~~~~~~~~~~~~~~~~~ $\rhd${\textbf{Move that replaces an item}}
+\STATE Place $x$ in $v$
+\STATE $\mathbf{CALL}$ {AssignBall($y, \mathbf{L},\mathbf{T}$)}
+\ELSE  
+\STATE Place $x$ in $v$ ~~~~~~~~~~~~~~~~~~ $\rhd${\textbf{Move that places an item}}
+\ENDIF
+\ENDIF
+\end{algorithmic}
+\end{algorithm}
+We also consider the case when each location can hold more than one item. To adapt LSA for this setting we make a small change, i.e., the label of a vertex (location) stays 0 until it is fully filled. Algorithm~\ref{algo:orientEdgegen} gives the modified procedure for the general location capacities. Here {\sc{Items}}$(v)$ gives the number of items already placed in $v$. Let the location capacity or maximum load allowed be $s$. Figure~\ref{fig:totalGen} suggests that the total number of moves are linear in the number of locations for the cases $k=3,4$ where the maximum location capacity is greater than $1$.
 
 
 \begin{table*}[ht!]
