@@ -102,12 +102,12 @@ Hopcroft-Karp                &  & 12605 & 1082214 \\
 
 \subsection{Performance on Real-world graphs}
 
-Next, we compare our runtime performance to the optimal algorithm proposed by Hopcroft et al.~\cite{hopcroft1973n}. In this experiment we want to study the effect of number of allowable moves on (a) the actual wall-clock times , (b) the result quality in terms of the size, or number of edges, of the final matching produced (refer Figure~\ref{table:softlabel}). We selected the following representative realworld datasets for our experiments:
+Next, we compare our runtime performance to the optimal algorithm proposed by Hopcroft et al.~\cite{hopcroft1973n}. In this experiment we want to study the effect of number of allowable moves on (a) the actual wall-clock times , (b) the result quality in terms of the size, or number of edges, of the final matching produced (refer Figure~\ref{table:softlabel}). We selected the following representative realworld dataset for our experiments:
 
 \begin{itemize}
   \item \textsf{Delicious dataset : } The \textsf{Delicious} dataset spans nine years from 2003 to 2011 and contain about 340 mio. bookmarks, 119 mio. unique URLs, 15 mio. tags and 2 mio. users~\cite{zubiaga2013harnessing}. Each bookmarked URL is time stamped and tagged with word descriptors. The nodes in one of the sets are URLs and in the other are its corresponding bookmarks.
 
-  \item \textsf{Yahoo Ad dataset : } Computational advertising used bi-partite graph matching algorithms for its ad placement decisions. 
+  % \item \textsf{Yahoo Ad dataset : } Computational advertising used bi-partite graph matching algorithms for its ad placement decisions. 
 \end{itemize}
 
 We first observe that the optimal result in the \textsf{Delicious} dataset, i.e. 1082214, is already obtained when the limit on the allowable moves is only five and in 12 seconds. Interestingly, as we increase the limit on the allowable moves, the runtime does not change showing that only a small of defections are sufficient to arrive at an optimal result. However, at higher limits, indeed other permutations are explored (in this case unsuccesfully) resulting in increased runtimes. In any case when the limit is set to $n$, that would guarantee optimality, we still perform an order of magnitude faster than the optimal algorithm of Hopcroft-Karp. 
