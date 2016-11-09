@@ -548,9 +548,12 @@ Therefore,
 \sum _{i=0}^{T-1}| N_i(R)) |< |N_{T}(R)|  \sum_{j=1}^{T}   {1 \over (k-1-\delta)^j }  <  |N_{T}(R)|  \sum_{j=1}^{T}   {1 \over (1+\gamma)^j } =O(n),\]
 which completes the first part of the proof of Theorem \ref{thm:main}. 
 To bound the expected time, observe that for $i$ such that $|N_i(R))|< n^{1/2}$,
-$$E\left(\sum_{i}|N_i(R)|\right) < n^{1/2}\cdot {(n^{1/2} +1) \over 2}= O(n)$$.
- For all other $i$ using lemmas~\ref{}
-$$\sum_{i}|N_i(R)| < |N_{T}(R)|  \sum_i {1 \over (k-1-\delta)^i} $$
+$$E\left(\sum_{i}|N_i(R)|\right) < n^{1/2}\cdot {(n^{1/2} +1) \over 2}= O(n)$$
+ For all other $i$ using lemmas~\ref{lem:expanhyper} and \ref{lem:expan}
+$$\sum_{i}|N_i(R)| < |N_{T}(R)|  \sum_i {1 \over (k-1-\delta)^i} < n $$ with probability $1-e^{-O(n^{0.5})}$.
+Note that we already proved that the maximum value of the sum of all the labels can be atmost $n^2$ (see discussion after Lemma~\ref{lem:graph}). This implies that for such $i$ 
+$$E\left(\sum_{i}|N_i(R)|\right) < n (1-o(1)) + n^2 e^{-O(n^{0.5})} = O(n)$$
+
 \end{proof}
 
 We obtain the following corollary about maximum matchings in left regular random bipartite graphs. Recall that a bipartite graph $G=(L\cup R;E)$ is  $k$-left regular if each vertex $v\in L$ has exactly $k$ neighbors in $R$.
