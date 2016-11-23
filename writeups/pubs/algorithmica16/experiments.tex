@@ -79,20 +79,20 @@ We remark that local search allocation has some additional cost, i.e., the extra
 %\hline \noalign{\smallskip}
 \multicolumn{1}{l}{} & Maximum Number of Moves                  & Wall-clock times     & Result Size  \\
 \hline \noalign{\smallskip}
-LSA        &   1      & 12    & 1029449  \\
-       &   2      & 12    & 1080006  \\
-        &   4      & 12    & 1082199  \\
-        &   5      & 16    & 1082214  \\
-        &   10      & 15    & 1082214  \\
-        &   50     & 15    & 1082214  \\
-        &   100     & 15    & 1082214  \\
-        &   1000     & 15    & 1082214  \\
-        &   10000    & 27    & 1082214  \\
-        &   100000    & 136    & 1082214  \\
-        &   $n$    & 1887    & 1082214  \\
+LSA        &   1      & 12    & 1,029,449  \\
+       &   2      & 12    & 1,080,006  \\
+        &   4      & 12    & 1,082,199  \\
+        &   5      & 16    & 1,082,214  \\
+        &   10      & 15    & 1,082,214  \\
+        &   50     & 15    & 1,082,214  \\
+        &   100     & 15    & 1,082,214  \\
+        &   1000     & 15    & 1,082,214  \\
+        &   10,000    & 27    & 1,082,214  \\
+        &   100,000    & 136    & 1,082,214  \\
+        &   $n$    & 1,887    & 1,082,214  \\
 \midrule
 
-Hopcroft-Karp                &  & 12605 & 1082214 \\
+Hopcroft-Karp                &  & 12,605 & 1,082,214 \\
 %\hline \noalign{\smallskip}
 
 \hline \noalign{\smallskip}
@@ -111,8 +111,5 @@ Next, we compare our runtime performance to the optimal algorithm proposed by Ho
   % \item \textsf{Yahoo Ad dataset : } Computational advertising used bi-partite graph matching algorithms for its ad placement decisions. 
 \end{itemize}
 
-We first observe that the optimal result in the \textsf{Delicious} dataset, i.e. 1082214, is already obtained when the limit on the allowable moves is only five and in 12 seconds. Interestingly, as we increase the limit on the allowable moves to place any item (match any edge), the runtime does not change showing that only a small of defections are sufficient to arrive at an optimal result. However, at higher limits, indeed other permutations are explored (in this case unsuccesfully) resulting in increased runtimes. The stopping creteria unlinke in case of perfect matchings cannot be predetermined in general. In future we plan to devise methodology to stop the algorithm when the maximum matching is retrieved. In any case when the limit is set to $n$, that would guarantee optimality, we still perform an order of magnitude faster than the optimal algorithm of Hopcroft-Karp. 
-
-
-
+We first observe that the optimal result in the \textsf{Delicious} dataset, i.e. 1,082,214, is already obtained when the limit on the allowable moves is only 5. We are of course sure about the optimality of the procedure when the maximum allowable moves is set to $n$ and that already is 10x improvement over the time taken by Hopcroft-Karp algorithm. For lower allowable limits of 5 and 10 the performance improvements are almost 1000x. Interestingly, as we increase the limit on the allowable moves to place any item (match any edge), the runtime does not change showing that only a small of defections are sufficient to arrive at an optimal result. However, at higher limits, indeed other permutations are explored (in this case unsuccesfully) resulting in increased runtimes. The stopping creteria unlinke in case of perfect matchings cannot be predetermined in general. In future we plan to devise methodology to stop the algorithm when the maximum matching is retrieved. In any case when the limit is set to $n$, that would guarantee optimality, we still perform an order of magnitude faster than the optimal algorithm of Hopcroft-Karp. 
 

@@ -7,16 +7,40 @@ Y.~Arbitman, M.~Naor, and G.~Segev.
 \newblock In {\em Proceedings of the 36th International Colloquium on Automata,
   Languages and Programming: Part I}, ICALP '09, pages 107--118, 2009.
 
+\bibitem{art:aumuller16}
+M.~{Aum{\"u}ller}, M.~{Dietzfelbinger}, and P.~{Woelfel}.
+\newblock {A Simple Hash Class with Strong Randomness Properties in Graphs and
+  Hypergraphs}.
+\newblock {\em ArXiv e-prints}, October 2016.
+
+\bibitem{1283433}
+J.~A. Cain, P.~Sanders, and N.~Wormald.
+\newblock The random graph threshold for k-orientiability and a fast algorithm
+  for optimal multiple-choice allocation.
+\newblock In {\em Proceedings of the 18th annual ACM-SIAM symposium on Discrete
+  algorithms (SODA 2007)}, pages 469--476, 2007.
+
 \bibitem{bookC:09}
 T.~H. Cormen, C.~E. Leiserson, R.~L. Rivest, and C.~Stein.
 \newblock {\em Introduction to Algorithms}.
 \newblock The MIT Press, 3rd edition, 2009.
+
+\bibitem{ina:cs01}
+A.~Czumaj and V.~Stemann.
+\newblock Randomized allocation processes.
+\newblock {\em Random Structures \& Algorithms}, 18(4):297--331, 2001.
 
 \bibitem{d:09}
 M.~Dietzfelbinger and U.~Schellbach.
 \newblock On risks of using cuckoo hashing with simple universal hash classes.
 \newblock In {\em Proceedings of the twentieth Annual ACM-SIAM Symposium on
   Discrete Algorithms}, SODA '09, pages 795--804, 2009.
+
+\bibitem{1283432}
+D.~Fernholz and V.~Ramachandran.
+\newblock The k-orientability thresholds for ${G}_{n,p}$.
+\newblock In {\em Proceedings of the 18th annual ACM-SIAM symposium on Discrete
+  algorithms (SODA 2007)}, pages 459--468, 2007.
 
 \bibitem{inc:fpss03}
 D.~Fotakis, R.~Pagh, P.~Sanders, and P.~Spirakis.
@@ -56,6 +80,12 @@ John~E Hopcroft and Richard~M Karp.
 \newblock An n\^{}5/2 algorithm for maximum matchings in bipartite graphs.
 \newblock {\em SIAM Journal on computing}, 2(4):225--231, 1973.
 
+\bibitem{inc:khosla13}
+M.~Khosla.
+\newblock Balls into bins made faster.
+\newblock In {\em Algorithms--ESA 2013}, volume 8125 of {\em Lecture Notes in
+  Computer Science}, pages 601--612. 2013.
+
 \bibitem{art:kmw09}
 A.~Kirsch, M.~Mitzenmacher, and U.~Wieder.
 \newblock More robust hashing: Cuckoo hashing with a stash.
@@ -78,6 +108,18 @@ M.~Mitzenmacher and S.~Vadhan.
 R.~Pagh and F.~F. Rodler.
 \newblock Cuckoo hashing.
 \newblock In {\em E{SA} '01}, pages 121--133, 2001.
+
+\bibitem{sek99}
+P.~Sanders, S.~Egner, and J.~Korst.
+\newblock Fast concurrent access to parallel disks.
+\newblock In {\em Proceedings of the 11th annual ACM-SIAM Symposium on Discrete
+  Algorithms (SODA 1999)}, pages 849--858, 1999.
+
+\bibitem{inp:sgl10}
+B.~Schlegel, R.~Gemulla, and W.~Lehner.
+\newblock Fast integer compression using simd instructions.
+\newblock In {\em Workshop on Data Management on New Hardware (DaMoN 2010)},
+  pages 34--40, 2010.
 
 \bibitem{zubiaga2013harnessing}
 Arkaitz Zubiaga, Victor Fresno, Raquel Martinez, and Alberto~Perez

@@ -1,57 +1,49 @@
 This is BibTeX, Version 0.99d (TeX Live 2012)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: algorithmica15.aux
-White space in argument---line 8 of file algorithmica15.aux
- : \citation{inp:l12,
- :                    fp12,fm12}
-I'm skipping whatever remains of this command
 The style file: plain.bst
-Database file #1: FinalCuckooIns.bib
-Warning--I didn't find a database entry for "ina:cs01"
-Warning--I didn't find a database entry for "1283433"
-Warning--I didn't find a database entry for "1283432"
-Warning--I didn't find a database entry for "sek99"
-Warning--I didn't find a database entry for "inp:sgl10"
+Database file #1: algorithmica15.bib
 Warning--empty publisher in inc:fpss03
-You've used 15 entries,
+Warning--empty publisher in inc:khosla13
+You've used 22 entries,
             2118 wiz_defined-function locations,
-            597 strings with 6454 characters,
-and the built_in function-call counts, 5982 in all, are:
-= -- 600
-> -- 264
-< -- 7
-+ -- 106
-- -- 88
-* -- 424
-:= -- 938
-add.period$ -- 46
-call.type$ -- 15
-change.case$ -- 89
+            629 strings with 7446 characters,
+and the built_in function-call counts, 8890 in all, are:
+= -- 895
+> -- 369
+< -- 13
++ -- 149
+- -- 122
+* -- 607
+:= -- 1361
+add.period$ -- 68
+call.type$ -- 22
+change.case$ -- 127
 chr.to.int$ -- 0
-cite$ -- 16
-duplicate$ -- 238
-empty$ -- 470
-format.name$ -- 88
-if$ -- 1284
+cite$ -- 24
+duplicate$ -- 374
+empty$ -- 717
+format.name$ -- 122
+if$ -- 1940
 int.to.chr$ -- 0
-int.to.str$ -- 15
-missing$ -- 16
-newline$ -- 78
-num.names$ -- 30
-pop$ -- 88
+int.to.str$ -- 22
+missing$ -- 23
+newline$ -- 113
+num.names$ -- 44
+pop$ -- 139
 preamble$ -- 1
-purify$ -- 74
+purify$ -- 105
 quote$ -- 0
-skip$ -- 190
+skip$ -- 301
 stack$ -- 0
-substring$ -- 428
-swap$ -- 76
-text.length$ -- 7
+substring$ -- 638
+swap$ -- 132
+text.length$ -- 13
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 58
-warning$ -- 1
-while$ -- 59
-width$ -- 17
-write$ -- 171
-(There was 1 error message)
+type$ -- 86
+warning$ -- 2
+while$ -- 89
+width$ -- 24
+write$ -- 248
+(There were 2 warnings)

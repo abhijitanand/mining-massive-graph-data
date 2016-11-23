@@ -204,7 +204,7 @@ grestore
 \abstract{Hash tables are ubiquitous in computer science for efficient access to large datasets. However, there is always a need for approaches that offer compact memory utilisation without substantial degradation of lookup performance. Cuckoo hashing is an efficient technique of creating hash tables with high space utilisation and offer a guaranteed constant access time. We are given $n$ locations and $m$ items. Each item has to be placed in one of the $k\ge2$ locations chosen by $k$ random hash functions. By allowing more than one choice for a single item, cuckoo hashing resembles multiple choice allocations schemes. In addition it supports dynamically changing the location of an item among its possible locations. We propose and analyse an insertion algorithm for cuckoo hashing that runs in \emph{linear time} with high probability and in expectation. Previous work on total allocation time has analysed breadth first search, and it was shown  to be linear only in \emph{expectation}. Our algorithm finds an assignment (with probability 1) whenever it exists. In contrast, the other known insertion method, known as \emph{random walk insertion}, may run indefinitely even for a solvable instance.
 We also present experimental results comparing the performance of our algorithm with the random walk method, also for the case when each location can hold more than one item. 
 
-As a corollary we obtain a linear time algorithm(with high probability and in expectation) for finding perfect matchings in a special class of sparse random bipartite graphs. We also perform experiments for finding maximum matchings in general large bipartite graphs and report an order of magnitude improvement in the running time as compared to Hopkraft Karp matching algorithm.
+As a corollary we obtain a linear time algorithm(with high probability and in expectation) for finding perfect matchings in a special class of sparse random bipartite graphs. We validate this my performing experiments on a real world large dataset for finding maximum matchings in general large bipartite graphs. We report an order of magnitude improvement in the running time as compared to the \emph{Hopkraft-Karp} matching algorithm.
 
 } 
 \keywords{Cuckoo Hashing, Bipartite Matching, Load Balancing}
@@ -566,6 +566,20 @@ We assign label $0$ to each of the vertices in $R$ initially. Each vertex in $L$
 
 \input{experiments}
 
+\section{Conclusions and Outlook}
+\label{chap:conc}
+
+In this article, we proposed and analysed an insertion algorithm, the \emph{Local Search Allocation} algorithm, for cuckoo hashing that runs in linear time with high probability and in expectation. Our algorithm, unlike existing random walk based insertion methods, always terminates and finds an assignment (with probability 1) whenever it exists. We also obtained a linear time algorithm for finding perfect matchings in a general large bipartite graphs.
+
+We conducted extensive experiments to validate our theoretical findings and report an order of magnitude improvement in the number of moves required for allocations as compared to the random walk based insertion approach. Secondly, we considered a real world social bookmarking graph dataset to evaluate the performance of our bipartite graph matching algorithm. We observe an order of magnitude improvement when the maximum allowable limit is set to $n$, but more interestingly we observe that the optimal solution is already reached at a small allowable limit of 5 with a substantial performance improvement of almost three orders of magnitude over Hopcroft-Karp algorithm.
+
+It should be noted that although the space complexity for label maintenance is $O(n)$, the number of bits required to encode each label is logarithmic in the maximum allowable moves. This allows compact representations of these labels in memory even without using integer encoding schemes that might further improve memory footprints while storing small integer ranges.
+
+In the future we would like to consider other generalized variants of graph matching problems using such a label propagtion scheme. Also interesting to investigate is the impact of graph properties like diameter, clustering coefficients etc. on the only parameter in our algorithm, i.e., maximum allowable moves. This would go a long way in automatic parameterization of LSA.
+
+
+\noindent
+\section{Acknowledgements} This work is partially funded by the ERC Advanced Grant ALEXANDRIA (grant no. 339233).
 
 
 %\begin{proposition}\label{prop:levelSize}
