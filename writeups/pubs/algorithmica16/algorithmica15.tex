@@ -201,8 +201,8 @@ grestore
 %\begin{document}
 %
 \maketitle
-\abstract{Hash tables are ubiquitous in computer science for their use in storing large sets of data. Cuckoo hashing is an efficient technique of creating large hash tables with high space utilization and offers a guaranteed constant access time. We are given $n$ locations and $m$ items. Each item has to be placed in one of the $k\ge2$ locations chosen by $k$ random hash functions. By allowing more than one choice for a single item, cuckoo hashing resembles multiple choice allocations schemes. In addition it supports dynamically changing the location of an item among its possible locations. We propose and analyze an insertion algorithm for cuckoo hashing that runs in \emph{linear time} with high probability and in expectation. Previous work on total allocation time has analysed breadth first search, and it was shown  to be linear only in \emph{expectation}. Our algorithm finds an assignment (with probability 1) whenever it exists. In contrast, the other known insertion method also called  \emph{random walk insertion} may run indefinitely even for a solvable instance.
-We present experimental results comparing the performance of our algorithm with the random walk method, also for the case when each location can hold more than one item.
+\abstract{Hash tables are ubiquitous in computer science for efficient access to large datasets. However, there is always a need for approaches that offer compact memory utilisation without substantial degradation of lookup performance. Cuckoo hashing is an efficient technique of creating hash tables with high space utilisation and offer a guaranteed constant access time. We are given $n$ locations and $m$ items. Each item has to be placed in one of the $k\ge2$ locations chosen by $k$ random hash functions. By allowing more than one choice for a single item, cuckoo hashing resembles multiple choice allocations schemes. In addition it supports dynamically changing the location of an item among its possible locations. We propose and analyse an insertion algorithm for cuckoo hashing that runs in \emph{linear time} with high probability and in expectation. Previous work on total allocation time has analysed breadth first search, and it was shown  to be linear only in \emph{expectation}. Our algorithm finds an assignment (with probability 1) whenever it exists. In contrast, the other known insertion method, known as \emph{random walk insertion}, may run indefinitely even for a solvable instance.
+We also present experimental results comparing the performance of our algorithm with the random walk method, also for the case when each location can hold more than one item. 
 
 As a corollary we obtain a linear time algorithm(with high probability and in expectation) for finding perfect matchings in a special class of sparse random bipartite graphs. We also perform experiments for finding maximum matchings in general large bipartite graphs and report an order of magnitude improvement in the running time as compared to Hopkraft Karp matching algorithm.
 
@@ -211,8 +211,8 @@ As a corollary we obtain a linear time algorithm(with high probability and in ex
 
 
 \section{Introduction}
-In computer science, hash table~\cite{bookC:09} is a data structure that maps items (keys) to locations (values) using a hash function. More precisely, given a universe $U$ of items and a hash table $H$ of size $n \in \mathbb{N}$, a hash function
-$h : U \rightarrow \{1,2,\ldots, n\}$ maps the items from $U$ to the $n$ positions on the table. Ideally, the hash function should assign to each possible item to a unique location, but this ideal is rarely achievable in practice. Two or more items could be mapped to the same location resulting in a collision. In this work we deal with a collision resolution technique known as \emph{cuckoo hashing}.  Cuckoo hashing was first proposed by Pagh and Rodler in \cite{inp:pr01}. We are interested in a generalization of the original idea (see~\cite{inc:fpss03}) where we are given a table with $n$ locations, and we assume each location can hold a single item. Each item chooses randomly $k\ge 3$ locations (using $k$ random hash functions) and has to be placed in one of them.  Formally speaking we are given $k\ge3$ hash functions $h_1, . . . , h_k$
+In computer science, a hash table~\cite{bookC:09} is a data structure that maps items (keys) to locations (values) using a hash function. More precisely, given a universe $U$ of items and a hash table $H$ of size $n \in \mathbb{N}$, a hash function
+$h : U \rightarrow \{1,2,\ldots, n\}$ maps the items from $U$ to the $n$ positions on the table. Ideally, the hash function should assign to each possible item to a unique location, but this objective is rarely achievable in practice. Two or more items could be mapped to the same location resulting in a collision. In this work we deal with a collision resolution technique known as \emph{cuckoo hashing}.  Cuckoo hashing was first proposed by Pagh and Rodler in \cite{inp:pr01}. We are interested in a generalization of the original idea (see~\cite{inc:fpss03}) where we are given a table with $n$ locations, and we assume each location can hold a single item. Each item chooses randomly $k\ge 3$ locations (using $k$ random hash functions) and has to be placed in one of them.  Formally speaking we are given $k\ge3$ hash functions $h_1, . . . , h_k$
 that each maps an element $x \in U$ to a position in the table $H$. 
 Moreover we assume that $h_1, . . . , h_k$ are truly independent and random hash functions. We refer the reader to ~\cite{ms:08,d:09}  (and references therein) for justification of this idealized assumption. 
  Other variations of cuckoo hashing are considered in for example \cite{inp:ans:09,art:kmw09}.
@@ -220,7 +220,7 @@ Moreover we assume that $h_1, . . . , h_k$ are truly independent and random hash
 %Multiple choice load balancing can be abstracted as a balls-into-bin game. In this scenario we are given $n$ bins (locations, servers) and  $m=\lfloor cn\rfloor$ balls (items, users, tasks) where each ball chooses $k$ bins randomly and is placed into one of them. A first breakthrough was achieved by~\cite{art:abku99} where the authors consider the case $c=1$ and $k=2$. 
 %They show that if each ball is placed into the one which is least loaded at the time of placement then with high probability the maximum load is ${\log \log n \over \log 2} +O(1).$ This is an exponential improvement compared to the case where $k=1$, i.e., ball is placed into one of the random bins. Since then a large amount of literature has appeared considering load balancing schemes for $k\ge2$. Most of the schemes never change the location of a ball once it is placed. Our algorithm, in addition, combines the power of multiple choices with the power of dynamically changing the location of balls among its $k$ chosen bins. Our algorithm finds applications in the following scenarios.
 
-Cuckoo hashing resembles multiple choice allocations schemes in the sense that it allows more than one choice for a single item. In addition it supports dynamically changing the location of an item among its possible locations during insertion. The insertion procedure in cuckoo hashing goes as follows. Assume that $p$ items have been inserted, each of them having made their $k$ random choices on the hash table, and we are about to insert the $p+1$st item. This item selects its $k$ random locations from the hash table and is assigned to one of them. But this location might already be occupied by a previously inserted item. In that case, the previous item is kicked out and is assigned to one of the other $k-1$ selected locations. In turn, this position might be occupied by another item, which is kicked out and goes to one of the remaining $k-1$ chosen locations. This process may be repeated indefinitely or until a free loction is found. 
+Cuckoo hashing resembles multiple choice allocations schemes in the sense that it allows more than one choice for a single item. In addition it supports dynamically changing the location of an item among its possible locations during insertion. The insertion procedure in cuckoo hashing goes as follows. Assume that $p$ items have been inserted, each of them having made their $k$ random choices on the hash table, and we are about to insert the $p+1$st item. This item selects its $k$ random locations from the hash table and is assigned to one of them. But this location might already be occupied by a previously inserted item. In that case, the previous item is evicted or ``kicked out'' and is assigned to one of the other $k-1$ selected locations. In turn, this position might be occupied by another item, which is kicked out and goes to one of the remaining $k-1$ chosen locations. This process may be repeated indefinitely or until a free loction is found. 
 
 We model cuckoo hashing by a directed graph $G=(V,E)$  such that the set of vertices $V=\{v_1,v_2,\ldots,v_n\}$ corresponds to locations on the hash table. We say a vertex is \emph{occupied} if there is an item assigned to the corresponding location, otherwise it is \emph{free}. Let $\mathcal{I}$ be the set of $m$ items. We represent each item $x\in\mathcal{I} $ as a tuple of its $k$ chosen vertices (locations), for example, $x=(v_{x_1},v_{x_2},\ldots , v_{x_k})$.
 A directed edge $e=(v_i,v_j) \in E$ if and only if there exists an item $y\in \mathcal{I} $ so that the following two conditions hold, (i) $v_i,v_j \in y$, and (ii) $v_i$ is occupied by $y$. Note that a vertex with outdegree $0$ is a free vertex. We denote the set of free vertices by $F$ and the distance of any vertex $v$ from some vertex in $F$ by $d(v,F)$. Since $G$ represents an allocation we call $G$ an \emph{allocation graph}. 
@@ -233,7 +233,7 @@ Now assume that in the cuckoo insertion procedure, at some instance an item $z$ 
 \item The necessary condition for item $z$ to be successfully inserted at $v_{z_j}$ is the existence of a path from $v_{z_j}$ to $F$. This condition remains satisfied as long as some allocation is possible.
 \item The procedure will stop in the minimum number of steps if for all $v_{z_i}\in z$  the distance $d(v_{z_j},F)\le d(v_{z_i},F)$. \end{enumerate}
 
-With respect to our first observation, a natural question would be the following. We are given a set of $m$ items and $n$ locations such that each item picks $k\ge 3$ locations at random. Is it possible to place each of the items into one of their chosen locations such that each location holds at most one item? From~ \cite{inp:l12,fp12,fm12} we know that there exists a critical size $c_k^* n$ such that if $m<c_k^* n$ then such an allocation is possible with high probability, otherwise this is not the case.
+With respect to our first observation, a natural question to ponder would be the following. We are given a set of $m$ items and $n$ locations such that each item picks $k\ge 3$ locations at random. Is it possible to place each of the items into one of their chosen locations such that each location holds at most one item? From~ \cite{inp:l12,fp12,fm12} we know that there exists a critical size $c_k^* n$ such that if $m<c_k^* n$ then such an allocation is possible with high probability, otherwise this is not the case.
 
 
 \begin{theorem}
@@ -254,7 +254,7 @@ Let~$c_{k}^\ast= \frac{\xi^\ast}{k(1-e^{-\xi^{*}})^{k-1}}$. Then
 \end{equation}
 \end{theorem}
 
-The proof of the above theorem is non-constructive, i.e., it does not give us an algorithm to find such an allocation. In this work we deal with the algorithmic issues and propose an algorithm which takes linear time with high probability to find the optimal allocation.
+The proof of the above theorem is non-constructive, i.e., it does not give us an algorithm to find such an allocation. In this work we deal with the algorithmic issues and propose an algorithm which takes linear time with high probability and in expectation to find the optimal allocation.
 
 Our second observation suggests that the insertion time in the cuckoo hashing depends on the selection of the location, which we make for each assignment, from among the $k$ possible locations. One can in principle use breadth first search to  always make assignments over the shortest path (in the allocation graph). But this method is inefficient and expensive to perform for each item. One can also select uniformly at random a location from the available locations. This resembles a random walk on the locations of the table and is called the \emph{random walk insertion}. In~\cite{art:fps10,art:fmm11} the authors analyzed the random walk insertion method and gave a polylogarithmic bound (with high probability) on the maximum insertion time, i.e., the maximum time it can take to insert a single item.  
 
@@ -265,15 +265,10 @@ The allocation problem in cuckoo hashing can also be phrased in terms of \emph{o
 In fact, this is a random (multi)hypergraph $H^*_{n,m,k}$ (or random (multi)graph $G^*_{n,m}$ for $k=2$) with $n$ vertices and $m$ edges where each edge is drawn uniformly at random ( with replacement) from the set of all $k$-multisubsets of the vertex set. An $\la$-orientation of a graph then amounts to a mapping of each edge to one of its vertices such that no vertex receives more than $\la$ edges. $\la$ is also called the maximum load capacity. In our algorithm, we focus on $\la=1$. Here, we give an overview of existing work for general $\la$ for completeness.
 
 For the case $k = 2$, several allocation algorithms and their analysis are closely connected to the cores of the associated
-graph. The $\la$ core of a graph is the maximum vertex induced subgraph with minimum degree at least $\la$. As another application, the above described problem can also be seen as a load balancing problem with locations representing the \emph{machines} and the items representing the \emph{jobs}.
+graph. The $\la$ core of a graph is the maximum vertex induced subgraph with minimum degree at least $\la$. As another application, the above described problem can also be seen as a load balancing problem with locations representing the \emph{machines} and the items representing the \emph{jobs}. To this extent Czumaj and Stemann~\cite{ina:cs01} gave a linear time algorithm achieving maximum load $O(m/n)$ based on computation of all cores. The main idea was to repeatedly choose a
+vertex $v$ with minimum degree and remove it from the graph, and assigning all its incident edges (items) to vertex (location) $v$. Cain, Sanders, and Wormald~\cite{1283433}  used a variation of the above approach and gave a linear time algorithm for computing an optimal allocation (asymptotically almost surely). Their algorithm first guesses the optimal load among the two likely values values ($\lceil m/n\rceil $ or $\lceil m/n\rceil +1$). The procedure starts with a load value say $\la=\lceil m/n\rceil $. Each time a vertex with degree at most $\la$ and its incident edges are assigned to $v$. The above rule, also called the \emph{mindegree rule}, first reduces the graph to its $\la+1$ core. Next, some edge $(u,v)$ is picked according to some priority rule and assigned to one of its vertices. Again the mindegree rule is applied with respect to some conditions. In case the algorithm fails it is repeated after incrementing the load value.
 
-For example, Czumaj and Stemann~\cite{ina:cs01} gave a linear time algorithm achieving maximum load $O(m/n)$ based on computation of all cores. The main idea was to repeatedly choose a
-vertex $v$ with minimum degree and remove it from the
-graph, and assigning all its incident edges (items) to vertex (location) $v$. 
-
-Cain, Sanders, and Wormald~\cite{1283433}  used a variation of the above approach and gave a linear time algorithm for computing an optimal allocation (asymptotically almost surely). Their algorithm first guesses the optimal load among the two likely values values ($\lceil m/n\rceil $ or $\lceil m/n\rceil +1$). The algorithm starts with load value say $\la=\lceil m/n\rceil $. Each time a vertex with degree at most $\la$ and its incident edges are assigned to $v$. The above rule also called the mindegree rule will first reduce the graph to its $\la+1$ core. After that some edge $(u,v)$ is picked according to some priority rule and assigned to one of its vertices. Again the mindegree rule is applied with respect to some conditions. In case the algorithm fails it is repeated after incrementing the load value.
-
-Fernholz and Ramachandran~\cite{1283432} used a different approach of dealing with the vertices with degree greater than the maximum load.  Their algorithm also called \emph{excess degree reduction} (EDR) always chooses a vertex with minimum degree, $d$. If $d<\la$ then this vertex is assigned all its incident edges and is removed from the graph. In case $d>2\la$ the algorithm fails. Otherwise, EDR replaces $d-\la$ paths of the form
+Fernholz and Ramachandran~\cite{1283432} used a different approach in dealing with the vertices with degree greater than the maximum load.  Their algorithm, called the \emph{excess degree reduction} (EDR) approach, always chooses a vertex with minimum degree, $d$. If $d<\la$ then this vertex is assigned all its incident edges and is removed from the graph. In case $d>2\la$ the algorithm fails. Otherwise, EDR replaces $d-\la$ paths of the form
 $(u, v, w)$ by bypass edges $(u, w)$ and then orients all remaining edges ($\le \la$ ) incident to $v$
 towards $v$.
 
@@ -293,16 +288,19 @@ be computed in polynomial time using maximum
 flow computations and with high probability achieve a maximum load of 
 $\lceil m/n\rceil$ or $\lceil m/n\rceil +1$~\cite{sek99}. 
 
+Very recently Aum{\"u}ller, Dietzfelbinger and Woelfel~\cite{art:aumuller16} analyzed our algorithm in their special framework of easily computable hash classes.
+
 \paragraph{Notations.} Throughout the paper we use the following notations. We denote the set of integers $\{1,2,\ldots, n\}$ by $[n]$. Let $V=\{v_1,v_2,\ldots, v_n\}$ be the set of $n$ vertices representing the locations of the hash table. For an allocation graph $G=(V,E)$ and any two vertices $v_i,v_j\in V$, the shortest distance between $v_i$ and $v_j$ is denoted by $d(v_i,v_j).$  We denote the set of free vertices by $F$. We denote the shortest distance of a vertex $v_i\in V$ to any set of vertices say $S$ by $d(v_i,S)$ which is defined as \[d(v_i,S): = \min_{v_j\in S} d(v_i,v_j).\] We use $R$ to denote the set of vertices furthest from $F$, i.e.,
 \[   R:= \{ v_i\in V |d(v_i, F ) \ge \max_{ v_j \in V} d(v_j,F)\}.
 \]
+
 For some integer $t\in[n]$ and the subset of vertex set $V' \subset V$ let ~$N_{t}(v_i)$ and $N_{t}(V')$ denote the set of vertices at distance at most $t$ from the vertex $v_i \in V$ and the set $V'$. Mathematically,
 \[ N_{t}(v_i) := \{ v_j \in V~| ~d(v_i,v_j) \le t  \} \]
 and 
 \[ N_{t}(V') := \{ v_j \in V~| ~d(v_i,V') \le t  \} .\]
 \subsection{Our Contribution}
 Our aim here is to minimize the total insertion time in cuckoo hashing, thereby minimizing the total time required to construct the hash table. We propose a deterministic strategy of how to select a vertex for placing an item when all its choices are occupied.
-We assign to each vertex $v_i\in V$ an integer label, $L(v_i)$. Initially all vertices have $0$ as their labels. Note that at this stage, for all  $j\in [n]$, $L(v_j) =d(v_j,F)$, i.e., the labels of all vertices represent their shortest distances from $F$. When an item $x$ appears, it chooses the vertex with the least label from among its $k$ choices. If the vertex is free, the item is placed on it. Otherwise, the previous item is kicked out . The label of the location is then updated and set to one more than the minimum label of the remaining $k-1$ choices of the item $x$. The kicked out item chooses the location with minimum label from its $k$ choices and the above procedure is repeated till an empty location is found. 
+We assign to each vertex $v_i\in V$ an integer label, $L(v_i)$. Initially all vertices have $0$ as their labels. Note that at this stage, for all  $j\in [n]$, $L(v_j) =d(v_j,F)$, i.e., the labels of all vertices represent their shortest distances from $F$. When an item $x$ appears, it chooses the vertex with the least label from among its $k$ choices. If the vertex is free, the item is placed on it. Otherwise, the previous item is kicked out. The label of the location is then updated and set to one more than the minimum label of the remaining $k-1$ choices of the item $x$. The kicked out item chooses the location with minimum label from its $k$ choices and the above procedure is repeated till an empty location is found. 
 Note that to maintain the labels of the vertices as their shortest distances from $F$ we would require to update labels of the neighbors of the affected vertex and the labels of their neighbors and so on. This corresponds to performing a breadth first search (bfs) starting from the affected vertex. We avoid the bfs and perform only local updations. Therefore, we also call our method as \emph{local search allocation}. 
 
 Previous work~\cite{inc:fpss03} on total allocation time has analysed breadth first search, and it was shown  to be linear only in \emph{expectation}.  The local search allocation method requires linear time with probability $1-o(1)$  and in expectation to find an allocation. We now state our main result.
@@ -384,14 +382,14 @@ Assume that we are given items in an online fashion, i.e., each item chooses its
 \IF{$(T(v)\neq \emptyset )$}
 \STATE $y\leftarrow T(v)$~~~~~~~~~~~~~~~~~~ $\rhd${\textbf{Move that replaces an item}}
 \STATE $T(v) \leftarrow x$
-\STATE $\mathbf{CALL}$ {AssignBall($y, \mathbf{L},\mathbf{T}$)}
+\STATE $\mathbf{CALL}$ {AssignItem($y, \mathbf{L},\mathbf{T}$)}
 \ELSE  
 \STATE $T(v) \leftarrow x$ ~~~~~~~~~~~~~~~~~~ $\rhd${\textbf{Move that places an item}}
 \ENDIF
 \ENDIF
 \end{algorithmic}
 \end{algorithm}
-In the next subsection we first prove the correctness of the algorithm, i.e, it finds an allocation in a finite number of steps whenever an allocation exists. We show that the algorithm takes a maximum of $O(n^2)$ time before it obtains an mapping for each item. We then proceed to give a stronger bound on the running time.
+In the next subsection we first prove the correctness of the algorithm, i.e, it finds an allocation in a finite number of steps whenever an allocation exists. We show that the algorithm takes a maximum of $O(n^2)$ time before it obtains a mapping for each item. We then proceed to give a stronger bound on the running time.
 
 
 
@@ -472,11 +470,11 @@ So our aim now is to bound the shortest distances such that the sum of these is 
 To compute the desired sum, i.e., $\sum_{v_i\in V}d(v,F)$, we study the structure of the allocation graph. The following lemma states that, with probability $1-o(1)$, a fraction of the vertices in the allocation graph are at a constant distance to the set of free vertices, $F$. This would imply that the contribution for the above sum made by these vertices is $O(n)$. 
 
 \begin{lemma}\label{lem:dist}
-For any fixed $\varepsilon>0$, let $m=(1-\varepsilon) c_k^* n$ balls are assigned to $n$ bins using $k$ random choices for each ball. Then the corresponding allocation graph $G=(V,E)$ satisfies the following with probability $1-O(1/n)$: for every $\alpha >0$ there exist $C=C(\alpha, \varepsilon) >0$ and a set $S \subseteq V$ of size at least $(1-\alpha)n$ such that every vertex $v\in S$ satisfies $d(v,F)\le C$. \end{lemma}
+For any fixed $\varepsilon>0$, let $m=(1-\varepsilon) c_k^* n$ items are assigned to $n$ locations using $k$ random choices for each locations. Then the corresponding allocation graph $G=(V,E)$ satisfies the following with probability $1-O(1/n)$: for every $\alpha >0$ there exist $C=C(\alpha, \varepsilon) >0$ and a set $S \subseteq V$ of size at least $(1-\alpha)n$ such that every vertex $v\in S$ satisfies $d(v,F)\le C$. \end{lemma}
 
 \begin{proof}
 We perform the following stripping process on $G$.
-We start with $G$ and in each step remove all its free vertices and the edges they are contained in. Note that by removing the edges, we have removed the balls placed on the corresponding vertices, thereby creating a new set of free vertices. For step $i$ of the stripping process, we denote the set of vertices by $V_i$ and the set of free vertices by $F_i$ and let $G_i$ be the corresponding allocation graph. The number of occupied vertices in $G_i$ is then equal to $|V_i|-|F_i|$. As each vertex holds at most one ball, the number of remaining balls is $|V_i|-|F_i|$.
+We start with $G$ and in each step remove all its free vertices and the edges they are contained in. Note that by removing the edges, we have removed the items placed on the corresponding vertices, thereby creating a new set of free vertices. For step $i$ of the stripping process, we denote the set of vertices by $V_i$ and the set of free vertices by $F_i$ and let $G_i$ be the corresponding allocation graph. The number of occupied vertices in $G_i$ is then equal to $|V_i|-|F_i|$. As each vertex holds at most one item, the number of remaining balls is $|V_i|-|F_i|$.
 
 Let $H=(V,E')$ be a $k$-uniform hypergraph with $n$ vertices representing the locations and $m$ edges representing the items. Each edge consists of $k$ vertices or $k$ choices of the item.
 Note that the number of occupied vertices in $G$ is equal to the number of edges in $H$. Similarly $G_i$ corresponds to a subgraph in $H$ induced on the vertex set $V_i$. Let us denote it by $H[V_i]$. 
@@ -487,7 +485,7 @@ Therefore, after $t\ge 1$ iterations of removing free vertices we obtain  $|V_{t
 We remark that the above lemma has already been proved in~\cite{art:fps10} (in the hypergraph setting). A similar result has also been proved in~\cite{fm12} (in the bipartite matching setting) for $k\ge 8$.
 With respect to an allocation graph recall that we denote the set of vertices furthest from $F$ by $R$. Also for an integer $s$, $N_s(R)$ denotes the set of vertices at distance at most $s$ from $R$. The next lemma states that the neighborhood of $R$ expands suitably with high probability. We remark that the estimate, for expansion factor, presented here is not the best possible but nevertheless suffices for our analysis. 
 \begin{lemma}\label{lem:expan}
-For any fixed $\varepsilon>0$, let $m=(1-\varepsilon) c_k^* n$ balls are assigned to $n$ bins using $k$ random choices for each item and $G=(V,E)$ be the corresponding allocation graph. Then for any $0<\alpha < {1\over k-1}$ and every integer $s$ such that $1\le | N_{s}(R)|\le \alpha n$,  there exists a constant $\zeta>0$ such that $G$  satisfies the following with probability $1-n^{-\zeta}$.
+For any fixed $\varepsilon>0$, let $m=(1-\varepsilon) c_k^* n$ items are assigned to $n$ locations using $k$ random choices for each item and $G=(V,E)$ be the corresponding allocation graph. Then for any $0<\alpha < {1\over k-1}$ and every integer $s$ such that $1\le | N_{s}(R)|\le \alpha n$,  there exists a constant $\zeta>0$ such that $G$  satisfies the following with probability $1-n^{-\zeta}$.
 
 \[
 	|N_{s}(R) | >  \left( k-1- {\log e^{k}(k-1) \over \log{1\over \alpha(k-1)}}\right)  | N_{s-1}(R)| . \]
@@ -547,15 +545,16 @@ Therefore,
 \[
 \sum _{i=0}^{T-1}| N_i(R)) |< |N_{T}(R)|  \sum_{j=1}^{T}   {1 \over (k-1-\delta)^j }  <  |N_{T}(R)|  \sum_{j=1}^{T}   {1 \over (1+\gamma)^j } =O(n),\]
 which completes the first part of the proof of Theorem \ref{thm:main}. 
-To bound the expected time, observe that for $i$ such that $|N_i(R))|< n^{1/2}$,
-$$E\left(\sum_{i}|N_i(R)|\right) < n^{1/2}\cdot {(n^{1/2} +1) \over 2}= O(n)$$
- For all other $i$ using lemmas~\ref{lem:expanhyper} and \ref{lem:expan}
+To bound the expected time, we observe that for $i$ such that $|N_i(R))|< n^{1/2}$ combining with the fact that for any $i$, $|N_i(R)|< |N_{i-1}(R)|$  the following holds
+$$\sum_{i}|N_i(R)|< \sum_{j=1}^{n^{1/2}}j = n^{1/2}\cdot {(n^{1/2} +1) \over 2}= O(n)$$
+with probability $1$.
+
+For all other $i$ using lemmas~\ref{lem:expanhyper} and \ref{lem:expan}
 $$\sum_{i}|N_i(R)| < |N_{T}(R)|  \sum_i {1 \over (k-1-\delta)^i} < n $$ with probability $1-e^{-O(n^{0.5})}$.
 Note that we already proved that the maximum value of the sum of all the labels can be atmost $n^2$ (see discussion after Lemma~\ref{lem:graph}). This implies that for such $i$ 
 $$E\left(\sum_{i}|N_i(R)|\right) < n (1-o(1)) + n^2 e^{-O(n^{0.5})} = O(n)$$
 
 \end{proof}
-
 We obtain the following corollary about maximum matchings in left regular random bipartite graphs. Recall that a bipartite graph $G=(L\cup R;E)$ is  $k$-left regular if each vertex $v\in L$ has exactly $k$ neighbors in $R$.
 
 \begin{corollary}

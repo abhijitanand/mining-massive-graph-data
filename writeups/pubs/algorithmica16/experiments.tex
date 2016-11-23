@@ -44,9 +44,9 @@ In Figure~\ref{fig:1} we give a comparison of the total number of moves (average
     \label{fig:totalGen}
     \end{figure}
 
-We remark that local search allocation has some additional cost, i.e., the extra space required to store the labels. Though this space is $O(n)$, local search allocation is still useful for the applications where the size of objects (representing the items) to be allocated is much larger than the labels which are integers. Moreover, with high probability, the maximum label of any vertex is $O(\log n)$. Many integer compression methods~\cite{inp:sgl10} have been proposed for compressing small integers and can be potentially useful in our setting for further optimizations. Also in most of the load balancing problems, the speed of finding an assignment is a much desired and the most important requirement.
+
 \begin{algorithm}[h!]
-\caption{AssignBall ($x, \mathbf{L},\mathbf{T}$)}
+\caption{AssignItem ($x, \mathbf{L},\mathbf{T}$)}
 \label{algo:orientEdgegen}
 \begin{algorithmic}[1]
 \STATE Choose an item $v$ among the $k$ choices of $x$ with minimum label $L(v)$.
@@ -60,7 +60,7 @@ We remark that local search allocation has some additional cost, i.e., the extra
 \STATE Choose an item (call it b) randomly from the $s$ items in v
 \STATE $y\leftarrow b$~~~~~~~~~~~~~~~~~~ $\rhd${\textbf{Move that replaces an item}}
 \STATE Place $x$ in $v$
-\STATE $\mathbf{CALL}$ {AssignBall($y, \mathbf{L},\mathbf{T}$)}
+\STATE $\mathbf{CALL}$ {AssignItem($y, \mathbf{L},\mathbf{T}$)}
 \ELSE  
 \STATE Place $x$ in $v$ ~~~~~~~~~~~~~~~~~~ $\rhd${\textbf{Move that places an item}}
 \ENDIF
@@ -69,6 +69,7 @@ We remark that local search allocation has some additional cost, i.e., the extra
 \end{algorithm}
 We also consider the case when each location can hold more than one item. To adapt LSA for this setting we make a small change, i.e., the label of a vertex (location) stays 0 until it is fully filled. Algorithm~\ref{algo:orientEdgegen} gives the modified procedure for the general location capacities. Here {\sc{Items}}$(v)$ gives the number of items already placed in $v$. Let the location capacity or maximum load allowed be $s$. Figure~\ref{fig:totalGen} suggests that the total number of moves are linear in the number of locations for the cases $k=3,4$ where the maximum location capacity is greater than $1$.
 
+We remark that local search allocation has some additional cost, i.e., the extra space required to store the labels. Though this space is $O(n)$, local search allocation is still useful for the applications where the size of objects (representing the items) to be allocated is much larger than the labels which are integers. Moreover, with high probability, the maximum label of any vertex is $O(\log n)$. Many integer compression methods~\cite{inp:sgl10} have been proposed for compressing small integers and can be potentially useful in our setting for further optimizations. Also in most of the load balancing problems, the speed of finding an assignment is a much desired and the most important requirement.
 
 \begin{table*}[ht!]
 \centering
@@ -76,7 +77,7 @@ We also consider the case when each location can hold more than one item. To ada
 \begin{tabular}{@{}l l l l @{}}
 \toprule
 %\hline \noalign{\smallskip}
-\multicolumn{1}{l}{} & Limit on Moves                  & Wall-clock times     & Result Size  \\
+\multicolumn{1}{l}{} & Maximum Number of Moves                  & Wall-clock times     & Result Size  \\
 \hline \noalign{\smallskip}
 LSA        &   1      & 12    & 1029449  \\
        &   2      & 12    & 1080006  \\
@@ -105,12 +106,12 @@ Hopcroft-Karp                &  & 12605 & 1082214 \\
 Next, we compare our runtime performance to the optimal algorithm proposed by Hopcroft et al.~\cite{hopcroft1973n}. In this experiment we want to study the effect of number of allowable moves on (a) the actual wall-clock times , (b) the result quality in terms of the size, or number of edges, of the final matching produced (refer Figure~\ref{table:softlabel}). We selected the following representative realworld dataset for our experiments:
 
 \begin{itemize}
-  \item \textsf{Delicious dataset : } The \textsf{Delicious} dataset spans nine years from 2003 to 2011 and contain about 340 mio. bookmarks, 119 mio. unique URLs, 15 mio. tags and 2 mio. users~\cite{zubiaga2013harnessing}. Each bookmarked URL is time stamped and tagged with word descriptors. The nodes in one of the sets are URLs and in the other are its corresponding bookmarks.
+  \item \textsf{Delicious dataset :} The \textsf{Delicious} dataset spans nine years from 2003 to 2011 and contain about 340 mio. bookmarks, 119 mio. unique URLs, 15 mio. tags and 2 mio. users~\cite{zubiaga2013harnessing}. Each bookmarked URL is time stamped and tagged with word descriptors. The nodes in one of the sets are URLs and in the other are its corresponding bookmarks.
 
   % \item \textsf{Yahoo Ad dataset : } Computational advertising used bi-partite graph matching algorithms for its ad placement decisions. 
 \end{itemize}
 
-We first observe that the optimal result in the \textsf{Delicious} dataset, i.e. 1082214, is already obtained when the limit on the allowable moves is only five and in 12 seconds. Interestingly, as we increase the limit on the allowable moves, the runtime does not change showing that only a small of defections are sufficient to arrive at an optimal result. However, at higher limits, indeed other permutations are explored (in this case unsuccesfully) resulting in increased runtimes. In any case when the limit is set to $n$, that would guarantee optimality, we still perform an order of magnitude faster than the optimal algorithm of Hopcroft-Karp. 
+We first observe that the optimal result in the \textsf{Delicious} dataset, i.e. 1082214, is already obtained when the limit on the allowable moves is only five and in 12 seconds. Interestingly, as we increase the limit on the allowable moves to place any item (match any edge), the runtime does not change showing that only a small of defections are sufficient to arrive at an optimal result. However, at higher limits, indeed other permutations are explored (in this case unsuccesfully) resulting in increased runtimes. The stopping creteria unlinke in case of perfect matchings cannot be predetermined in general. In future we plan to devise methodology to stop the algorithm when the maximum matching is retrieved. In any case when the limit is set to $n$, that would guarantee optimality, we still perform an order of magnitude faster than the optimal algorithm of Hopcroft-Karp. 
 
 
 
