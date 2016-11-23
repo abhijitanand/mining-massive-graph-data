@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex algorithmica15"] 1479898916 "algorithmica15.aux" "algorithmica15.bbl" "algorithmica15" 1479898917
+["bibtex algorithmica15"] 1479899707 "algorithmica15.aux" "algorithmica15.bbl" "algorithmica15" 1479899849
   "/usr/local/texlive/2012/texmf-dist/bibtex/bst/base/plain.bst" 1292289607 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "algorithmica15.aux" 1479898917 5239 5dad18cdc044b33e84f0287cce375107 ""
+  "algorithmica15.aux" 1479899848 5160 3d098cddc8ec874121061a7dd380adb5 ""
   "algorithmica15.bcf" 0 -1 0 ""
   "algorithmica15.bib" 1479896048 6997 1401ced05421fc26d3b843cdebffa1bb ""
   (generated)
-  "algorithmica15.blg"
   "algorithmica15.bbl"
-["pdflatex"] 1479898916 "algorithmica15.tex" "algorithmica15.pdf" "algorithmica15" 1479898917
+  "algorithmica15.blg"
+["pdflatex"] 1479899848 "algorithmica15.tex" "algorithmica15.pdf" "algorithmica15" 1479899849
   "/usr/local/texlive/2012/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2012/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm" 1246382020 1120 1e8878807317373affa7f7bba4cf2f6a ""
   "/usr/local/texlive/2012/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm" 1246382020 1120 7f9f170e8aa57527ad6c49feafd45d54 ""
@@ -119,9 +119,9 @@
   "/usr/local/texlive/2012/texmf-var/web2c/pdftex/pdflatex.fmt" 1341108725 3691572 80746d7cec090b0770bc87079bef471d ""
   "/usr/local/texlive/2012/texmf.cnf" 1341108668 572 7ea7194897937febeb63145e1c3a1f03 ""
   "/usr/local/texlive/2012/texmf/web2c/texmf.cnf" 1336865692 31299 729e216d9b945005c0d4b079c0500bc9 ""
-  "algorithmica15.aux" 1479898917 5239 5dad18cdc044b33e84f0287cce375107 ""
-  "algorithmica15.bbl" 1479898916 4889 220c2e50654d52678edc7deff197adcc "bibtex algorithmica15"
-  "algorithmica15.tex" 1479898913 58813 05c67cc93426f703c8c669de76b25a0e ""
+  "algorithmica15.aux" 1479899848 5160 3d098cddc8ec874121061a7dd380adb5 ""
+  "algorithmica15.bbl" 1479899708 4889 220c2e50654d52678edc7deff197adcc "bibtex algorithmica15"
+  "algorithmica15.tex" 1479899847 58790 f03589bf20d0b0bc4aaf317144c080d3 ""
   "example.eps" 1440443984 286 240e01e547b56ebd62e19ba1e85adf80 ""
   "experiments.tex" 1479897851 9549 43ee81b4b77669f840c5f54f2c405479 ""
   "max-3.pdf" 1386858979 18789 d9790f072930f6ba63b8e45e6fbea1c7 ""

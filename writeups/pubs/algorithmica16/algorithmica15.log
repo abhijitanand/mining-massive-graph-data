@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  23 NOV 2016 12:01
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  23 NOV 2016 12:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -350,12 +350,12 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 SVJour3 warning: Missing \journalname
-LaTeX Font Info:    Calculating math sizes for size <13> on input line 203.
-LaTeX Font Info:    Try loading font information for U+msa on input line 203.
+LaTeX Font Info:    Calculating math sizes for size <13> on input line 204.
+LaTeX Font Info:    Try loading font information for U+msa on input line 204.
 (/usr/local/texlive/2012/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 203.
+LaTeX Font Info:    Try loading font information for U+msb on input line 204.
 
 (/usr/local/texlive/2012/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
@@ -368,10 +368,10 @@ Please supply a shorter form with \titlerunning prior to \maketitle
 
 Package amsmath Warning: Foreign command \over;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 243.
+(amsmath)                 on input line 244.
 
 
-Overfull \hbox (17.05702pt too wide) detected at line 254
+Overfull \hbox (17.05702pt too wide) detected at line 255
 \U/msb/m/n/10 P [] [] [] \OML/cmm/m/it/10 :
  []
 
@@ -383,20 +383,20 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 335.
+(amsmath)                 on input line 336.
 
 
-Overfull \hbox (31.6995pt too wide) in paragraph at lines 344--344
+Overfull \hbox (31.6995pt too wide) in paragraph at lines 345--345
 [] 
  []
 
 
-Overfull \hbox (30.93217pt too wide) in paragraph at lines 352--352
+Overfull \hbox (30.93217pt too wide) in paragraph at lines 353--353
 [] 
  []
 
 [7] [8] [9] [10] [11]
-Overfull \hbox (1.60823pt too wide) in paragraph at lines 532--536
+Overfull \hbox (1.60823pt too wide) in paragraph at lines 533--537
 \OT1/cmr/m/n/10 As ev-ery ver-tex in $\OML/cmm/m/it/10 S$ \OT1/cmr/m/n/10 is at
  a con-stant dis-tance from $\OML/cmm/m/it/10 F$\OT1/cmr/m/n/10 , we ob-tain $[
 ][] \OML/cmm/m/it/10 d\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 v; F\OT1/cmr/m/n/10 ) =
@@ -404,7 +404,7 @@ Overfull \hbox (1.60823pt too wide) in paragraph at lines 532--536
  []
 
 
-Overfull \hbox (40.2954pt too wide) in paragraph at lines 541--541
+Overfull \hbox (40.2954pt too wide) in paragraph at lines 542--542
 [] 
  []
 
@@ -510,7 +510,7 @@ sfonts/cm/cmti10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmti8.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfo
 nts/symbols/msam10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/a
 msfonts/symbols/msbm10.pfb>
-Output written on algorithmica15.pdf (19 pages, 661850 bytes).
+Output written on algorithmica15.pdf (19 pages, 661737 bytes).
 PDF statistics:
  221 PDF objects out of 1000 (max. 8388607)
  156 compressed objects within 2 object streams
